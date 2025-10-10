@@ -1,0 +1,19 @@
+.game-failed{
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    justify-content: center;
+}
+
+.game-failed__ticket{
+    margin-top: auto;
+}
+
+.game-failed__button{
+    margin-top: auto;
+}

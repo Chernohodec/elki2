@@ -1,0 +1,42 @@
+.game-start-panel{
+    position: relative;
+    overflow: hidden;
+}
+
+
+.game-start-panel::before{
+    content: '';
+    position: fixed;
+    left: 0;
+    top: -1px;
+    width: 100%;
+    height: 100dvh;
+    background-image: url(../../assets/img/tasks/task5/task5-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: calc(100% + 2px) auto;
+}
+
+.game-start-panel__content{
+    background-image: url(../../assets/img/tasks/task1/task1-content-bg.svg);
+    background-size: 100%;
+    margin-top: auto;
+    /* backdrop-filter: blur(10px); */
+    position: relative;
+    padding-top: 18vw;
+    /* min-height: 500px; */
+}
+
+.game-start-panel__content_ios{
+    margin-bottom: -45px;
+    padding-bottom: 45px;
+}
+
+.game-start-panel__char{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -35vw;
+    width: 50vw;
+    height: auto;
+}

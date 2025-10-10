@@ -1,0 +1,35 @@
+.settings-block{
+    margin-bottom: auto;
+}
+
+.settings-panel{
+    position: relative;
+}
+
+.settings-panel::before{
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100dvh;
+    background-image: url(../../assets/img/main-bg.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #E4ECE3;
+}
+
+.settings-panel__content{
+    background: #E4ECE3;
+    border-radius: 30px 30px 0 0;
+    padding: 0px 0 30px;
+    min-height: calc(100dvh - 200px);
+}
+
+.settings-switch :global(input:checked + .vkuiSwitch__inputFake .vkuiSwitch__track){
+    background-color: #DD2085;
+}
+
+.video{
+
+}

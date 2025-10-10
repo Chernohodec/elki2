@@ -1,0 +1,65 @@
+.custom-tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 15px;
+    width: calc(100% - 30px);
+    /* height: 70px; */
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+    height: 70px;
+    margin: auto;
+    background-color: #fff;
+    border: 1px solid #FFFFFF52;
+    border-radius: 34px;
+    box-shadow: 0 5px 0 #FFFFFF70;
+}
+
+.tabbar-item__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    height: 40px;
+}
+
+.tabbar-item__content img {
+    filter: invert(0.3);
+    transition: .3s;
+}
+
+.tabbar-item__content span {
+    color: #989898;
+    font-size: 12px;
+    transition: .3s;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: OpinionPro;
+}
+
+.tabbar-item {
+    height: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 29px;
+    transition: .3s;
+}
+
+.tabbar-item_active {
+    opacity: 1;
+    background-image: var(--red-gradient);
+    box-shadow: 5px -2px 11.4px 0px #FFFFFF22 inset, 0px 4px 23.4px 0px #EA03008F, 0px 4px 38.9px 0px #EA030087;
+}
+
+.tabbar-item_active .tabbar-item__content img {
+    filter: invert(0);
+}
+
+.tabbar-item_active .tabbar-item__content span {
+    color: #fff;
+}

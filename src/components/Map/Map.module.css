@@ -1,0 +1,155 @@
+.map {
+    height: 520px;
+    width: 100%;
+    overflow: auto;
+}
+
+.map__image {
+    background-image: url(../../../public/assets/img/map-bg.jpg);
+    height: 100%;
+    width: 2900px;
+    background-size: auto 100%;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+.tasks {
+    display: flex;
+    align-items: center;
+    gap: 270px;
+    padding-left: 170px;
+    padding-top: 105px;
+}
+
+.task-item {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.task-item__content {
+    width: 100%;
+    height: 185px;
+    background-image: url(../../../public/assets/img/map-frame.png);
+    background-repeat: no-repeat;
+    background-position: center 100%;
+    background-size: calc(100% - 3px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    clip-path: polygon(28.956% 0.826%, 72.054% 0.826%, 72.054% 0.826%, 76.587% 1.125%, 80.887% 1.991%, 84.897% 3.377%, 88.559% 5.235%, 91.815% 7.519%, 94.608% 10.182%, 96.881% 13.176%, 98.575% 16.455%, 99.634% 19.971%, 100% 23.678%, 100% 74.612%, 100% 74.612%, 99.683% 77.827%, 98.764% 80.878%, 97.294% 83.722%, 95.323% 86.319%, 92.899% 88.629%, 90.075% 90.61%, 86.898% 92.223%, 83.42% 93.425%, 79.69% 94.176%, 75.758% 94.435%, 72.187% 94.435%, 72.187% 94.435%, 70.362% 94.481%, 68.55% 94.616%, 66.756% 94.841%, 64.985% 95.153%, 63.243% 95.552%, 61.533% 96.037%, 59.86% 96.605%, 58.229% 97.256%, 56.646% 97.989%, 55.114% 98.802%, 52.999% 100%, 52.999% 100%, 52.535% 100.23%, 52.048% 100.408%, 51.543% 100.536%, 51.027% 100.613%, 50.505% 100.638%, 49.983% 100.613%, 49.467% 100.536%, 48.962% 100.408%, 48.475% 100.23%, 48.011% 100%, 45.896% 98.802%, 45.896% 98.802%, 44.365% 97.989%, 42.781% 97.256%, 41.15% 96.605%, 39.478% 96.037%, 37.767% 95.552%, 36.025% 95.153%, 34.254% 94.841%, 32.46% 94.616%, 30.648% 94.481%, 28.823% 94.435%, 25.253% 94.435%, 25.253% 94.435%, 21.32% 94.176%, 17.59% 93.425%, 14.112% 92.223%, 10.935% 90.61%, 8.111% 88.629%, 5.687% 86.319%, 3.716% 83.722%, 2.246% 80.878%, 1.327% 77.827%, 1.01% 74.612%, 1.01% 23.678%, 1.01% 23.678%, 1.376% 19.971%, 2.435% 16.455%, 4.129% 13.176%, 6.402% 10.182%, 9.195% 7.519%, 12.452% 5.235%, 16.113% 3.377%, 20.123% 1.991%, 24.423% 1.125%, 28.956% 0.826%);
+    padding: 20px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.task-item__content button {
+    height: 32px;
+}
+
+.task-item__icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 55px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.task-item__icon img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.task-item__icon_type_parent {
+    background-image: url(../../../public/assets/img/tasks/parent-icon-bg.png);
+}
+
+.task-item__icon_type_kid {
+    background-image: url(../../../public/assets/img/tasks/child-icon-bg.png);
+}
+
+.task-item__image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url(../../../public/assets/img/tasks/child-icon-bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.task-item__image_type_parent {
+    background-image: url(../../../public/assets/img/tasks/parent-icon-bg.png);
+}
+
+.task-item__character {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 10px 0 5px;
+    height: 32px;
+    background-image: var(--yellow-gradient);
+    border-radius: 16px;
+    border: 1.37px solid #FFFFFF61;
+    box-shadow: 6.83px -2.73px 15.57px 0px #FFFFFF33 inset, 0px 5.46px 31.96px 0px #FFC30B8F, 0px 5.46px 53.12px 0px #FFC30B87;
+}
+
+.task-item__character_type_parent{
+    left: -10px;
+}
+
+.task-item__character img {
+    margin-top: -5px;
+}
+
+.task-item__image-wrapper {
+    width: max-content;
+    position: relative;
+}
+
+.task-item__image-wrapper::before {
+    content: '';
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    background-color: #FFC30B2E;
+    left: -7px;
+    top: -7px;
+}
+
+.task-item__image-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background-color: #FFC30B2E;
+    left: -15px;
+    top: -15px;
+}

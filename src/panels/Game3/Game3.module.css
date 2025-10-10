@@ -1,0 +1,286 @@
+.game-panel {
+    /* position: relative; */
+    position: fixed;
+    /* touch-action: manipulation; */
+    touch-action: pan-x pan-y;
+}
+
+.game-panel::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: -2px;
+    width: 100%;
+    height: 100dvh;
+    background-image: url(../../assets/img/tasks/task3/task3-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: calc(100% + 2px) 100%;
+}
+
+.game-start-panel__content {
+    background: #FFFFFFCC;
+    border-radius: 30px 30px 0 0;
+    margin-top: auto;
+    height: calc(100dvh - 100px);
+    overflow: hidden;
+}
+
+.game-field {
+    background-color: #B8E0EC;
+    border-radius: 30px;
+    width: 350px;
+    height: 350px;
+    margin: auto;
+    background-image: url(../../assets/img/tasks/task3/task3-gamefield-logo.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.field-cell {
+    /* background-color: rgba(255, 255, 255, 0.3); */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    touch-action: manipulation;
+}
+
+.field-cell img {
+    /* width: 100%; */
+    /* height: 100%; */
+}
+
+.field-cell.correct-cell {
+    background-color: rgba(184, 224, 236, 0.7);
+    box-shadow: 0 0 0 2px #4CAF50;
+}
+
+.piece-in-field {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: move;
+    position: relative;
+}
+
+.piece-in-field img {
+    position: absolute;
+}
+
+.parts {
+    position: relative;
+    min-height: 180px;
+    border-radius: 30px;
+    background-color: #E5F5F4;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-content: center;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.part {
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.part:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+}
+
+.part,
+.piece-in-field {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.field-cell_position_1 img {
+    width: 120px;
+    height: 150px;
+    left: 0;
+    top: 0;
+}
+
+.field-cell_position_2 img {
+    width: 185px;
+    height: 119px;
+    top: 0;
+}
+
+.field-cell_position_3 img {
+    width: 120px;
+    height: 150px;
+    right: 0;
+    top: 0;
+}
+
+.field-cell_position_4 img {
+    width: 152px;
+    height: 120px;
+    left: 0;
+    top: 0;
+}
+
+.field-cell_position_5 img {
+    width: 118px;
+    height: 182px;
+    left: 0;
+    top: -30px;
+}
+
+.field-cell_position_6 img {
+    width: 150px;
+    height: 120px;
+    right: 0;
+    top: -0px;
+}
+
+.field-cell_position_7 img {
+    width: 120px;
+    height: 151px;
+    left: 0;
+    top: -30px;
+}
+
+.field-cell_position_8 img {
+    width: 179px;
+    height: 119px;
+    left: -31px;
+    top: 1px;
+}
+
+.field-cell_position_9 img {
+    width: 119px;
+    height: 150px;
+    right: 0;
+    top: -30px;
+}
+
+.dragging {
+    opacity: 0.7 !important;
+    transform: scale(1.1) !important;
+    z-index: 1000 !important;
+    position: relative;
+}
+
+.part:active,
+.part.dragging {
+    opacity: 0.7;
+    transform: scale(1.05);
+}
+
+/* Улучшенная поддержка touch */
+.part, .piece-in-field {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.field-cell {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* iOS специфичные стили */
+@supports (-webkit-touch-callout: none) {
+    .game-field {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .part, .piece-in-field {
+        cursor: pointer;
+    }
+}
+
+/* Предотвращение выделения текста на iOS */
+.game-panel {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.dragging {
+    opacity: 0.5 !important;
+    transform: scale(0.95) !important;
+    z-index: 999 !important;
+}
+
+.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.part {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    cursor: grab;
+    touch-action: none;
+}
+
+.part:active {
+    cursor: grabbing;
+}
+
+.piece-in-field {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    cursor: grab;
+    touch-action: none;
+}
+
+.piece-in-field:active {
+    cursor: grabbing;
+}
+
+.field-cell {
+    position: relative;
+    touch-action: none;
+}
+
+.game-field {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.parts {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}

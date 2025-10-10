@@ -1,0 +1,106 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 24px;
+    border: none;
+    font-weight: 700;
+    transition: opacity .3s;
+    flex-shrink: 0;
+    font-family: OpinionPro
+}
+
+.button:not(.button_platform_ios):hover {
+    opacity: .7;
+}
+
+.button_size_normal {
+    height: 70px;
+    border-radius: 35px;
+    font-size: 18px;
+    /* font-weight: 700; */
+    text-transform: uppercase;
+}
+
+.button_size_small {
+    height: 52px;
+    border-radius: 26px;
+    font-size: 14px;
+    padding: 0 20px;
+    text-transform: uppercase;
+}
+
+.button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.button_color_red {
+    background-image: var(--red-gradient);
+    box-shadow: 0px 4px 23.4px 0px #EA03008F, 0px 4px 38.9px 0px #EA030087;
+    color: var(--white);
+}
+
+.button_color_pink {
+    background-color: #B70062;
+    color: #fff;
+    position: relative;
+    border: 1px solid #EBDCEB;
+}
+
+.button_color_pink:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -6px;
+    width: 100%;
+    height: 100%;
+    background-color: #DD2085;
+    border: 1px solid #EBDCEB;
+    border-radius: 35px;
+}
+
+.button_color_pink>span {
+    margin-top: -6px;
+}
+
+.button_color_yellow {
+    background:
+        linear-gradient(180deg, #FFC30B 0%, #FF9500 100%);
+    box-shadow: 5px -2px 11.4px 0px #FFFFFF66 inset,  0px 4px 23.4px 0px #FFC30B8F, 0px 4px 38.9px 0px #FFC30B87;
+    border: 1px solid #FFFFFF61;
+    color: #6E000C;
+    text-shadow: 0px 1px 0px 0px #FFFFFF40;
+}
+
+.button_color_transparent {
+    border: 1px solid #EA0300;
+}
+
+.button_color_transparent span {
+    background: linear-gradient(180deg, #EA0300 0%, #840715 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button_color_transparent-yellow {
+    border: 1px solid #FFC30B;
+}
+
+.button_color_transparent-yellow span {
+    background: linear-gradient(180deg, #FFC30B 0%, #FF9500 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 2px 0px #FFFFFF40;
+}
+
+.button>span {
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+    position: relative;
+    z-index: 2;
+}

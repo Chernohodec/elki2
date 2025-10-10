@@ -1,0 +1,41 @@
+.text {
+    font-family: Montserrat
+}
+
+.color_type_black {
+    color: var(--vkui--color_text_primary);
+}
+
+.color_type_white {
+    color: #fff;
+}
+
+.color_type_gray {
+    color: #658386;
+}
+
+.color_type_yellow {
+    color: var(--vkui--color_text_accent_themed);
+}
+
+.size_type_small {
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.size_type_normal {
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.align_type_center {
+    text-align: center;
+}
+
+.align_type_left {
+    text-align: left;
+}
+
+.align_type_right {
+    text-align: right;
+}

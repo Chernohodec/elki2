@@ -1,0 +1,68 @@
+.title {
+    /* font-size: 32px; */
+    line-height: 1;
+    /* font-weight: 700; */
+    text-transform: uppercase;
+    font-family: OpinionPro;
+}
+
+.color_type_red {
+    color: #E10120;
+}
+
+.color_type_black {
+    color: #003137;
+}
+
+.color_type_black :global(a) {
+    color: #003137;
+}
+
+.color_type_white {
+    color: #fff;
+}
+
+.color_type_white :global(a) {
+    color: #fff;
+}
+
+.color_type_yellow {
+    color: #FFC30B;
+}
+
+.color_type_red-black{
+    color: #6E000C;
+
+}
+
+.size_type_small {
+    font-size: 16px;
+}
+
+.size_type_normal {
+    font-size: 24px;
+}
+
+.size_type_medium {
+    font-size: 18px;
+}
+
+.size_type_big {
+    font-size: 32px;
+}
+
+.size_type_xl {
+    font-size: 40px;
+}
+
+.align_type_center {
+    text-align: center;
+}
+
+.align_type_left {
+    text-align: left;
+}
+
+.align_type_right {
+    text-align: right;
+}

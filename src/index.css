@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "OpinionPro";
+    src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot");
+    src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot?#iefix")format("embedded-opentype"),
+        url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff")format("woff"),
+        url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff2")format("woff2"),
+        url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.ttf")format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot");
+    src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot?#iefix")format("embedded-opentype"),
+        url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff")format("woff"),
+        url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff2")format("woff2"),
+        url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.ttf")format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot");
+    src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot?#iefix")format("embedded-opentype"),
+        url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff")format("woff"),
+        url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff2")format("woff2"),
+        url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.ttf")format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+body,html {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  outline: none !important;
+}
+
+img {
+  -drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+ul,
+ol,
+p,
+div,
+label,
+h1,
+h2,
+h3 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button,
+button span {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+:root {
+  --white: #ffffff;
+  --red-gradient: linear-gradient(180deg, #EA0300 0%, #840715 100%);
+  --yellow-gradient: linear-gradient(180deg, #FFC30B 0%, #FF9500 100%);
+}
+
+.vkuiModalPage__children{
+  background-color: #EBF1F8;
+}

@@ -1,0 +1,180 @@
+.about-panel {
+    position: relative;
+}
+
+.about-panel::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100dvh;
+    background-image: url(../../assets/img/about-movie-bg1.png),url(../../assets/img/about-movie-bg3.png);
+    background-repeat: no-repeat;
+    background-position: center -300px, center 100%;
+    background-size: 630px, cover;
+}
+
+.about-panel-banner {
+    background-image: url(../../assets/img/about-movie-banner.jpg);
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: cover;
+    height: 500px;
+    margin-top: -100px;
+    display: flex;
+}
+
+.about-panel-banner__play {
+    margin: auto;
+    /* filter: saturate(0.6); */
+    position: relative;
+}
+
+.about-panel-banner__play img:first-child{
+    position: relative;
+    z-index: 2;
+    /* filter: blur(30px); */
+}
+
+.about-panel-banner__play img:last-child{
+    position: absolute;
+    left: 0;
+    top: 0;
+    filter: blur(20px);
+    z-index: 1;
+}
+
+.about-panel-description {
+    background-image: url(../../assets/img/about-movie-bg1.png);
+    background-repeat: no-repeat;
+    background-position: center -50px;
+    background-size: 100% calc(100% + 120px);
+    margin-top: -100px;
+    padding-top: 20px;
+    padding-bottom: 140px;
+    position: relative;
+    z-index: 2;
+}
+
+.about-panel-description__title {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+.about-panel-description__title2 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0;
+}
+
+.about-panel-chars {
+    background-image: url(../../assets/img/about-movie-bg2.png);
+    background-repeat: no-repeat;
+    background-position: center 0px;
+    background-size: 100% auto;
+    margin-top: -50px;
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.chars-slide {
+    width: 285px;
+    height: 430px;
+    background-image: url(../../assets/img/char-slide-bg.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 70px;
+}
+
+.chars-slide__text {
+    max-width: 230px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.chars-actor {
+    width: 150px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.chars-actor__text {
+    position: absolute;
+    width: 145px;
+    height: 90px;
+    left: 0;
+    right: 0;
+    top: 65px;
+    background-image: url(../../assets/img/char-actor.svg);
+    background-repeat: no-repeat;
+    background-position: center 0;
+    padding-top: 15px;
+    padding-left: 22px;
+    font-family: Gilroy;
+    transform: translateX(20px);
+}
+
+.chars-actor__text span:first-child {
+    font-size: 16px;
+    font-weight: 700;
+    color: #DCE7C0;
+    display: block;
+    transform: rotate(-6deg);
+    margin-bottom: 7px;
+}
+
+.chars-actor__text span:last-child {
+    font-size: 10px;
+    color: #DCE7C0;
+    display: block;
+    transform: rotate(-6deg);
+    width: 80px;
+    text-align: center;
+}
+
+.chars-slider {
+    position: relative;
+}
+
+.chars-slider__next {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 2;
+}
+
+.chars-slider__prev {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 2;
+}
+
+.about-panel-footer {
+    background-image: url(../../assets/img/about-movie-bg3.png);
+    background-repeat: no-repeat;
+    background-position: center -90px;
+    background-size: 100% calc(100% + 90px);
+    margin-top: -100px;
+    padding-top: 60px;
+    /* padding-bottom: 10px; */
+    position: relative;
+    z-index: 2;
+}

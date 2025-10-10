@@ -1,0 +1,214 @@
+.game-panel {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.game-panel::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100dvh;
+    background-image: url(../../assets/img/tasks/task1/task1-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.game-start-panel__content {
+    background-image: url(../../assets/img/tasks/task1/task1-game-field.svg);
+    background-size: 100%;
+    margin-top: auto;
+    /* backdrop-filter: blur(10px); */
+    position: relative;
+
+    /* min-height: 500px; */
+}
+
+.game-start-panel__content_platform_ios{
+    margin-bottom: -45px;
+    padding-bottom: 45px;
+}
+
+.game-field {
+    width: 344px;
+    height: 344px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 12px solid #FEF3FA;
+    display: grid;
+    grid-template-columns: repeat(2, 140px);
+    justify-content: center;
+    align-items: center;
+    grid-gap: 0 12px;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+}
+
+.game-field__error {
+  animation: shake 0.5s linear;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.game-field__left-top {
+    display: flex;
+    width: 140px;
+    height: 140px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.game-field__left-top.game-field__button_active {
+    filter: drop-shadow(0px 17px 37.8px #F58DE1);
+}
+
+.game-field__right-top {
+    display: flex;
+    width: 140px;
+    height: 140px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.game-field__right-top.game-field__button_active {
+    filter: drop-shadow(0px 17px 37.8px #49746287);
+}
+
+.game-field__left-bottom {
+    display: flex;
+    width: 140px;
+    height: 140px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.game-field__left-bottom.game-field__button_active {
+
+    filter: drop-shadow(0px 17px 37.8px #3D8EB687);
+}
+
+.game-field__right-bottom {
+    display: flex;
+    width: 140px;
+    height: 140px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.game-field__right-bottom.game-field__button_active {
+    filter: drop-shadow(0px 17px 37.8px #AC4A4C87);
+}
+
+.reload-button {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    box-shadow: 0px 4px 44.1px 0px #EB53B0;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.game-lifes {
+    display: flex;
+    align-items: center;
+    grid-gap: 5px;
+}
+
+.game-field-wrapper__stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 353px;
+    margin: auto;
+}
+
+.game-field-counter {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    grid-gap: 14px;
+}
+
+.game-field-counter span {
+    color: #E948A8;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.onboarding {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100dvh;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 24px;
+    position: relative;
+    justify-content: flex-end;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.onboarding-step1 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 170px;
+    margin: auto;
+    width: 190px;
+    transform: translateX(10px);
+}
+
+.onboarding-step2 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 180px;
+    margin: auto;
+    width: 290px;
+    transform: translateX(-39px);
+}
+
+.onboarding-step3 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 149px;
+    margin: auto;
+    width: 360px;
+    transform: translateX(-10px);
+}
+
+.onboarding-step4{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 160px;
+    margin: auto;
+    width: 240px;
+    transform: translateX(-45px);
+}
