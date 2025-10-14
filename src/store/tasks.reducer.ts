@@ -102,15 +102,19 @@ const initialState: TasksState = {
     balls: [
         {
             id: 1,
-            number: "FINNIK-02034",
+            number: "12131345",
         },
         {
             id: 2,
-            number: "FINNIK-02034",
+            number: "12131345",
         },
         {
             id: 3,
-            number: "FINNIK-02034",
+            number: "12131345",
+        },
+        {
+            id: 4,
+            number: "12131345",
         },
     ],
     friends: [

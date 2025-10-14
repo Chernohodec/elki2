@@ -9,75 +9,50 @@
     top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../assets/img/main-bg.png);
+    background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
-    background-size: contain;
-    background-color: #E4ECE3;
+    background-size: cover;
 }
 
 .tasks-panel__content {
-    background: #E4ECE3;
+    background: #0000001F;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     border-radius: 30px 30px 0 0;
-    padding: 0px 0 30px;
-    min-height: calc(100dvh - 200px);
-}
-
-.tasks-panel__content > div{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100dvh - 200px);
+    min-height: calc(100dvh - 245px);
+    margin-top: auto;
 }
 
 .task-switcher {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background-color: #3950250F;
-    border-radius: 27px;
-    height: 55px;
+    grid-template-columns: repeat(2, 1fr);
+    background: #0000001F;
+    border-radius: 21px;
+    height: 42px;
     align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 .task-switcher__button {
-    height: 36px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid transparent;
-    opacity: .3;
     text-transform: uppercase;
-    grid-gap: 7px;
-    border-radius: 20px;
+    border-radius: 21px;
     transition: .3s;
+    color: #fff;
+    font-size: 15px;
+    font-family: OpinionPro;
+    font-weight: 600;
 }
 
-.task-switcher__button>span {
-    font-weight: 700;
-    color: #003137;
-    font-size: 14px;
-}
-
-.task-switcher__button i {
-    font-size: 12px;
-    font-style: normal;
-    display: flex;
-    width: 20px;
-    height: 20px;
-    background-color: #003137;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    color: #D5EBBC;
-}
 
 .task-switcher__button_active {
-    opacity: 1;
-    background-color: #D5EBBC;
-    border: 1px solid #003137;
-    box-shadow: 0 4px 0 #003137;
-    transform: translateY(-2px);
+    border: 1px solid #FFFFFF61;
+    background-image: var(--yellow-gradient);
+    color: #6E000C;
+    box-shadow: 6.83px -2.73px 15.57px 0px rgba(255, 255, 255, .1) inset, 0px 5.46px 31.96px 0px #FFC30B8F,
+        0px 5.46px 53.12px 0px #FFC30B87;
 }
 
 .tasks-items {
@@ -130,12 +105,24 @@
 .task-ticket {
     display: flex;
     align-items: center;
-    height: 55px;
-    padding: 0 18px;
+    height: 70px;
+    padding: 0 20px;
     justify-content: space-between;
-    background: #FFFFFFB0;
+    background: #00000012;
+    border-radius: 22px;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.task-ticket span {
+    height: 30px;
+    background-color: #00000012;
     border-radius: 15px;
-    grid-gap: 15px;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
 }
 
 .tasks-tickets {
@@ -159,44 +146,63 @@
     margin: auto;
 }
 
-.friends-list {
-    margin-left: -12px;
-    width: calc(100% + 24px);
-    background: #FFFFFFCC;
-    border-radius: 30px 30px 0 0;
+.big-counter {
+    background-image: url(../../../public/assets/img/big-counter-bg.png);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size: contain;
+    width: 175px;
+    height: 94px;
+    border-radius: 47px;
+    background-color: #FFC30B12;
+    border: 2px solid #FFC30B61;
+    box-shadow: 11.08px -4.43px 25.25px 0px rgba(255, 255, 255, .1) inset, 0px 8.86px 51.84px 0px #EA03008F, 0px 8.86px 86.17px 0px #EA030087;
+    padding-left: 40px;
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    color: #FFC30B;
+    font-weight: 700;
+    font-family: OpinionPro;
+    margin: 0 auto;
+    line-height: 1;
+}
+
+.friends-list{
     display: flex;
     flex-direction: column;
-    grid-gap: 7px;
-    margin-bottom: -40px;
+    gap: 5px;
 }
 
 .friends-list__item {
     display: flex;
     align-items: center;
-    height: 54px;
-    background: #E6EDE078;
-    border-radius: 27px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #00000012;
     padding: 0 15px;
-    grid-gap: 10px;
+    gap: 10px;
 }
 
-.friends-list__name {
-    /* margin-left: 12px; */
-    margin-right: auto;
+.friends-list__item span {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 65px;
+    border-radius: 15px;
+    background: #00000012;
+    font-size: 12px;
+    margin-left: auto;
 }
 
-@media screen and (min-width: 600px) {
-    .tasks-items {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 20px 10px;
-    }
-
-    .tasks-item {
-        height: 110px;
-    }
-
-    .tasks-items .tasks-item:not(:last-child) {
-        margin-bottom: 0;
-    }
+.friends-list__item-photo {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    overflow: hidden;
 }
+
+@media screen and (min-width: 600px) {}

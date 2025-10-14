@@ -24,7 +24,7 @@
 }
 
 .button_size_small {
-    height: 52px;
+    height: 42px;
     border-radius: 26px;
     font-size: 14px;
     padding: 0 20px;
@@ -68,7 +68,7 @@
 .button_color_yellow {
     background:
         linear-gradient(180deg, #FFC30B 0%, #FF9500 100%);
-    box-shadow: 5px -2px 11.4px 0px #FFFFFF66 inset,  0px 4px 23.4px 0px #FFC30B8F, 0px 4px 38.9px 0px #FFC30B87;
+    box-shadow: 5px -2px 11.4px 0px #FFFFFF66 inset, 0px 4px 23.4px 0px #FFC30B8F, 0px 4px 38.9px 0px #FFC30B87;
     border: 1px solid #FFFFFF61;
     color: #6E000C;
     text-shadow: 0px 1px 0px 0px #FFFFFF40;

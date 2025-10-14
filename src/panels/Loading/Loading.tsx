@@ -2,6 +2,7 @@ import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import { Div, NavIdProps, Panel } from "@vkontakte/vkui";
 import { FC, useEffect, useState } from "react";
 
+import { useInit } from "../../hooks/useInit";
 import { ONBOARDING_VIEW_PANELS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
@@ -9,7 +10,6 @@ import {
     setAppIsLoaded,
 } from "../../store/main.reducer";
 import css from "./Loading.module.css";
-import { useInit } from "../../hooks/useInit";
 
 export const Loading: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -38,9 +38,6 @@ export const Loading: FC<NavIdProps> = ({ id }) => {
     return (
         <Panel id={id}>
             <Div className={css["loading-page"]}>
-                <div className={css["loading-block"]}>
-                    <div className={css["loading-block__bar"]}></div>
-                </div>
             </Div>
         </Panel>
     );

@@ -3,26 +3,15 @@ import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
 import { FC, useRef, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PrizeBanner from "../../assets/img/action-pic1new.png";
-import titleImage1 from "../../assets/img/action-title1.png";
-import titleImage2 from "../../assets/img/action-title2.png";
-import nextIcon from "../../assets/img/next-button.svg";
-import prevIcon from "../../assets/img/prev-button.svg";
-import prizePic1 from "../../assets/img/prizes/prize1.png";
-import prizePic2 from "../../assets/img/prizes/prize2.png";
-import prizePic3 from "../../assets/img/prizes/prize3.png";
-import prizePic4 from "../../assets/img/prizes/prize4.png";
-import prizePic5 from "../../assets/img/prizes/prize5.png";
-import prizePic6 from "../../assets/img/prizes/prize6.png";
-import prizePic7 from "../../assets/img/prizes/prize7.png";
-import prizePic8 from "../../assets/img/prizes/prize8.png";
-import prizePic9 from "../../assets/img/prizes/prize9.png";
+// import nextIcon from "../../assets/img/next-button.svg";
+// import prevIcon from "../../assets/img/prev-button.svg";
+import { Icon24Chevron, Icon24ChevronRight } from "@vkontakte/icons";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
-import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 import css from "./Prize.module.css";
+import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 
 const FaqItem = ({
     id,
@@ -36,24 +25,27 @@ const FaqItem = ({
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div
-            className={css["faq-item"]}
-            key={id}
-            onClick={() => setIsOpen(!isOpen)}
-        >
-            <div
+        <div className={classNames(css["faq-item"])}>
+            <button
                 className={classNames(
-                    css["faq-item__top"],
-                    isOpen && css["faq-item__top_active"]
+                    css["faq-item__header"],
+                    isOpen && css["faq-item__header_active"]
                 )}
+                onClick={() => setIsOpen(!isOpen)}
             >
-                <Text color="black" className={css["faq-item__top-title"]}>
+                <Text color="white" align="left">
                     {title}
                 </Text>
-            </div>
+                <Icon24Chevron
+                    fill={"#ffffff"}
+                    className={css["faq-item__icon"]}
+                />
+            </button>
             {isOpen && (
                 <div className={css["faq-item__content"]}>
-                    <Text color="black">{text}</Text>
+                    <Text color="white" align="left">
+                        {text}
+                    </Text>
                 </div>
             )}
         </div>
@@ -64,62 +56,22 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
 
     const swiperRef = useRef();
-    const [currentPrizeSlide, setCurrentPrizeSlide] = useState(0);
 
     const prizes = [
         {
             id: 1,
-            text: "Яндекс Станция Лайт 2",
-            img: prizePic1,
-            place: "и билет в кино!",
+            text: "Планшет",
+            img: "assets/img/prize1.png",
         },
         {
             id: 2,
-            text: "Яндекс Станция Лайт 2",
-            img: prizePic2,
-            place: "и билет в кино!",
+            text: "Планшет",
+            img: "assets/img/prize1.png",
         },
         {
             id: 3,
-            text: "Камера с мгновенной печатью",
-            img: prizePic3,
-            place: "и билет в кино!",
-        },
-        {
-            id: 4,
-            text: "Беспроводные наушники",
-            img: prizePic4,
-            place: "и билет в кино!",
-        },
-        {
-            id: 5,
-            text: "Попкорница",
-            img: prizePic5,
-            place: "и билет в кино!",
-        },
-        {
-            id: 6,
-            text: "Книги и пазл про Финника",
-            img: prizePic6,
-            place: null,
-        },
-        {
-            id: 7,
-            text: "Мягкая игрушка и альбом для наклеек",
-            img: prizePic7,
-            place: null,
-        },
-        {
-            id: 8,
-            text: "Игрушка антистресс и свитбоксы с подарком",
-            img: prizePic8,
-            place: null,
-        },
-        {
-            id: 9,
-            text: "Настольная игра и раскраска",
-            img: prizePic9,
-            place: null,
+            text: "Планшет",
+            img: "assets/img/prize1.png",
         },
     ];
 
@@ -154,83 +106,83 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                 }}
                 title="О розыгрыше"
             />
+            <Spacing size={240}/>
             <div className={css["prizes-panel__content"]}>
                 <Div>
                     <div className={css["prizes-panel__banner"]}>
-                        <Title
-                            align="center"
-                            className={css["prizes-panel__title"]}
-                            size="medium"
-                            color="yellow"
-                        >
-                            Выигрывайте
-                            <br />
-                            крутые призы!
-                        </Title>
                         <img
-                            width={350}
-                            src={PrizeBanner}
+                            width={320}
+                            src={"assets/img/onboarding-gifts.png"}
                             className={css["prizes-panel__banner-pic"]}
                             alt=""
                         />
+                        <Title
+                            align="center"
+                            className={css["prizes-panel__title"]}
+                            color="white"
+                        >
+                            Выполняйте задания <br />и выигрывайте призы!
+                        </Title>
+                        <Spacing size={10} />
+                        <Text align="center" color="gray">
+                            Lorem ipsum dolor sit amet consectetur. Pretium
+                            placerat duis convallis felis eget nunc arcu id at.
+                            Facilisi augue ultrices molestie.
+                        </Text>
                     </div>
+                    <Spacing size={25} />
                     <div className={css["prizes-info"]}>
-                        <div className={css["prizes-info1"]}>
+                        <div className={css["prizes-info__item"]}>
+                            <div className={css["prizes-info__number"]}>1</div>
                             <Title size="small" color="white">
-                                Выполняйте задания <br />
-                                и открывайте новых героев на карте
-                            </Title>
-                        </div>
-                        <div className={css["prizes-info2"]}>
-                            <Title size="small" color="white">
-                                Получайте билеты
+                                С 00.00.25 выполняйте задания
                                 <br />
-                                за пройденные уровни. <br />
-                                Каждый билет увеличивает шансы на победу в розыгрыше!
+                                и копите шары, 1 шар = 1 шансу
+                                <br />в розыгрыше призов
                             </Title>
                         </div>
-                        <div className={css["prizes-info3"]}>
+                        <div className={css["prizes-info__item"]}>
+                            <div className={css["prizes-info__number"]}>2</div>
                             <Title size="small" color="white">
-                                3 ноября подведем итоги в сообществе
-                                «Финник 2» во "Вконтакте"
+                                Приглашайте друзей и получайте
+                                <br />
+                                дополнительные шары, увеличивая
+                                <br />
+                                свои шансы победы в розыгрыше
+                            </Title>
+                        </div>
+                        <div className={css["prizes-info__item"]}>
+                            <div className={css["prizes-info__number"]}>3</div>
+                            <Title size="small" color="white">
+                                00.00.25 подведем итоги в нашем
+                                <br />
+                                сообществе ВКонтакте
                             </Title>
                         </div>
                     </div>
-                    <div className={css["prizes-panel-items"]}>
-                        <img
-                            src={titleImage1}
-                            className={css["prizes-panel-items__title"]}
-                        />
-                        <Spacing size={25} />
-                        <div className={css["prizes-slider"]}>
-                            {currentPrizeSlide < prizes.length-1 && <button
-                                onClick={() => swiperRef.current?.slideNext()}
-                                className={css["prizes-slider__next"]}
-                            >
-                                <img src={nextIcon} alt="" />
-                            </button>}
-                            {currentPrizeSlide > 0 && <button
-                                onClick={() => swiperRef.current?.slidePrev()}
-                                className={css["prizes-slider__prev"]}
-                            >
-                                <img src={prevIcon} alt="" />
-                            </button>}
-                            <Swiper
-                                spaceBetween={5}
-                                slidesPerView={1}
-                                // loop={true}
-                                onBeforeInit={(swiper) => {
-                                    swiperRef.current = swiper;
-                                }}
-                                onTransitionEnd={(swiper) => {
-                                    setCurrentPrizeSlide(swiper.activeIndex);
-                                }}
-                            >
-                                {prizes.map((prize) => {
-                                    return (
-                                        <SwiperSlide key={prize.id}>
+                </Div>
+                <Spacing size={40} />
+                <Div className={css["prizes-panel-items"]}>
+                    <Title align="center" color="yellow">
+                        Что можно выиграть?
+                    </Title>
+                    <Spacing size={20} />
+                    <div className={css["prizes-slider"]}>
+                        <Swiper
+                            spaceBetween={10}
+                            slidesPerView={"auto"}
+                            // loop={true}
+                        >
+                            {prizes.map((prize) => {
+                                return (
+                                    <SwiperSlide key={prize.id}>
+                                        <div className={css["prizes-slide"]}>
                                             <div
-                                                className={css["prizes-slide"]}
+                                                className={
+                                                    css[
+                                                        "prizes-slide__img-wrapper"
+                                                    ]
+                                                }
                                             >
                                                 <img
                                                     className={
@@ -238,64 +190,32 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                                                     }
                                                     src={prize.img}
                                                     alt=""
-                                                    width={188}
-                                                    height={130}
+                                                    width={150}
+                                                    height={150}
                                                 />
-                                                <Title
-                                                    className={
-                                                        css[
-                                                            "prizes-slide__text"
-                                                        ]
-                                                    }
-                                                    color="black"
-                                                    align="center"
-                                                    size="medium"
-                                                >
-                                                    {prize.text}
-                                                </Title>
-                                                {prize.place && (
-                                                    <div
-                                                        className={
-                                                            css[
-                                                                "prizes-slide__place"
-                                                            ]
-                                                        }
-                                                    >
-                                                        <Text
-                                                            className={
-                                                                css[
-                                                                    "prizes-slide__place-text"
-                                                                ]
-                                                            }
-                                                            size="small"
-                                                            color="yellow"
-                                                            align="center"
-                                                        >
-                                                            {prize.place}
-                                                        </Text>
-                                                    </div>
-                                                )}
                                             </div>
-                                        </SwiperSlide>
-                                    );
-                                })}
-                            </Swiper>
-                        </div>
+
+                                            <Title
+                                                className={
+                                                    css["prizes-slide__text"]
+                                                }
+                                                color="white"
+                                                align="center"
+                                            >
+                                                {prize.text}
+                                            </Title>
+                                        </div>
+                                    </SwiperSlide>
+                                );
+                            })}
+                        </Swiper>
                     </div>
-                    <Spacing size={50} />
-                    <VkVideoBanner />
-                    <Spacing size={20} />
-                    <Button
-                        color="pink"
-                        href="https://www.afisha.ru/movie/finnik-2-306500/"
-                    >
-                        Купить билеты
-                    </Button>
-                    <Spacing size={50} />
-                    <img
-                        src={titleImage2}
-                        className={css["prizes-panel-items__faq-title"]}
-                    />
+                </Div>
+                <Div className={css["faq-block"]}>
+                    <Spacing size={25} />
+                    <Title align="center" color="yellow">
+                        Частые вопросы
+                    </Title>
                     <Spacing size={20} />
                     <div className={css["faq-list"]}>
                         {faq.map((faqItem) => {
@@ -309,19 +229,50 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                             );
                         })}
                     </div>
-                    <Spacing size={25} />
-                    <Button
-                        href="https://disk.yandex.ru/i/uL5nT6gWIG7_3w"
-                        color="transparent"
-                        className={css["prizes-panel__rules"]}
-                    >
-                        Правила и условия
-                    </Button>
+                    <Spacing size={10} />
+                    <a className={css["prizes-panel__rules"]} href="">
+                        <Text color="white" align="left">
+                            Условия розыгрыша
+                        </Text>
+                        <Icon24ChevronRight
+                            fill={"#ffffff"}
+                            className={css["faq-item__icon"]}
+                        />
+                    </a>
                     <Spacing size={70} />
                 </Div>
             </div>
-
-            <div className={css["about-panel-footer"]}></div>
+            <div className={classNames(css["main-page-banner"])}>
+                <Div className={css["main-page-content__text"]}>
+                    <VkVideoBanner
+                        href="https://trk.mail.ru/c/kkhk46"
+                        onClick={() => {}}
+                    />
+                    <Spacing size={15} />
+                    <Title color="red" align="center">
+                        смотрите Ёлки 12
+                        <br />в кино с 18 декабря!
+                    </Title>
+                    <Spacing size={10} />
+                    <Text align="center">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.
+                    </Text>
+                    <Spacing size={15} />
+                    <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
+                        Купить билеты
+                    </Button>
+                    <Spacing size={10} />
+                    <Button
+                        color="transparent"
+                        href="https://www.afisha.ru/movie/finnik-2-306500/"
+                    >
+                        Подробнее о фильме
+                    </Button>
+                    <Spacing size={100} />
+                </Div>
+            </div>
         </Panel>
     );
 };

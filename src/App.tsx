@@ -24,6 +24,10 @@ import {
     selectOnboardingComplete,
 } from "./store/main.reducer";
 import { selectTasks } from "./store/tasks.reducer";
+import { Tasks } from "./panels/Tasks/Tasks";
+import { Settings } from "./panels/Settings/Settings";
+import { About } from "./panels/About/About";
+import { Prize } from "./panels/Prize/Prize";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -73,10 +77,11 @@ export const App = () => {
                             onSwipeBackStart={() => "prevent"}
                         >
                             <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
-                            {/* <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
                             <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} />
+                            <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
+                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
                             <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
-                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} /> */}
+
                             {/* <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
                             <Game1
                                 updateTasks={updateTasks}

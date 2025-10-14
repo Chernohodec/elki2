@@ -8,8 +8,8 @@ export interface Main {
 }
 
 const initialState: Main = {
-    appIsLoaded: true,
-    onboardingComplete: true,
+    appIsLoaded: false,
+    onboardingComplete: false,
     notificationIsAllowed: false,
 };
 

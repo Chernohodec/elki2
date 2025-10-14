@@ -5,7 +5,6 @@ import {
 import { classNames, Spacing, usePlatform } from "@vkontakte/vkui";
 import { MouseEventHandler } from "react";
 import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { DEFAULT_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";

@@ -5,9 +5,9 @@ import css from "./Text.module.css";
 export type Text = {
     children?: ReactNode;
     className?: string;
-    color?: TextColors;
-    size?: TextSize;
-    align?: TextAlign;
+    color?: TextColors | string;
+    size?: TextSize | string;
+    align?: TextAlign | string;
 };
 
 export enum TextColors {

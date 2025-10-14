@@ -1,16 +1,8 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import {
-    Div,
-    FixedLayout,
-    NavIdProps,
-    Panel,
-    Spacing,
-    classNames,
-} from "@vkontakte/vkui";
+import { NavIdProps, Panel, Spacing, classNames } from "@vkontakte/vkui";
 import { FC } from "react";
-
-import { Text, TextColors } from "../../components/Text/Text";
-import { Title, TitleAlign, TitleColors } from "../../components/Title/Title";
+import { Text } from "../../components/Text/Text";
+import { Title, TitleAlign } from "../../components/Title/Title";
 import { ONBOARDING_VIEW_PANELS } from "../../routes";
 
 import { Button } from "../../components/Button/Button";
@@ -25,9 +17,7 @@ export const OnboardingStart: FC<NavIdProps> = ({ id }) => {
                 <div className={css["onboarding-content-wrapper"]}>
                     <div className={css["onboarding-content"]}>
                         <div className={css["onboarding-content__title"]}>
-                            <Title
-                                align={TitleAlign.center}
-                            >
+                            <Title align={TitleAlign.center}>
                                 Помогите Ване и его родителям добраться до своей
                                 цели!
                             </Title>
@@ -40,7 +30,7 @@ export const OnboardingStart: FC<NavIdProps> = ({ id }) => {
                                 placerat duis convallis felis eget nunc arcu id
                                 at. Facilisi augue ultrices molestie.
                             </Text>
-                             <Spacing size={35} />
+                            <Spacing size={35} />
                             <Button
                                 onClick={() => {
                                     routeNavigator.push(

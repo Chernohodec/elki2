@@ -16,17 +16,12 @@ export const InviteBanner = ({ inviteFriend }) => {
     return (
         <div className={classNames(css["invite-banner"])}>
             <Title
-                size="medium"
-                color="yellow"
+                size="small"
+                color="white"
                 className={css["invite-banner__title"]}
-            >
-                Дарим 5 билетов
-                <br />
-                за каждого
-                <br />
-                приглашенного друга!{" "}
-            </Title>
-            <Spacing size={15} />
+            >Приглашайте друзей<br/>
+и получайте шары!</Title>
+            <Spacing size={5} />
             <Button
                 size="small"
                 color="yellow"

@@ -38,6 +38,7 @@
     text-transform: uppercase;
     font-weight: 600;
     font-family: OpinionPro;
+    letter-spacing: -0.6px;
 }
 
 .tabbar-item {

@@ -2,6 +2,7 @@
     height: 520px;
     width: 100%;
     overflow: auto;
+    border-radius: 0 0 30px 30px;
 }
 
 .map__image {

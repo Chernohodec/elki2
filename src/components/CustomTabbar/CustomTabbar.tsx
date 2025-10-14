@@ -47,7 +47,7 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             </button>
             <button
                 onClick={() =>
-                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.TASKS}`)
+                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.TASKS}?tab=friends`)
                 }
                 className={classNames(
                     css["tabbar-item"],
@@ -61,11 +61,11 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             </button>
             <button
                 onClick={() =>
-                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.TASKS}`)
+                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.PRIZE}`)
                 }
                 className={classNames(
                     css["tabbar-item"],
-                    isTasksPanel && css["tabbar-item_active"]
+                    isPrizePanel && css["tabbar-item_active"]
                 )}
             >
                 <div className={css["tabbar-item__content"]}>
@@ -75,11 +75,11 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             </button>
             <button
                 onClick={() =>
-                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.TASKS}`)
+                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.ABOUT}`)
                 }
                 className={classNames(
                     css["tabbar-item"],
-                    isTasksPanel && css["tabbar-item_active"]
+                    isAboutPanel && css["tabbar-item_active"]
                 )}
             >
                 <div className={css["tabbar-item__content"]}>

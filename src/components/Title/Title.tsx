@@ -5,9 +5,9 @@ import css from "./Title.module.css";
 export type Title = {
     children?: ReactNode;
     className?: string;
-    color?: TitleColors;
-    size?: TitleSize;
-    align?: TitleAlign;
+    color?: TitleColors | string;
+    size?: TitleSize | string;
+    align?: TitleAlign | string;
 };
 
 export enum TitleColors {

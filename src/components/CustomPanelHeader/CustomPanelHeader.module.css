@@ -1,0 +1,79 @@
+.custom-header :global(.vkuiPanelHeader__in) {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.task-counter {
+    width: 80px;
+    height: 42px;
+    border-radius: 21px;
+    background-image: url(../../../public/assets/img/ball-counter-bg.png);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    background-color: #FFC30B12;
+    border: 1px solid #FFC30B61;
+    padding: 0 18px;
+}
+
+.task-counter span {
+    font-weight: 700;
+    font-size: 18px;
+    color: #FFC30B;
+    text-shadow: 0px 4px 17.3px #FFC30B;
+    margin-right: auto;
+    width: 20px;
+}
+
+.task-counter:after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 0px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    background-image: url(../../assets/img/star-icon.svg);
+    background-size: cover;
+}
+
+.header-settings {
+    width: 68px;
+    height: 52px;
+    background-image: url(../../assets/img/settings-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.header-back {
+    width: 48px;
+    height: 48px;
+    background: #FFC30B12;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #FFC30B61;
+}
+
+.header-title {
+    position: relative;
+    z-index: 2;
+}
+
+.header-logo {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    margin: auto;
+}

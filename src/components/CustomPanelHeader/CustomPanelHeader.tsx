@@ -3,19 +3,19 @@ import {
     useRouteNavigator,
 } from "@vkontakte/vk-mini-apps-router";
 import { classNames, PanelHeader, usePlatform } from "@vkontakte/vkui";
-import { MouseEventHandler } from "react";
-import logoColored from "../../assets/img/logo-colored.png";
-import logo from "../../../public/assets/img/logo.png";
+import { MouseEventHandler, ReactNode } from "react";
 import { DEFAULT_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Title } from "../Title/Title";
 import css from "./CustomPanelHeader.module.css";
+import { Icon24Back, Icon28Settings, Icon28SettingsOutline } from "@vkontakte/icons";
 
 export type CustomPanelHeader = {
     onBackClick?: MouseEventHandler<HTMLElement>;
     title?: string;
     settings?: boolean;
+    children?: ReactNode;
 };
 
 export const CustomPanelHeader = ({
@@ -26,7 +26,7 @@ export const CustomPanelHeader = ({
 }: CustomPanelHeader) => {
     const platform = usePlatform();
     const isDesktop = platform === "vkcom";
-    const tasks = useAppSelector(selectTasks)
+    const tasks = useAppSelector(selectTasks);
     const routeNavigator = useRouteNavigator();
     const taskPages = [
         DEFAULT_VIEW_PANELS.GAME1_START,
@@ -43,7 +43,10 @@ export const CustomPanelHeader = ({
         DEFAULT_VIEW_PANELS.GAME6,
     ];
     const { panel: activePanel } = useActiveVkuiLocation();
-    const finishedTasks = tasks.filter(task=>task.checked)
+    const isMainPanel = activePanel === DEFAULT_VIEW_PANELS.MAIN;
+    const isAboutPanel = activePanel === DEFAULT_VIEW_PANELS.ABOUT;
+    const isTaskPage = taskPages.includes(activePanel);
+    const finishedTasks = tasks.filter((task) => task.checked);
 
     return (
         <PanelHeader
@@ -52,29 +55,46 @@ export const CustomPanelHeader = ({
             )}
             delimiter="none"
             transparent={true}
+            fixed={isMainPanel ? true : false}
+            float={isMainPanel ? true : false}
             before={
                 onBackClick ? (
                     <div
                         className={css["header-back"]}
                         onClick={onBackClick}
-                    ></div>
+                    >
+                        <Icon24Back color="#FFC30B"/>
+                    </div>
                 ) : (
                     <div className={css["task-counter"]}>
-                        <span className={css["task-counter__value"]}>23</span>
+                        <span className={css["task-counter__value"]}>
+                            {finishedTasks.length}
+                        </span>
                     </div>
                 )
             }
             after={
                 settings && (
-                    <div
-                        className={css["header-settings"]}
-                        onClick={() =>
+                    <Icon28SettingsOutline onClick={() =>
                             routeNavigator.push(DEFAULT_VIEW_PANELS.SETTINGS)
-                        }
-                    ></div>
+                        } fill="#ffffff"/>
                 )
             }
         >
+            {props.children ? (
+                props.children
+            ) : isMainPanel || isTaskPage ? (
+                <img
+                    className={css["header-logo"]}
+                    width={80}
+                    src={"assets/img/logo.png"}
+                    alt=""
+                />
+            ) : (
+                <Title className={css["header-title"]} color="yellow" align="center">
+                    {title}
+                </Title>
+            )}
         </PanelHeader>
     );
 };
