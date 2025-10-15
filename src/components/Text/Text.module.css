@@ -3,7 +3,7 @@
 }
 
 .color_type_black {
-    color: var(--vkui--color_text_primary);
+    color: #000000;
 }
 
 .color_type_white {
@@ -15,7 +15,7 @@
 }
 
 .color_type_yellow {
-    color: var(--vkui--color_text_accent_themed);
+    color: #FFC30B;
 }
 
 .size_type_small {

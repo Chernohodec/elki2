@@ -1,4 +1,3 @@
-import bridge from "@vkontakte/vk-bridge";
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
@@ -10,75 +9,115 @@ import {
 } from "@vkontakte/vkui";
 import { FC, useEffect, useRef, useState } from "react";
 import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { checkQuest } from "../../api/user/checkQuest";
-import nextIcon from "../../assets/img/next-button.svg";
-import prevIcon from "../../assets/img/prev-button.svg";
-import shareCard1 from "../../assets/img/tasks/task2/share-card1.jpg";
-import shareCard2 from "../../assets/img/tasks/task2/share-card2.jpg";
-import shareCard3 from "../../assets/img/tasks/task2/share-card3.jpg";
 import game2Title from "../../assets/img/tasks/task2/task2-header-title.png";
-import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { ErrorSnackbar } from "../../components/ErrorSnackbar/ErrorSnackbar";
 import { GameCancel } from "../../components/GameCancel/GameCancel";
-import { GameDone } from "../../components/GameDone/GameDone";
-import { Title } from "../../components/Title/Title";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
+import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
+import { Title } from "../../components/Title/Title";
+import { Button } from "../../components/Button/Button";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
     const swiperRef = useRef();
     const dispatch = useAppDispatch();
     const platform = usePlatform();
-    const currentTask = useAppSelector(selectTasks).find(task=>task?.id === 2)
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const shareCards = [
-        {
-            id: 1,
-            pic: shareCard1,
-        },
-        {
-            id: 2,
-            pic: shareCard2,
-        },
-        {
-            id: 3,
-            pic: shareCard3,
-        },
-    ];
-
-    const share = async () => {
-        try {
-            const bridgeResponse = await bridge.send("VKWebAppShowStoryBox", {
-                background_type: "image",
-                url: shareCards[currentSlide].pic,
-                attachment: {
-                    text: "open",
-                    type: "url",
-                    url: "https://vk.com/app53990455",
-                },
-            });
-
-            dispatch(setTaskChecked(2));
-            routeNavigator.showPopout(
-                <GameDone onClick={() => routeNavigator.replace(`/`)} />
-            );
-            await checkQuest(2);
-            updateTasks();
-        } catch (e) {
-            console.log(e);
-            // routeNavigator.showPopout(<ErrorSnackbar />);
-        }
-    };
+    const currentTask = useAppSelector(selectTasks).find(
+        (task) => task?.id === 2
+    );
+    const [onboardingDone, setOnboardingDone] = useState(false);
+    const [score, setScore] = useState(0);
+    const [activeHole, setActiveHole] = useState<number | null>(null);
+    const [gameActive, setGameActive] = useState(false);
+    const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (!currentTask?.active) {
-            routeNavigator.replace(`/`)
+            routeNavigator.replace(`/`);
         }
     }, []);
+
+    // Очистка интервала при размонтировании
+    useEffect(() => {
+        return () => {
+            if (gameIntervalRef.current) {
+                clearInterval(gameIntervalRef.current);
+            }
+        };
+    }, []);
+
+    const startGame = () => {
+        setOnboardingDone(true);
+        setGameActive(true);
+        setScore(0);
+        startGameLoop();
+    };
+
+    const startGameLoop = () => {
+        if (gameIntervalRef.current) {
+            clearInterval(gameIntervalRef.current);
+        }
+
+        gameIntervalRef.current = setInterval(() => {
+            // Выбираем случайную яму (от 0 до 5, так как у нас 6 snowdrift-wrapper)
+            const randomHole = Math.floor(Math.random() * 6);
+            setActiveHole(randomHole);
+
+            // Свинья появляется на 800-1200ms
+            const showTime = 800 + Math.random() * 400;
+
+            setTimeout(() => {
+                setActiveHole(null);
+            }, showTime);
+        }, 1500); // Новое появление каждые 1.5 секунды
+    };
+
+    const handleHoleClick = (holeIndex: number) => {
+        if (!gameActive) return;
+
+        // Если кликнули по активной яме со свиньей
+        if (activeHole === holeIndex) {
+            setScore((prevScore) => {
+                const newScore = prevScore + 1;
+
+                // Проверяем победу
+                if (newScore >= 10) {
+                    gameWin();
+                }
+
+                return newScore;
+            });
+
+            // Сразу скрываем свинью после попадания
+            setActiveHole(null);
+        }
+    };
+
+    const gameWin = () => {
+        setGameActive(false);
+        if (gameIntervalRef.current) {
+            clearInterval(gameIntervalRef.current);
+            gameIntervalRef.current = null;
+        }
+
+        // Здесь можно добавить логику завершения игры
+        console.log("Победа! Набрано 10 очков!");
+
+        // Пример вызова функции обновления задач
+        if (updateTasks) {
+            updateTasks();
+        }
+    };
+
+    // Функция для получения класса порядка для snowdrift-wrapper
+    const getOrderClass = (index: number): string => {
+        const orders = ["1", "2", "3", "1", "2", "3"];
+        return css[`snowdrift-wrapper_order_${orders[index]}`];
+    };
+
+    // Создаем массив из 6 ям (2 ряда по 3 ямы)
+    const holes = Array.from({ length: 6 }, (_, index) => index);
 
     return (
         <Panel id={id} disableBackground className={css["game-panel"]}>
@@ -91,73 +130,118 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                         />
                     );
                 }}
-            >
-                <img src={game2Title} width={166} alt="" />
-            </CustomPanelHeader>
+                title="Поймай пига"
+            ></CustomPanelHeader>
             <div
                 className={classNames(
                     css["game-start-panel__content"],
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                <Div>
-                    <Spacing size={30} />
-                    <Title size="medium" align="center" color="black">
-                        Выберите открытку,
-                        <br />
-                        которой хотите поделиться
-                    </Title>
-                    <Spacing size={20} />
-                    <div className={css["cards-slider"]}>
-                        {currentSlide !== 0 && (
-                            <button
-                                onClick={() => swiperRef.current?.slidePrev()}
-                                className={css["cards-slider__prev"]}
-                            >
-                                <img src={prevIcon} alt="" />
-                            </button>
-                        )}
-                        {currentSlide !== 3 && (
-                            <button
-                                onClick={() => swiperRef.current?.slideNext()}
-                                className={css["cards-slider__next"]}
-                            >
-                                <img src={nextIcon} alt="" />
-                            </button>
-                        )}
-                        <Swiper
-                            spaceBetween={0}
-                            slidesPerView={1}
-                            onBeforeInit={(swiper) => {
-                                swiperRef.current = swiper;
-                            }}
-                            onTransitionEnd={(swiper) =>
-                                setCurrentSlide(swiper.activeIndex)
-                            }
-                        >
-                            {shareCards.map((shareCard) => {
-                                return (
-                                    <SwiperSlide key={shareCard.id}>
-                                        <div className={css["cards-slide"]}>
-                                            <img
-                                                className={
-                                                    css["cards-slide__img"]
-                                                }
-                                                src={shareCard.pic}
-                                                alt=""
-                                                width={135}
-                                            />
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            })}
-                        </Swiper>
+                <div className={css["hit-pig-game"]}>
+                    <div className={css["hit-pig-counter"]}>
+                        <Title color="yellow">{score}/10</Title>
                     </div>
-                    <Spacing size={20} />
-                    <Button onClick={share}>
-                        <span>Поделиться в истории</span>
-                    </Button>
-                </Div>
+                    <div className={css["game-area"]}>
+                        {/* Первый ряд снежных сугробов */}
+                        <div className={css["snow-row"]}>
+                            {holes.slice(0, 3).map((holeIndex) => (
+                                <div
+                                    key={holeIndex}
+                                    className={classNames(
+                                        css["snowdrift-wrapper"],
+                                        getOrderClass(holeIndex)
+                                    )}
+                                    onClick={() => handleHoleClick(holeIndex)}
+                                    style={{
+                                        cursor: gameActive
+                                            ? "pointer"
+                                            : "default",
+                                    }}
+                                >
+                                    <div className={css["snowdrift"]}></div>
+                                    {!onboardingDone && holeIndex === 0 && (
+                                        <>
+                                            <img
+                                                src="assets/img/tasks/task2/touch-icon.svg"
+                                                className={
+                                                    css[
+                                                        "snowdrift-wrapper__pointer"
+                                                    ]
+                                                }
+                                            />
+                                            <div className={css["pig"]}></div>
+                                        </>
+                                    )}
+                                    {/* Свинья появляется только в активной яме */}
+                                    {activeHole === holeIndex && gameActive && (
+                                        <div className={css["pig"]}></div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Второй ряд снежных сугробов */}
+                        <div className={css["snow-row"]}>
+                            {holes.slice(3, 6).map((holeIndex) => (
+                                <div
+                                    key={holeIndex}
+                                    className={classNames(
+                                        css["snowdrift-wrapper"],
+                                        getOrderClass(holeIndex)
+                                    )}
+                                    onClick={() => handleHoleClick(holeIndex)}
+                                    style={{
+                                        cursor: gameActive
+                                            ? "pointer"
+                                            : "default",
+                                    }}
+                                >
+                                    <div className={css["snowdrift"]}></div>
+                                    {/* Свинья появляется только в активной яме */}
+                                    {activeHole === holeIndex && gameActive && (
+                                        <div className={css["pig"]}></div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    {!onboardingDone && (
+                        <div className={css["onboarding-wrapper"]}>
+                            <div className={css["onboarding"]}>
+                                <Title align="center">
+                                    Тапайте по пигу,
+                                    <br />
+                                    чтобы поймать его
+                                </Title>
+                                <Spacing size={20} />
+                                <Button color="red" onClick={startGame}>
+                                    Начать игру
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Сообщение о победе */}
+                    {score >= 10 && (
+                        <div className={css["onboarding-wrapper"]}>
+                            <div className={css["onboarding"]}>
+                                <Title align="center">
+                                    Поздравляем!
+                                    <br />
+                                    Вы поймали 10 пигов!
+                                </Title>
+                                <Spacing size={20} />
+                                <Button
+                                    color="red"
+                                    onClick={() => routeNavigator.replace(`/`)}
+                                >
+                                    Завершить игру
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </Panel>
     );

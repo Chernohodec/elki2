@@ -17,12 +17,12 @@ import { FC } from "react";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Map } from "../../components/Map/Map";
+import { Text } from "../../components/Text/Text";
+import { Title } from "../../components/Title/Title";
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Main.module.css";
-import { Title } from "../../components/Title/Title";
-import { Text } from "../../components/Text/Text";
 
 export const Main: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -186,13 +186,22 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                         <br />в кино с 18 декабря!
                     </Title>
                     <Spacing size={10} />
-                    <Text align="center">Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.</Text>
+                    <Text align="center">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.
+                    </Text>
                     <Spacing size={15} />
                     <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
                         Купить билеты
                     </Button>
-                    <Spacing size={10}/>
-                    <Button color="transparent" href="https://www.afisha.ru/movie/finnik-2-306500/">Подробнее о фильме</Button>
+                    <Spacing size={10} />
+                    <Button
+                        color="transparent"
+                        href="https://www.afisha.ru/movie/finnik-2-306500/"
+                    >
+                        Подробнее о фильме
+                    </Button>
                     <Spacing size={100} />
                 </Div>
             </div>

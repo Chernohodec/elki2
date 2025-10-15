@@ -1,8 +1,14 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { classNames, Div, NavIdProps, Panel, Spacing, usePlatform } from "@vkontakte/vkui";
+import {
+    classNames,
+    Div,
+    NavIdProps,
+    Panel,
+    Spacing,
+    usePlatform,
+} from "@vkontakte/vkui";
 import { FC } from "react";
 import "swiper/css";
-import char2Image from "../../assets/img/task-pic2.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
@@ -12,7 +18,7 @@ import css from "./Game2start.module.css";
 
 export const Game2Start: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
-    const platform = usePlatform()
+    const platform = usePlatform();
 
     return (
         <Panel id={id} disableBackground className={css["game-start-panel"]}>
@@ -20,22 +26,43 @@ export const Game2Start: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                // title="О розыгрыше"
+                title="Поймай пига"
             />
-            <div className={classNames(css["game-start-panel__content"], css[`game-start-panel__content_${platform}`])}>
-                <img
-                    className={css["game-start-panel__char"]}
-                    width={170}
-                    src={char2Image}
-                    alt=""
-                />
+            <div
+                className={classNames(
+                    css["game-start-panel__content"],
+                    css[`game-start-panel__content_${platform}`]
+                )}
+            >
+                <div className={css["game-start-panel__img-wrapper"]}>
+                    <img
+                        className={css["game-start-panel__img"]}
+                        width={145}
+                        src={"assets/img/tasks/task2/character-pic.png"}
+                        alt=""
+                    />
+                </div>
                 <Div>
                     <Spacing size={35} />
-                    <Title align="center" color="black">Челлендж от Лизы Мяу</Title>
-                    <Spacing size={10} />
-                    <Text align="center" color="black">Блогерша Лиза Мяу запускает новый тренд — теперь у каждого в сторис должны быть открытки с Финником! Присоединяйтесь: это точно собьёт Юджина со следа и поможет герою добраться до посоха незамеченным.</Text>
-                    <Spacing size={30} />
-                    <Button onClick={()=>routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME2}`)}>
+                    <Title align="center" color="yellow">
+                        Помоги дяде юре
+                        <br />
+                        поймать пига
+                    </Title>
+                    <Spacing size={5} />
+                    <Text align="center" color="white">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.Lorem ipsum dolor sit amet
+                        consectetur. Pretium placerat duis convallis felis eget
+                        nunc arcu id at. Facilisi augue ultrices molestie.
+                    </Text>
+                    <Spacing size={40} />
+                    <Button
+                        onClick={() =>
+                            routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME2}`)
+                        }
+                    >
                         <span>Продолжить</span>
                     </Button>
                     <Spacing size={90} />

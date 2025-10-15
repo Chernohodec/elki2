@@ -1,7 +1,6 @@
 .title {
-    /* font-size: 32px; */
+    /* line-height: 1.3; */
     line-height: 1;
-    /* font-weight: 700; */
     text-transform: uppercase;
     font-family: OpinionPro;
 }
@@ -11,11 +10,11 @@
 }
 
 .color_type_black {
-    color: #003137;
+    color: #000000;
 }
 
 .color_type_black :global(a) {
-    color: #003137;
+    color: #000000;
 }
 
 .color_type_white {
@@ -32,6 +31,10 @@
 
 .color_type_red-black{
     color: #6E000C;
+}
+
+.color_type_grey{
+    color: rgba(0, 0, 0, .3);
 
 }
 

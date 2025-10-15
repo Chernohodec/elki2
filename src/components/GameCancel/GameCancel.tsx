@@ -2,7 +2,6 @@ import { classNames, Div, PopoutWrapper, Spacing } from "@vkontakte/vkui";
 import { Button } from "../Button/Button";
 import { Title } from "../Title/Title";
 import css from "./GameCancel.module.css";
-import cancelImage from "../../assets/img/tasks/task-cancel-modal-pic.png";
 
 export const GameCancel = ({
     reloadHandler,
@@ -17,7 +16,7 @@ export const GameCancel = ({
             <img
                 width={220}
                 className={css["game-cancel__ticket"]}
-                src={cancelImage}
+                src={""}
                 alt=""
             />
             <Spacing size={30} />

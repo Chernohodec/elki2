@@ -14,7 +14,8 @@ export enum TitleColors {
     black = "black",
     white = "white",
     yellow = "yellow",
-    red = "red"
+    red = "red",
+    gray = "gray"
 }
 
 export enum TitleSize {

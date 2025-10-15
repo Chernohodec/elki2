@@ -1,80 +1,196 @@
 .game-panel {
-    position: relative;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .game-panel::before {
     content: '';
     position: fixed;
     left: 0;
-    top: -2px;
+    top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../assets/img/tasks/task2/task2-bg.jpg);
+    background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
-    background-size: calc(100% + 2px) 100%;
+    background-size: cover;
 }
 
 .game-start-panel__content {
-   background: #FFFFFFCC;
-   border-radius: 30px 30px 0 0;
-   margin-top: auto;
-   height: calc(100dvh - 100px);
-}
-
-
-.game-start-panel__content > div{
+    background: #0000001F;
+    border-radius: 30px 30px 0 0;
+    padding: 0px 0 30px;
+    min-height: calc(100dvh - 100px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    margin-top: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
 }
 
-.cards-slider{
+.onboarding-wrapper {
+    width: calc(100% - 30px);
+    background: url(../../../public/assets/img/progressbar-bg.jpg), var(--yellow-gradient);
+    border-radius: 60px 60px 0 0;
+    padding: 4px 4px 0;
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
-    margin-left: -12px;
-    width: calc(100% + 24px);
-    overflow: hidden;
-    padding-bottom: 70px;
+    z-index: 2;
+    margin-top: auto;
+    margin-bottom: 5dvh;
+    box-shadow: 0px 4px 75.2px 0px #00000040;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
-.cards-slide{
-    background-image: url(../../assets/img/tasks/task2/card-slide-bg.svg);
+.onboarding {
+    padding: 40px 10px 30px;
+    background-color: var(--white);
+    border-radius: 55px 55px 0 0;
+}
+
+.hit-pig-game {
+    background-image: url(../../../public/assets/img/tasks/task2/game-bg.jpg);
+    min-height: calc(100dvh - 100px);
     background-repeat: no-repeat;
-    width: 190px;
-    height: 290px;
+    border-radius: 30px 30px 0 0;
+    background-size: cover;
+    background-position: center 0;
+    position: relative;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.hit-pig-counter {
+    width: 140px;
+    height: 63px;
+    border-radius: 32px;
+    background-image: url(../../../public/assets/img/tasks/task2/counter-pig.png), var(--red-gradient);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center, center;
+    background-size: 40px, cover;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding: 5px 0 0 22px;
+    border: 2.22px solid #FFC30B61;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40px;
+    margin: auto;
+    box-shadow: 11.08px -4.43px 25.25px 0px rgba(255, 255, 255, .05) inset, 0px 8.86px 51.84px 0px #EA03008F,
+        0px 8.86px 86.17px 0px #EA030087;
+}
+
+.game-area {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-top: auto;
+    margin-bottom: 40px;
+}
+
+.snow-row {
+    position: relative;
+    height: 150px;
+    width: 330px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.snow-row:last-child{
+    z-index: 2;
+}
+
+.snowdrift-wrapper {
+    position: absolute;
+    width: 140px;
+    height: 90px;
+}
+
+.snowdrift{
+    position: absolute;
+    background-image: url(../../../public/assets/img/tasks/task2/snow.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.snowdrift-wrapper_order_1 {
+    left: 0;
+    top: 0;
+}
+
+.snowdrift-wrapper_order_2 {
+    left: 0;
+    right: 0;
+    top: 30px;
+    margin: auto;
+    z-index: 2;
+}
+
+.snowdrift-wrapper_order_3 {
+    right: 0;
+    top: 0;
+}
+
+.snowdrift-wrapper__pointer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -20px;
+    margin: auto;
+    filter: drop-shadow(0px 5.46px 31.96px #EA03008F) drop-shadow(0px 5.46px 53.12px #EA030087);
+    z-index: 3;
+}
+
+.pig {
+    position: absolute;
+    width: 94px;
+    height: 144px;
+    background-image: url(../../../public/assets/img/tasks/task2/pig.png);
     background-repeat: no-repeat;
     background-position: center;
-    padding: 7px 5px 15px 0px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    transform: scale(0.85);
-    transition: .3s transform;
+    background-size: 160px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -80px;
+    z-index: 1;
 }
 
-.cards-slide__img{
-    transform: rotate(2deg);
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-.cards-slider__prev{
+.pig {
     position: absolute;
-    bottom: 0;
-    left: 20px;
+    width: 94px;
+    height: 144px;
+    background-image: url(../../../public/assets/img/tasks/task2/pig.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 160px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -80px;
+    z-index: 1;
+    transition: transform 0.1s ease;
 }
 
-.cards-slider__next{
-    position: absolute;
-    bottom: 0;
-    right: 20px;
-}
-
-.cards-slider :global(.swiper){
-    width: 200px;
-    overflow: visible;
-}
-
-.cards-slider :global(.swiper .swiper-slide-active) .cards-slide{
-    transform: scale(1);
+/* Анимация при нажатии на свинью */
+.pig:active {
+    transform: scale(0.9);
 }

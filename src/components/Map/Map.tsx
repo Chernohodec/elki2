@@ -34,7 +34,7 @@ export const Map = ({ ...props }: Map) => {
             <div className={classNames(css["map__image"])}>
                 <div className={classNames(css["tasks"])}>
                     {tasks.map((task) => (
-                        <div className={css["task-item"]}>
+                        <div className={css["task-item"]} key={task.id}>
                             <div className={css["task-item__content"]}>
                                 <div
                                     className={classNames(

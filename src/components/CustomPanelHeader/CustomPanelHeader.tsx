@@ -83,7 +83,7 @@ export const CustomPanelHeader = ({
         >
             {props.children ? (
                 props.children
-            ) : isMainPanel || isTaskPage ? (
+            ) : isMainPanel ? (
                 <img
                     className={css["header-logo"]}
                     width={80}

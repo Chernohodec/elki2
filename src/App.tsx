@@ -23,11 +23,16 @@ import {
     selectAppIsLoaded,
     selectOnboardingComplete,
 } from "./store/main.reducer";
-import { selectTasks } from "./store/tasks.reducer";
+import { selectTasks, setBalls, setTasks } from "./store/tasks.reducer";
 import { Tasks } from "./panels/Tasks/Tasks";
 import { Settings } from "./panels/Settings/Settings";
 import { About } from "./panels/About/About";
 import { Prize } from "./panels/Prize/Prize";
+import { Game1Start } from "./panels/Game1/Game1Start";
+import { Game1 } from "./panels/Game1/Game1";
+import { getUser } from "./api/user/getUser";
+import { Game2Start } from "./panels/Game2/Game2Start";
+import { Game2 } from "./panels/Game2/Game2";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -40,7 +45,13 @@ export const App = () => {
         panel: activePanel = DEFAULT_VIEW_PANELS.MAIN,
         view: activeView = DEFAULT_VIEW,
     } = useActiveVkuiLocation();
-    const gamePanels = [
+    const gamePanels: string[] = [
+        DEFAULT_VIEW_PANELS.GAME1_START,
+        DEFAULT_VIEW_PANELS.GAME2_START,
+        DEFAULT_VIEW_PANELS.GAME3_START,
+        DEFAULT_VIEW_PANELS.GAME4_START,
+        DEFAULT_VIEW_PANELS.GAME5_START,
+        DEFAULT_VIEW_PANELS.GAME6_START,
         DEFAULT_VIEW_PANELS.GAME1,
         DEFAULT_VIEW_PANELS.GAME2,
         DEFAULT_VIEW_PANELS.GAME3,
@@ -51,6 +62,17 @@ export const App = () => {
 
     const appIsLoaded = useAppSelector(selectAppIsLoaded);
     const panelIsGame = gamePanels.includes(activePanel);
+
+    const updateTasks = async () => {
+        const userUpdated: any = await getUser();
+        console.log(userUpdated);
+        dispatch(setBalls(userUpdated.tickets));
+        dispatch(
+            setTasks(
+                userUpdated.quests.sort((a: any, b: any) => a.order - b.order)
+            )
+        );
+    };
 
     return (
         <SplitLayout>
@@ -82,7 +104,7 @@ export const App = () => {
                             <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
                             <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
 
-                            {/* <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
+                            {/* <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} /> */}
                             <Game1
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME1}
@@ -92,6 +114,7 @@ export const App = () => {
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME2}
                             />
+                            {/* 
                             <Game3Start nav={DEFAULT_VIEW_PANELS.GAME3_START} />
                             <Game3
                                 updateTasks={updateTasks}

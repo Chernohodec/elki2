@@ -69,6 +69,7 @@
 .header-title {
     position: relative;
     z-index: 2;
+    line-height: 1.3;
 }
 
 .header-logo {

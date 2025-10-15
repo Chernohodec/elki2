@@ -3,7 +3,6 @@
     overflow: hidden;
 }
 
-
 .game-start-panel::before {
     content: '';
     position: fixed;
