@@ -11,214 +11,122 @@
     content: '';
     position: fixed;
     left: 0;
-    top: -2px;
+    top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../assets/img/tasks/task6/task6-bg.jpg);
+    background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
-    background-size: calc(100% + 2px) 100%;
+    background-size: cover;
 }
 
 .game-start-panel__content {
-    background: #FFFFFFCC;
+    background: #0000001F;
     border-radius: 30px 30px 0 0;
+    padding: 0px 0 30px;
+    min-height: calc(100dvh - 100px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     margin-top: auto;
-    height: calc(100dvh - 100px);
-}
-
-.game-start-panel__content>div {
     display: flex;
     flex-direction: column;
-    grid-gap: 20px;
-    height: 100%;
+    padding-bottom: 100px;
+    overflow: hidden;
 }
 
-.game-start-panel__content_ios {
-    margin-bottom: -45px;
-    padding-bottom: 45px;
-}
-
-.game-header {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center;
-    grid-gap: 20px;
-}
-
-.game-header__item {
+.game-area {
+    width: 340px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    position: relative;
+    height: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
 }
 
-.game-header__item-counter {
-    font-size: 14px;
-    font-weight: 700;
-    font-family: Gilroy;
-    width: 60px;
-    height: 20px;
-    border-radius: 30px;
+.game-area__pic1 {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #F7D9EA;
-    background-color: #fff;
-    box-shadow: 0px 3px 0px rgba(256, 256, 256, 1);
-}
-
-.game-field {
-    background-image: url(../../assets/img/tasks/task6/task6-bg-game-field.jpg);
-    background-repeat: no-repeat;
+    width: 340px;
+    height: 225px;
+    background-image: url(../../../public/assets/img/tasks/task6/game-pic1.jpg);
     background-position: center;
     background-size: cover;
     border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
-.game-row {
+.game-area__pic2 {
     display: flex;
-}
-
-.game-gem {
-    background-size: contain;
-    background-repeat: no-repeat;
+    width: 340px;
+    height: 225px;
+    background-image: url(../../../public/assets/img/tasks/task6/game-pic2.jpg);
     background-position: center;
-    cursor: pointer;
-    margin: 2px;
-    touch-action: none;
-    user-select: none;
-    opacity: 1;
-    transform: scale(1);
-    visibility: visible;
-    transition: none;
-}
-
-/* Анимации */
-.swap-animation {
-    transition: transform 0.3s ease-in-out;
-    z-index: 10;
-}
-
-.match-animation {
-    animation: matchScale 0.3s forwards;
-    z-index: 5;
-}
-
-@keyframes matchScale {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-        visibility: visible;
-    }
-
-    50% {
-        transform: scale(1.2);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(0);
-        opacity: 0;
-        visibility: hidden;
-    }
-}
-
-.falling-animation {
-    transition: transform 0.3s ease-in;
-}
-
-.spawn-animation {
-    animation: spawnScale 0.3s forwards;
-}
-
-@keyframes spawnScale {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    80% {
-        transform: scale(1.1);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-        visibility: visible;
-    }
-}
-
-.gem-selected {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    z-index: 5;
-}
-
-.shake-animation {
-    animation: shake 0.3s;
-}
-
-@keyframes shake {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    20%,
-    60% {
-        transform: translateX(-5px);
-    }
-
-    40%,
-    80% {
-        transform: translateX(5px);
-    }
-}
-
-/* Онбординг */
-.onboarding {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100dvh;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 24px;
+    background-size: cover;
+    border-radius: 25px;
+    margin-top: 5px;
     position: relative;
-    justify-content: flex-end;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.onboarding-step1 {
+.game-area__item{
     position: absolute;
-    left: 20px;
-    right: 0;
-    top: 73px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-image: url(../../../public/assets/img/tasks/task-done-pic.png);
+    background-size: 25px;
+    background-position: center;
+    z-index: 2;
+    opacity: 0;
+    transition: .3s;
 }
 
-.onboarding-step2 {
+.game-area__item_order_1{
+    left: 15px;
+    bottom: 15px;
+}
+
+.game-area__item_order_2{
+    left: 115px;
+    top: 95px;
+}
+
+.game-area__item_order_3{
+    left: 120px;
+    top: 120px;
+}
+
+.game-area__item_order_4{
+    right: 110px;
+    top: 90px;
+}
+
+.game-area__item_order_5{
+    right: 40px;
+    bottom: 25px;
+}
+
+.game-area__item_active{
+    opacity: 1;
+}
+
+.game-area__counter{
     position: absolute;
     left: 0;
     right: 0;
-    top: 20dvh;
+    top: 0;
+    bottom: 0;
     margin: auto;
-    width: 327px;
-    display: block;
-}
-
-@media screen and (min-width: 600px) {
-    .game-field {
-        width: 340px;
-        margin: auto;
-        transform: scale(1.2);
-    }
+    font-size: 28px;
+    font-weight: 700;
+    font-family: OpinionPro;
+    color: #fff;
+    width: 90px;
+    height: 45px;
+    border-radius: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3px;
+    background: linear-gradient(180deg, #EA0300 0%, #840715 100%);
+    box-shadow: 0px 4px 23.4px 0px #EA03008F, 0px 4px 38.9px 0px #EA030087;
+    z-index: 2;
 }

@@ -2,6 +2,7 @@ import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
     Div,
+    FixedLayout,
     NavIdProps,
     Panel,
     Spacing,
@@ -44,8 +45,11 @@ export const Game4Start: FC<NavIdProps> = ({ id }) => {
                 </div>
                 <Div>
                     <Spacing size={35} />
-                    <Title align="center" color="yellow">Зина подготовила<br/>
-пару советов</Title>
+                    <Title align="center" color="yellow">
+                        Зина подготовила
+                        <br />
+                        пару советов
+                    </Title>
                     <Spacing size={5} />
                     <Text align="center" color="white">
                         Lorem ipsum dolor sit amet consectetur. Pretium placerat
@@ -55,16 +59,22 @@ export const Game4Start: FC<NavIdProps> = ({ id }) => {
                         nunc arcu id at. Facilisi augue ultrices molestie.
                     </Text>
                     <Spacing size={40} />
+
+                    <Spacing size={90} />
+                </Div>
+            </div>
+            <FixedLayout vertical="bottom">
+                <Div>
                     <Button
+                        color="yellow"
                         onClick={() =>
                             routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME4}`)
                         }
                     >
                         <span>Продолжить</span>
                     </Button>
-                    <Spacing size={90} />
                 </Div>
-            </div>
+            </FixedLayout>
         </Panel>
     );
 };

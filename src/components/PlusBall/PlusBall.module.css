@@ -1,0 +1,21 @@
+.plus-block {
+    width: 65px;
+    height: 33px;
+    border-radius: 17px;
+    background: linear-gradient(180deg, #EA0300 0%, #840715 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 23.4px 0px #EA03008F, 0px 4px 38.9px 0px #EA030087;
+
+
+    gap: 5px;
+}
+
+.plus-block span {
+    font-family: OpinionPro;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    transform: translateY(1px);
+}

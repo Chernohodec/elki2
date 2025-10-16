@@ -37,6 +37,10 @@ import { Game3Start } from "./panels/Game3/Game3Start";
 import { Game3 } from "./panels/Game3/Game3";
 import { Game4Start } from "./panels/Game4/Game4Start";
 import { Game4 } from "./panels/Game4/Game4";
+import { Game5Start } from "./panels/Game5/Game5Start";
+import { Game5 } from "./panels/Game5/Game5";
+import { Game6Start } from "./panels/Game6/Game6Start";
+import { Game6 } from "./panels/Game6/Game6";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -128,17 +132,17 @@ export const App = () => {
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME4}
                             />
-                            {/* 
                             <Game5Start nav={DEFAULT_VIEW_PANELS.GAME5_START} />
                             <Game5
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME5}
                             />
+                            
                             <Game6Start nav={DEFAULT_VIEW_PANELS.GAME6_START} />
                             <Game6
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME6}
-                            /> */}
+                            />
                         </View>
                     </Root>
                 </SplitCol>

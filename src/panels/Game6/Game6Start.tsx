@@ -1,8 +1,15 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { classNames, Div, NavIdProps, Panel, Spacing, usePlatform } from "@vkontakte/vkui";
+import {
+    classNames,
+    Div,
+    FixedLayout,
+    NavIdProps,
+    Panel,
+    Spacing,
+    usePlatform,
+} from "@vkontakte/vkui";
 import { FC } from "react";
 import "swiper/css";
-import char6Image from "../../assets/img/task-pic6.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
@@ -12,7 +19,7 @@ import css from "./Game6start.module.css";
 
 export const Game6Start: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
-    const platform = usePlatform()
+    const platform = usePlatform();
 
     return (
         <Panel id={id} disableBackground className={css["game-start-panel"]}>
@@ -20,27 +27,51 @@ export const Game6Start: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                // title="О розыгрыше"
+                title="Найди отличия"
             />
-            <div className={classNames(css["game-start-panel__content"], css[`game-start-panel__content_${platform}`])}>
-                <img
-                    className={css["game-start-panel__char"]}
-                    width={170}
-                    src={char6Image}
-                    alt=""
-                />
+            <div
+                className={classNames(
+                    css["game-start-panel__content"],
+                    css[`game-start-panel__content_${platform}`]
+                )}
+            >
+                <div className={css["game-start-panel__img-wrapper"]}>
+                    <img
+                        className={css["game-start-panel__img"]}
+                        width={145}
+                        src={"assets/img/tasks/task6/character-pic.png"}
+                        alt=""
+                    />
+                </div>
                 <Div>
                     <Spacing size={35} />
-                    <Title align="center" color="black">Переполох домовят</Title>
-                    <Spacing size={10} />
-                    <Text align="center" color="black">После пробуждения посоха в мастерской домовят всё вверх дном! Помогите домовятам навести порядок в их волшебном шкафчике: соберите одинаковые предметы в ряды, чтобы восстановить поток энергии и запустить мастерскую заново.</Text>
-                    <Spacing size={30} />
-                    <Button onClick={()=>routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME6}`)}>
-                        <span>Играть!</span>
-                    </Button>
-                    <Spacing size={90} />
+                    <Title align="center" color="yellow">
+                        Судьбоносный танец
+                        <br />с Вадимом на балу
+                    </Title>
+                    <Spacing size={5} />
+                    <Text align="center" color="white">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.Lorem ipsum dolor sit amet
+                        consectetur. Pretium placerat duis convallis felis eget
+                        nunc arcu id at. Facilisi augue ultrices molestie.
+                    </Text>
+                    <Spacing size={130} />
                 </Div>
             </div>
+            <FixedLayout vertical="bottom">
+                <Div>
+                    <Button
+                        color="yellow"
+                        onClick={() =>
+                            routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME6}`)
+                        }
+                    >
+                        <span>Начать игру</span>
+                    </Button>
+                </Div>
+            </FixedLayout>
         </Panel>
     );
 };

@@ -2,6 +2,7 @@ import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
     Div,
+    FixedLayout,
     NavIdProps,
     Panel,
     Spacing,
@@ -58,16 +59,21 @@ export const Game3Start: FC<NavIdProps> = ({ id }) => {
                         nunc arcu id at. Facilisi augue ultrices molestie.
                     </Text>
                     <Spacing size={40} />
+                    <Spacing size={90} />
+                </Div>
+            </div>
+            <FixedLayout vertical="bottom">
+                <Div>
                     <Button
+                        color="yellow"
                         onClick={() =>
                             routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME3}`)
                         }
                     >
-                        <span>Продолжить</span>
+                        <span>Начать игру</span>
                     </Button>
-                    <Spacing size={90} />
                 </Div>
-            </div>
+            </FixedLayout>
         </Panel>
     );
 };

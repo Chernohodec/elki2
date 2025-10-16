@@ -1,30 +1,32 @@
-import { classNames, Div, PopoutWrapper, Spacing } from "@vkontakte/vkui";
-import { Button } from "../Button/Button";
+import { classNames, Div, Spacing } from "@vkontakte/vkui";
 import { Title } from "../Title/Title";
 import css from "./GameDone.module.css";
-import ticketImage from '../../assets/img/ticket-icon.svg'
+import { Text } from "../Text/Text";
+import { PlusBall } from "../PlusBall/PlusBall";
 
-export const GameDone = ({ onClick }: { onClick: () => void }) => {
+export const GameDone = ({ pic, text }: { pic?: string, text: string }) => {
     return (
-        <PopoutWrapper>
         <Div className={classNames(css["game-done"])}>
-            <img width={110} className={css["game-done__ticket"]} src={ticketImage} alt="" />
-            <Spacing size={30} />
+            <img
+                width={190}
+                className={css["game-done__ticket"]}
+                src={pic ? pic : 'assets/img/tasks/task-done-pic.png'}
+                alt=""
+            />
+            <Spacing size={20} />
             <Title
+                align="center"
+                color="yellow"
+                className={css["game-done__title"]}
+            >Задание выполнено</Title>
+            <Spacing size={5} />
+            <Text
                 align="center"
                 color="white"
                 className={css["game-done__title"]}
-            >
-                Ура, задание пройдено! <br />
-                Билетик ваш!
-            </Title>
-            <Button
-                className={css["game-done__button"]}
-                onClick={onClick}
-            >
-                Забрать
-            </Button>
+            >{text}</Text>
+            <Spacing size={15} />
+            <PlusBall />
         </Div>
-        </PopoutWrapper>
     );
 };

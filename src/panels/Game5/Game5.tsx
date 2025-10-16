@@ -2,365 +2,723 @@ import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
     Div,
+    FixedLayout,
     NavIdProps,
     Panel,
-    PopoutWrapper,
+    Spacing,
     usePlatform,
 } from "@vkontakte/vkui";
-import { FC, useEffect, useRef, useState } from "react";
+import item1Image from "../../../public/assets/img/tasks/task5/item1.png";
+import item2Image from "../../../public/assets/img/tasks/task5/item2.png";
+import item3Image from "../../../public/assets/img/tasks/task5/item3.png";
+import item4Image from "../../../public/assets/img/tasks/task5/item4.png";
+import item5Image from "../../../public/assets/img/tasks/task5/item5.png";
+import item6Image from "../../../public/assets/img/tasks/task5/item6.png";
+import { FC, useEffect, useState } from "react";
 import "swiper/css";
 import { checkQuest } from "../../api/user/checkQuest";
-import heartIcon from "../../assets/img/tasks/heart-icon.svg";
-import floor from "../../assets/img/tasks/task5/floor.png";
-import frameJump from "../../assets/img/tasks/task5/frame-jump.svg";
-import frameRun1 from "../../assets/img/tasks/task5/frame-run1.svg";
-import frameRun2 from "../../assets/img/tasks/task5/frame-run2.svg";
-import obstacle1 from "../../assets/img/tasks/task5/obstacle1.png";
-import obstacle2 from "../../assets/img/tasks/task5/obstacle2.png";
-import obstacle3 from "../../assets/img/tasks/task5/obstacle3.png";
-import game5Title from "../../assets/img/tasks/task5/task5-header-title.png";
-import onboardingStep1 from "../../assets/img/tasks/task5/task5-onboarding1.png";
-import onboardingStep2 from "../../assets/img/tasks/task5/task5-onboarding2.png";
-import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { GameCancel } from "../../components/GameCancel/GameCancel";
 import { GameDone } from "../../components/GameDone/GameDone";
-import { GameFailed } from "../../components/GameFailed/GameFailed";
-import { Title } from "../../components/Title/Title";
 import { preloadImages } from "../../helpers/preloadImages";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game5.module.css";
+import { Button } from "../../components/Button/Button";
 
 export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
+    const dispatch = useAppDispatch();
+    const platform = usePlatform();
     const currentTask = useAppSelector(selectTasks).find(
         (task) => task?.id === 5
     );
-    const [gameStarted, setGameStarted] = useState(false);
-    const [score, setScore] = useState(0);
-    const [lives, setLives] = useState(3);
-    const [isJumping, setIsJumping] = useState(false);
-    const [currentFrame, setCurrentFrame] = useState(frameRun1);
-    const [obstacles, setObstacles] = useState<
-        Array<{ x: number; type: number }>
-    >([]);
-    const [heroIsDamaged, setHeroIsDamaged] = useState(false);
-    const gameLoopRef = useRef<number>();
-    const obstacleTimerRef = useRef<number>();
-    const scoreTimerRef = useRef<NodeJS.Timeout>();
-    const [animationSpeed, setAnimationSpeed] = useState(10);
-    const [animationCounter, setAnimationCounter] = useState(0);
-    const [floorPosition, setFloorPosition] = useState(0);
-    const floorRef = useRef<HTMLImageElement>(null);
-    const [floorWidth, setFloorWidth] = useState(0);
-    const [onboardingStep, setOnboardingStep] = useState(0);
-    const [finishLine, setFinishLine] = useState<{
+    const [counters, setCounters] = useState([0, 0, 0, 0]);
+    const [gameComplete, setGameComplete] = useState(false);
+    const [touchStartPos, setTouchStartPos] = useState<{
         x: number;
-        visible: boolean;
-    }>({ x: -1000, visible: false });
-    const [gameCompleting, setGameCompleting] = useState(false);
-    const dispatch = useAppDispatch();
-    const platform = usePlatform();
+        y: number;
+    } | null>(null);
+    const [selectedGem, setSelectedGem] = useState<{
+        row: number;
+        col: number;
+    } | null>(null);
+    const [mouseStartPos, setMouseStartPos] = useState<{
+        x: number;
+        y: number;
+    } | null>(null);
 
-    // Константы игры
-    const GAME_SPEED = 5;
-    const JUMP_HEIGHT = 100;
-    const OBSTACLE_INTERVAL = 2000;
-    const SCORE_INCREMENT = 4;
-    const SCORE_INTERVAL = 100;
-    const MAX_SCORE = 500;
-    const FINISH_TRIGGER_SCORE = 450; // Очки, при которых появляется финишная черта
-
-    // Запуск игры
-    const startGame = () => {
-        setGameStarted(true);
-        setScore(0);
-        setLives(3);
-        setObstacles([]);
-        setFinishLine({ x: -1000, visible: false });
-        setGameCompleting(false);
+    const config = {
+        countRows: 8,
+        countCols: 7,
+        gemSize: 44,
+        images: [
+            item1Image,
+            item2Image,
+            item3Image,
+            item4Image,
+            item5Image,
+            item6Image,
+        ],
+        gemClass: "gem",
+        gemIdPrefix: "gem",
+        gameStates: ["pick", "switch", "revert", "remove", "refill"],
+        gameState: "",
+        movingItems: 0,
+        swapDuration: 300,
     };
 
-    // Обработка прыжка
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (
-                (e.code === "Space" || e.key === " " || e.keyCode === 32) &&
-                !isJumping &&
-                gameStarted &&
-                !gameCompleting
-            ) {
-                handleJump();
+    const player = {
+        selectedRow: -1,
+        selectedCol: -1,
+        posX: "",
+        posY: "",
+    };
+
+    const [gems, setGems] = useState<number[][]>([]);
+
+    // Инициализация игрового поля
+    const initGame = () => {
+        const newGems: number[][] = Array(config.countRows)
+            .fill(null)
+            .map(() => Array(config.countCols).fill(-1));
+
+        for (let i = 0; i < config.countRows; i++) {
+            for (let j = 0; j < config.countCols; j++) {
+                let gemType;
+                do {
+                    gemType = Math.floor(Math.random() * 6);
+                    newGems[i][j] = gemType;
+                } while (isStreak(newGems, i, j));
             }
-        };
-
-        const handleTouch = () => {
-            if (!isJumping && gameStarted && !gameCompleting) {
-                handleJump();
-            }
-        };
-
-        const handleJump = () => {
-            setIsJumping(true);
-            const jumpTimeout = setTimeout(() => {
-                setIsJumping(false);
-            }, 800);
-
-            return () => clearTimeout(jumpTimeout);
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-        window.addEventListener("touchstart", handleTouch);
-
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-            window.removeEventListener("touchstart", handleTouch);
-        };
-    }, [isJumping, gameStarted, gameCompleting]);
-
-    // Игровой цикл
-    useEffect(() => {
-        if (!gameStarted) return;
-
-        const gameLoop = (timestamp: number) => {
-            // Если игра завершается, не генерируем новые препятствия
-            if (!gameCompleting) {
-                // Генерация препятствий
-                if (
-                    !obstacleTimerRef.current ||
-                    timestamp - obstacleTimerRef.current > OBSTACLE_INTERVAL
-                ) {
-                    const obstacleType = Math.floor(Math.random() * 3) + 1;
-                    setObstacles((prev) => [
-                        ...prev,
-                        { x: window.innerWidth, type: obstacleType },
-                    ]);
-                    obstacleTimerRef.current = timestamp;
-                }
-            }
-
-            // Движение препятствий
-            setObstacles((prev) =>
-                prev
-                    .map((obs) => ({ ...obs, x: obs.x - GAME_SPEED }))
-                    .filter((obs) => obs.x > -100)
-            );
-
-            // Движение финишной черты
-            if (finishLine.visible) {
-                setFinishLine((prev) => ({
-                    ...prev,
-                    x: prev.x - GAME_SPEED,
-                }));
-            }
-
-            // Анимация бега с контролируемой скоростью
-            if (!isJumping) {
-                setAnimationCounter((prev) => {
-                    if (prev >= animationSpeed) {
-                        setCurrentFrame((prevFrame) =>
-                            prevFrame === frameRun1 ? frameRun2 : frameRun1
-                        );
-                        return 0;
-                    }
-                    return prev + 1;
-                });
-            }
-
-            // Движение пола
-            if (floorWidth > 0) {
-                setFloorPosition((prev) => prev - GAME_SPEED);
-            }
-
-            gameLoopRef.current = requestAnimationFrame(gameLoop);
-        };
-
-        gameLoopRef.current = requestAnimationFrame(gameLoop);
-        return () => {
-            if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
-        };
-    }, [
-        gameStarted,
-        isJumping,
-        animationSpeed,
-        gameCompleting,
-        finishLine.visible,
-    ]);
-
-    // Счетчик очков
-    useEffect(() => {
-        if (!gameStarted || gameCompleting) return;
-
-        scoreTimerRef.current = setInterval(() => {
-            setScore((prev) => {
-                const newScore = prev + SCORE_INCREMENT;
-
-                // Показываем финишную черту при достижении определенного количества очков
-                if (newScore >= FINISH_TRIGGER_SCORE && !finishLine.visible) {
-                    setFinishLine({
-                        x: window.innerWidth + 200,
-                        visible: true,
-                    });
-                    setGameCompleting(true);
-                    // Очищаем все препятствия при появлении финиша
-                    setObstacles([]);
-                }
-
-                return newScore;
-            });
-        }, SCORE_INTERVAL);
-
-        return () => {
-            if (scoreTimerRef.current) clearInterval(scoreTimerRef.current);
-        };
-    }, [gameStarted, gameCompleting, finishLine.visible]);
-
-    // Проверка столкновений
-    useEffect(() => {
-        if (!gameStarted) return;
-
-        const characterRect = {
-            x: 100,
-            y: isJumping ? JUMP_HEIGHT : 0,
-            width: 50,
-            height: 80,
-        };
-
-        // Проверка столкновения с препятствиями
-        obstacles.forEach((obs) => {
-            const obstacleRect = {
-                x: obs.x,
-                y: 0,
-                width: 50,
-                height: 60,
-            };
-
-            if (checkCollision(characterRect, obstacleRect)) {
-                setLives((prev) => {
-                    const newLives = prev - 1;
-                    setHeroIsDamaged(true);
-                    setTimeout(() => {
-                        setHeroIsDamaged(false);
-                    }, 1000);
-                    if (newLives <= 0) {
-                        console.log("Игра окончена! Закончились жизни");
-                        routeNavigator.showPopout(
-                            <GameFailed
-                                backHandler={() => routeNavigator.replace(`/`)}
-                                reloadHandler={() => {
-                                    routeNavigator.hidePopout();
-                                    startGame();
-                                }}
-                            />
-                        );
-                        setGameStarted(false);
-                    }
-                    return newLives;
-                });
-                // Удаляем препятствие после столкновения
-                setObstacles((prev) => prev.filter((o) => o !== obs));
-            }
-        });
-
-        // Проверка достижения финишной черты
-        if (finishLine.visible && finishLine.x <= 120 && finishLine.x >= 80) {
-            console.log("Финиш достигнут!");
-            setScore(MAX_SCORE);
-            setGameCompleting(true);
-            checkQuest(5).then(() => {
-                updateTasks();
-            });
-            dispatch(setTaskChecked(5));
-            routeNavigator.showPopout(
-                <GameDone onClick={() => routeNavigator.replace(`/`)} />
-            );
-            setGameStarted(false);
         }
-    }, [obstacles, isJumping, gameStarted, finishLine]);
+        setGems(newGems);
+    };
 
-    // Функция проверки столкновений
-    const checkCollision = (
-        rect1: { x: number; y: number; width: number; height: number },
-        rect2: { x: number; y: number; width: number; height: number }
-    ) => {
+    // Проверка на завершение игры
+    useEffect(() => {
+        if (counters.every((counter) => counter >= 10)) {
+            // Анимация завершения уровня
+            const allGems = document.querySelectorAll(`.${css["game-gem"]}`);
+            allGems.forEach((gem, index) => {
+                setTimeout(() => {
+                    gem.classList.add(css["match-animation"]);
+                    gem.addEventListener(
+                        "animationend",
+                        () => {
+                            gem.classList.remove(css["match-animation"]);
+                        },
+                        { once: true }
+                    );
+                }, index * 50);
+            });
+
+            setTimeout(() => {
+                checkQuest(6).then(() => {
+                    updateTasks();
+                });
+                dispatch(setTaskChecked(6));
+                setGameComplete(true);
+            }, allGems.length * 50 + 300);
+        }
+    }, [counters]);
+
+    // Проверка на группу из 3+ элементов
+    const isStreak = (grid: number[][], row: number, col: number) => {
+        if (!grid || !grid[row] || grid[row][col] === undefined) return false;
         return (
-            rect1.x < rect2.x + rect2.width &&
-            rect1.x + rect1.width > rect2.x &&
-            rect1.y < rect2.y + rect2.height &&
-            rect1.y + rect1.height > rect2.y
+            isVerticalStreak(grid, row, col) ||
+            isHorizontalStreak(grid, row, col)
         );
     };
 
-    // Предзагрузка текстуры пола
-    useEffect(() => {
-        const img = new Image();
-        img.src = floor;
+    const isVerticalStreak = (grid: number[][], row: number, col: number) => {
+        if (!grid || !grid[row] || grid[row][col] === undefined) return false;
 
-        if (floorRef.current) {
-            const handleLoad = () => {
-                setFloorWidth(floorRef.current?.naturalWidth || 0);
-            };
+        const gemValue = grid[row][col];
+        let streak = 1;
+        let tmp = row - 1;
 
-            floorRef.current.addEventListener("load", handleLoad);
-            return () => {
-                floorRef.current?.removeEventListener("load", handleLoad);
-            };
+        while (tmp >= 0 && grid[tmp] && grid[tmp][col] === gemValue) {
+            streak++;
+            tmp--;
         }
-    }, []);
 
-    const onboardingSteps = [
-        <div className={css["onboarding-step1"]}>
-            <img width={350} src={onboardingStep1} alt="" />
-        </div>,
-        <div className={css["onboarding-step2"]}>
-            <img width={310} src={onboardingStep2} alt="" />
-        </div>,
-    ];
+        tmp = row + 1;
+        while (
+            tmp < config.countRows &&
+            grid[tmp] &&
+            grid[tmp][col] === gemValue
+        ) {
+            streak++;
+            tmp++;
+        }
 
-    useEffect(() => {
-        onboardingStep < 2
-            ? routeNavigator.showPopout(
-                  <PopoutWrapper>
-                      <div className={css["onboarding"]}>
-                          {onboardingSteps[onboardingStep]}
-                          <Button
-                              onClick={() =>
-                                  setOnboardingStep(onboardingStep + 1)
-                              }
-                          >
-                              <span>
-                                  {onboardingStep === onboardingSteps.length - 1
-                                      ? "Начать"
-                                      : "Продолжить"}
-                              </span>
-                          </Button>
-                      </div>
-                  </PopoutWrapper>
-              )
-            : routeNavigator.hidePopout();
+        return streak >= 3;
+    };
 
-        onboardingStep === 2 && startGame();
-    }, [onboardingStep]);
+    const isHorizontalStreak = (grid: number[][], row: number, col: number) => {
+        if (!grid || !grid[row] || grid[row][col] === undefined) return false;
 
+        const gemValue = grid[row][col];
+        let streak = 1;
+        let tmp = col - 1;
+
+        while (
+            tmp >= 0 &&
+            grid[row][tmp] !== undefined &&
+            grid[row][tmp] === gemValue
+        ) {
+            streak++;
+            tmp--;
+        }
+
+        tmp = col + 1;
+        while (
+            tmp < config.countCols &&
+            grid[row][tmp] !== undefined &&
+            grid[row][tmp] === gemValue
+        ) {
+            streak++;
+            tmp++;
+        }
+
+        return streak >= 3;
+    };
+
+    // Обмен элементов местами с анимацией
+    const swapGems = (
+        row1: number,
+        col1: number,
+        row2: number,
+        col2: number
+    ) => {
+        const gem1 = document.getElementById(
+            `${config.gemIdPrefix}-${row1}-${col1}`
+        );
+        const gem2 = document.getElementById(
+            `${config.gemIdPrefix}-${row2}-${col2}`
+        );
+
+        if (!gem1 || !gem2) return;
+
+        // Запрещаем взаимодействие во время анимации
+        gem1.style.pointerEvents = "none";
+        gem2.style.pointerEvents = "none";
+
+        // Получаем позиции элементов
+        const rect1 = gem1.getBoundingClientRect();
+        const rect2 = gem2.getBoundingClientRect();
+
+        // Вычисляем смещения
+        const deltaX = rect2.left - rect1.left;
+        const deltaY = rect2.top - rect1.top;
+
+        // Применяем анимацию
+        gem1.style.transition = `transform ${config.swapDuration}ms ease-in-out`;
+        gem2.style.transition = `transform ${config.swapDuration}ms ease-in-out`;
+        gem1.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        gem2.style.transform = `translate(${-deltaX}px, ${-deltaY}px)`;
+        gem1.style.zIndex = "10";
+        gem2.style.zIndex = "10";
+
+        // Обновляем состояние после начала анимации
+        const newGems = [...gems];
+        const temp = newGems[row1][col1];
+        newGems[row1][col1] = newGems[row2][col2];
+        newGems[row2][col2] = temp;
+        setGems(newGems);
+
+        setTimeout(() => {
+            // Сбрасываем трансформации после анимации
+            gem1.style.transition = "none";
+            gem2.style.transition = "none";
+            gem1.style.transform = "translate(0, 0)";
+            gem2.style.transform = "translate(0, 0)";
+            gem1.style.zIndex = "";
+            gem2.style.zIndex = "";
+
+            // Возвращаем возможность взаимодействия
+            setTimeout(() => {
+                gem1.style.pointerEvents = "";
+                gem2.style.pointerEvents = "";
+            }, 50);
+
+            if (
+                !isStreak(newGems, row1, col1) &&
+                !isStreak(newGems, row2, col2)
+            ) {
+                // Анимация возврата, если обмен не привел к совпадению
+                setTimeout(() => {
+                    gem1.style.transition = `transform ${config.swapDuration}ms ease-in-out`;
+                    gem2.style.transition = `transform ${config.swapDuration}ms ease-in-out`;
+                    gem1.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                    gem2.style.transform = `translate(${-deltaX}px, ${-deltaY}px)`;
+                    gem1.style.zIndex = "10";
+                    gem2.style.zIndex = "10";
+
+                    setTimeout(() => {
+                        const revertedGems = [...newGems];
+                        revertedGems[row1][col1] = newGems[row2][col2];
+                        revertedGems[row2][col2] = newGems[row1][col1];
+                        setGems(revertedGems);
+
+                        // gem1.style.transition = "none";
+                        // gem2.style.transition = "none";
+                        // gem1.style.transform = "translate(0, 0)";
+                        // gem2.style.transform = "translate(0, 0)";
+                        // gem1.style.zIndex = "";
+                        // gem2.style.zIndex = "";
+
+                        config.gameState = "pick";
+                        player.selectedRow = -1;
+                        player.selectedCol = -1;
+                    }, config.swapDuration);
+                }, 200);
+            } else {
+                removeMatches(newGems);
+            }
+        }, config.swapDuration);
+    };
+
+    // Удаление совпадающих элементов с анимацией
+    const removeMatches = (grid: number[][]) => {
+        if (!grid) return;
+
+        const newGrid = [...grid];
+        const matchedGems: { row: number; col: number }[] = [];
+        const gemTypes = new Set<number>();
+
+        // Находим все совпадения
+        for (let i = 0; i < config.countRows; i++) {
+            for (let j = 0; j < config.countCols; j++) {
+                if (grid[i][j] === -1) continue;
+
+                if (isStreak(newGrid, i, j)) {
+                    const gemType = newGrid[i][j];
+                    if (gemType === undefined) continue;
+
+                    if (gemType < 4) {
+                        gemTypes.add(gemType);
+                    }
+
+                    if (isVerticalStreak(newGrid, i, j)) {
+                        let tmp = i;
+                        while (tmp >= 0 && newGrid[tmp][j] === gemType) {
+                            matchedGems.push({ row: tmp, col: j });
+                            tmp--;
+                        }
+                        tmp = i + 1;
+                        while (
+                            tmp < config.countRows &&
+                            newGrid[tmp][j] === gemType
+                        ) {
+                            matchedGems.push({ row: tmp, col: j });
+                            tmp++;
+                        }
+                    }
+
+                    if (isHorizontalStreak(newGrid, i, j)) {
+                        let tmp = j;
+                        while (tmp >= 0 && newGrid[i][tmp] === gemType) {
+                            matchedGems.push({ row: i, col: tmp });
+                            tmp--;
+                        }
+                        tmp = j + 1;
+                        while (
+                            tmp < config.countCols &&
+                            newGrid[i][tmp] === gemType
+                        ) {
+                            matchedGems.push({ row: i, col: tmp });
+                            tmp++;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Добавляем анимацию перед удалением
+        matchedGems.forEach(({ row, col }) => {
+            const gem = document.getElementById(
+                `${config.gemIdPrefix}-${row}-${col}`
+            );
+            if (gem) {
+                gem.classList.add(css["match-animation"]);
+                gem.addEventListener(
+                    "animationend",
+                    () => {
+                        gem.classList.remove(css["match-animation"]);
+                        // Восстанавливаем стили на случай, если элемент остался на поле
+                        // gem.style.opacity = "1";
+                        // gem.style.transform = "scale(1)";
+                        // gem.style.visibility = "visible";
+                    },
+                    { once: true }
+                );
+            }
+        });
+
+        setTimeout(() => {
+            // Удаляем совпадения из поля
+            matchedGems.forEach(({ row, col }) => {
+                newGrid[row][col] = -1;
+            });
+
+            // Обновляем счетчики
+            if (gemTypes.size > 0) {
+                setCounters((prevCounters) => {
+                    const newCounters = [...prevCounters];
+                    gemTypes.forEach((type) => {
+                        if (type >= 0 && type < 4) {
+                            newCounters[type] += 1;
+                        }
+                    });
+                    return newCounters;
+                });
+            }
+
+            setGems(newGrid);
+            setTimeout(() => dropGems(newGrid), 100);
+        }, 300);
+    };
+
+    // Падение элементов с анимацией
+    const dropGems = (grid: number[][]) => {
+        if (!grid) return;
+
+        const newGrid = [...grid];
+        let moved = false;
+
+        for (let j = 0; j < config.countCols; j++) {
+            for (let i = config.countRows - 1; i > 0; i--) {
+                if (newGrid[i][j] === -1 && newGrid[i - 1][j] !== -1) {
+                    const gem = document.getElementById(
+                        `${config.gemIdPrefix}-${i - 1}-${j}`
+                    );
+                    if (gem) {
+                        gem.classList.add(css["falling-animation"]);
+                        // Гарантируем, что элемент видим перед анимацией
+                        gem.style.opacity = "1";
+                        gem.style.transform = "scale(1)";
+                        gem.style.visibility = "visible";
+                    }
+
+                    newGrid[i][j] = newGrid[i - 1][j];
+                    newGrid[i - 1][j] = -1;
+                    moved = true;
+                }
+            }
+        }
+
+        if (moved) {
+            setGems(newGrid);
+            setTimeout(() => {
+                document
+                    .querySelectorAll(`.${css["falling-animation"]}`)
+                    .forEach((el) => {
+                        el.classList.remove(css["falling-animation"]);
+                    });
+                dropGems(newGrid);
+            }, 100);
+        } else {
+            fillEmptySpaces(newGrid);
+        }
+    };
+
+    // Заполнение пустых мест с анимацией
+    const fillEmptySpaces = (grid: number[][]) => {
+        const newGrid = [...grid];
+        let filled = false;
+
+        for (let j = 0; j < config.countCols; j++) {
+            if (newGrid[0][j] === -1) {
+                newGrid[0][j] = Math.floor(Math.random() * 6);
+                filled = true;
+
+                setTimeout(() => {
+                    const gem = document.getElementById(
+                        `${config.gemIdPrefix}-0-${j}`
+                    );
+                    if (gem) {
+                        // Сбрасываем стили перед анимацией появления
+                        gem.style.opacity = "1";
+                        gem.style.transform = "scale(1)";
+                        gem.style.visibility = "visible";
+                        gem.classList.add(css["spawn-animation"]);
+                        gem.addEventListener(
+                            "animationend",
+                            () => {
+                                gem.classList.remove(css["spawn-animation"]);
+                            },
+                            { once: true }
+                        );
+                    }
+                }, 10);
+            }
+        }
+
+        setGems(newGrid);
+
+        if (filled) {
+            setTimeout(() => dropGems(newGrid), 300);
+        } else {
+            checkNewMatches(newGrid);
+        }
+    };
+
+    // Проверка новых совпадений после заполнения
+    const checkNewMatches = (grid: number[][]) => {
+        let hasMatches = false;
+
+        for (let i = 0; i < config.countRows; i++) {
+            for (let j = 0; j < config.countCols; j++) {
+                if (isStreak(grid, i, j)) {
+                    hasMatches = true;
+                    break;
+                }
+            }
+            if (hasMatches) break;
+        }
+
+        if (hasMatches) {
+            setTimeout(() => removeMatches(grid), 100);
+        } else {
+            if (!hasPossibleMoves(grid)) {
+                shuffleBoard();
+            } else {
+                config.gameState = "pick";
+                player.selectedRow = -1;
+                player.selectedCol = -1;
+            }
+        }
+    };
+
+    // Проверка наличия возможных ходов
+    const hasPossibleMoves = (grid: number[][]) => {
+        for (let i = 0; i < config.countRows; i++) {
+            for (let j = 0; j < config.countCols; j++) {
+                if (j < config.countCols - 1) {
+                    const tempGrid = JSON.parse(JSON.stringify(grid));
+                    [tempGrid[i][j], tempGrid[i][j + 1]] = [
+                        tempGrid[i][j + 1],
+                        tempGrid[i][j],
+                    ];
+                    if (
+                        isStreak(tempGrid, i, j) ||
+                        isStreak(tempGrid, i, j + 1)
+                    ) {
+                        return true;
+                    }
+                }
+
+                if (i < config.countRows - 1) {
+                    const tempGrid = JSON.parse(JSON.stringify(grid));
+                    [tempGrid[i][j], tempGrid[i + 1][j]] = [
+                        tempGrid[i + 1][j],
+                        tempGrid[i][j],
+                    ];
+                    if (
+                        isStreak(tempGrid, i, j) ||
+                        isStreak(tempGrid, i + 1, j)
+                    ) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    };
+
+    // Перемешивание поля
+    const shuffleBoard = () => {
+        const flatGems = gems.flat();
+        for (let i = flatGems.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [flatGems[i], flatGems[j]] = [flatGems[j], flatGems[i]];
+        }
+
+        const newGems: number[][] = [];
+        for (let i = 0; i < config.countRows; i++) {
+            newGems[i] = [];
+            for (let j = 0; j < config.countCols; j++) {
+                newGems[i][j] = flatGems[i * config.countCols + j];
+            }
+        }
+
+        setGems(newGems);
+
+        if (!hasPossibleMoves(newGems)) {
+            shuffleBoard();
+        } else {
+            config.gameState = "pick";
+            player.selectedRow = -1;
+            player.selectedCol = -1;
+        }
+    };
+
+    // Обработчики свайпов и кликов
+    const handleTouchStart = (
+        e: React.TouchEvent,
+        row: number,
+        col: number
+    ) => {
+        const touch = e.touches[0];
+        setTouchStartPos({ x: touch.clientX, y: touch.clientY });
+        setSelectedGem({ row, col });
+        const gem = document.getElementById(
+            `${config.gemIdPrefix}-${row}-${col}`
+        );
+        if (gem) gem.classList.add(css["gem-selected"]);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (!touchStartPos || !selectedGem) return;
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (!touchStartPos || !selectedGem) return;
+
+        document.querySelectorAll(`.${css["gem-selected"]}`).forEach((el) => {
+            el.classList.remove(css["gem-selected"]);
+        });
+
+        const touch = e.changedTouches[0];
+        const deltaX = touch.clientX - touchStartPos.x;
+        const deltaY = touch.clientY - touchStartPos.y;
+        const absDeltaX = Math.abs(deltaX);
+        const absDeltaY = Math.abs(deltaY);
+
+        if (absDeltaX > absDeltaY && absDeltaX > 10) {
+            const direction = deltaX > 0 ? "right" : "left";
+            handleSwipe(selectedGem.row, selectedGem.col, direction);
+        } else if (absDeltaY > absDeltaX && absDeltaY > 10) {
+            const direction = deltaY > 0 ? "down" : "up";
+            handleSwipe(selectedGem.row, selectedGem.col, direction);
+        }
+
+        setTouchStartPos(null);
+        setSelectedGem(null);
+    };
+
+    const handleSwipe = (
+        row: number,
+        col: number,
+        direction: "up" | "down" | "left" | "right"
+    ) => {
+        let targetRow = row;
+        let targetCol = col;
+
+        switch (direction) {
+            case "left":
+                targetCol--;
+                break;
+            case "right":
+                targetCol++;
+                break;
+            case "up":
+                targetRow--;
+                break;
+            case "down":
+                targetRow++;
+                break;
+        }
+
+        if (
+            targetRow < 0 ||
+            targetRow >= config.countRows ||
+            targetCol < 0 ||
+            targetCol >= config.countCols
+        ) {
+            return;
+        }
+
+        const tempGems = gems.map((row) => [...row]);
+        [tempGems[row][col], tempGems[targetRow][targetCol]] = [
+            tempGems[targetRow][targetCol],
+            tempGems[row][col],
+        ];
+
+        const isValidSwap =
+            isStreak(tempGems, row, col) ||
+            isStreak(tempGems, targetRow, targetCol);
+
+        if (isValidSwap) {
+            swapGems(row, col, targetRow, targetCol);
+        } else {
+            if (navigator.vibrate) navigator.vibrate(50);
+
+            const gem1 = document.getElementById(
+                `${config.gemIdPrefix}-${row}-${col}`
+            );
+            const gem2 = document.getElementById(
+                `${config.gemIdPrefix}-${targetRow}-${targetCol}`
+            );
+
+            if (gem1) gem1.classList.add(css["shake-animation"]);
+            if (gem2) gem2.classList.add(css["shake-animation"]);
+
+            setTimeout(() => {
+                if (gem1) gem1.classList.remove(css["shake-animation"]);
+                if (gem2) gem2.classList.remove(css["shake-animation"]);
+            }, 300);
+        }
+    };
+
+    const handleMouseDown = (e: React.MouseEvent, row: number, col: number) => {
+        setMouseStartPos({ x: e.clientX, y: e.clientY });
+        setSelectedGem({ row, col });
+        const gem = document.getElementById(
+            `${config.gemIdPrefix}-${row}-${col}`
+        );
+        if (gem) gem.classList.add(css["gem-selected"]);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!mouseStartPos || !selectedGem) return;
+    };
+
+    const handleMouseUp = (e: React.MouseEvent) => {
+        if (!mouseStartPos || !selectedGem) return;
+
+        document.querySelectorAll(`.${css["gem-selected"]}`).forEach((el) => {
+            el.classList.remove(css["gem-selected"]);
+        });
+
+        const deltaX = e.clientX - mouseStartPos.x;
+        const deltaY = e.clientY - mouseStartPos.y;
+        const absDeltaX = Math.abs(deltaX);
+        const absDeltaY = Math.abs(deltaY);
+
+        if (absDeltaX > absDeltaY && absDeltaX > 10) {
+            const direction = deltaX > 0 ? "right" : "left";
+            handleSwipe(selectedGem.row, selectedGem.col, direction);
+        } else if (absDeltaY > absDeltaX && absDeltaY > 10) {
+            const direction = deltaY > 0 ? "down" : "up";
+            handleSwipe(selectedGem.row, selectedGem.col, direction);
+        }
+
+        setMouseStartPos(null);
+        setSelectedGem(null);
+    };
+
+    // Инициализация игры
     useEffect(() => {
         const images = [
-            frameRun1,
-            frameRun2,
-            frameJump,
-            obstacle1,
-            obstacle2,
-            obstacle3,
-            floor,
-            onboardingStep1,
-            onboardingStep2,
-            game5Title,
+            item1Image,
+            item2Image,
+            item3Image,
+            item4Image,
+            item5Image,
+            item6Image,
         ];
 
         preloadImages(images);
+        initGame();
+    }, []);
 
-        if(currentTask?.checked || !currentTask?.active){
-            routeNavigator.replace(`/`)
+    useEffect(() => {
+        if (currentTask?.checked || !currentTask?.active) {
+            routeNavigator.replace(`/`);
         }
     }, []);
 
@@ -368,137 +726,115 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    setGameStarted(false);
                     routeNavigator.showPopout(
                         <GameCancel
-                            reloadHandler={() => {
-                                routeNavigator.hidePopout();
-                                startGame();
-                            }}
+                            reloadHandler={() => routeNavigator.hidePopout()}
                             backHandler={() => routeNavigator.replace(`/`)}
                         />
                     );
                 }}
-            >
-                <img src={game5Title} width={166} alt="" />
-            </CustomPanelHeader>
-            <div
+                title="Кулинарная игра"
+            ></CustomPanelHeader>
+            <Div
                 className={classNames(
                     css["game-start-panel__content"],
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                <Div>
-                    <div className={css["game-header"]}>
-                        <div className={css["lifes"]}>
-                            {Array.from({ length: 3 }).map((_, i) => (
-                                <img
-                                    key={i}
-                                    src={heartIcon}
-                                    alt=""
-                                    className={i < lives ? css["active"] : ""}
-                                />
+                {gameComplete ? (
+                    <GameDone
+                        pic="assets/img/tasks/task5/done.png"
+                        text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie."
+                    />
+                ) : (
+                    <>
+                        <div className={css["game-header"]}>
+                            {counters.map((counter, index) => (
+                                <div
+                                    key={index}
+                                    className={css["game-header__item"]}
+                                >
+                                    <img
+                                        src={
+                                            [
+                                                item1Image,
+                                                item2Image,
+                                                item3Image,
+                                                item4Image,
+                                            ][index]
+                                        }
+                                        alt={`Item ${index + 1}`}
+                                        width={66}
+                                        height={66}
+                                        className={
+                                            css["game-header__item-image"]
+                                        }
+                                    />
+                                    <span
+                                        className={
+                                            css["game-header__item-counter"]
+                                        }
+                                    >
+                                        {counter > 9 ? 10 : counter}/10
+                                    </span>
+                                </div>
                             ))}
                         </div>
-                        <div className={css["counter"]}>
-                            <Title size="big" color="black" align="center">
-                                {score} / {MAX_SCORE}
-                            </Title>
+                        <Spacing size={15} />
+                        <div
+                            className={css["game-field"]}
+                            data-vkui-swipe-back={false}
+                        >
+                            {gems.map((row, rowIndex) => (
+                                <div key={rowIndex} className={css["game-row"]}>
+                                    {row.map((gem, colIndex) => (
+                                        <div
+                                            key={`${rowIndex}-${colIndex}`}
+                                            id={`${config.gemIdPrefix}-${rowIndex}-${colIndex}`}
+                                            className={css["game-gem"]}
+                                            onTouchStart={(e) =>
+                                                handleTouchStart(
+                                                    e,
+                                                    rowIndex,
+                                                    colIndex
+                                                )
+                                            }
+                                            onTouchMove={handleTouchMove}
+                                            onTouchEnd={handleTouchEnd}
+                                            onMouseDown={(e) =>
+                                                handleMouseDown(
+                                                    e,
+                                                    rowIndex,
+                                                    colIndex
+                                                )
+                                            }
+                                            onMouseMove={handleMouseMove}
+                                            onMouseUp={handleMouseUp}
+                                            style={{
+                                                backgroundImage:
+                                                    gem !== -1
+                                                        ? `url(${config.images[gem]})`
+                                                        : "none",
+                                                width: config.gemSize,
+                                                height: config.gemSize,
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                            ))}
                         </div>
-                        <div className={css["sound"]}>
-                            {/* <button
-                                className={css["mute-button"]}
-                                onClick={() => setMuted(!muted)}
-                            >
-                                {muted ? (
-                                    <Icon24MuteCross fill="#E948A8" />
-                                ) : (
-                                    <Icon24Volume fill="#E948A8" />
-                                )}
-                            </button> */}
-                        </div>
-                    </div>
-                    <div
-                        className={css["game-field"]}
-                        onClick={() => {
-                            if (!isJumping && gameStarted) {
-                                setIsJumping(true);
-                                setTimeout(() => setIsJumping(false), 800);
-                            }
-                        }}
-                    >
-                        {/* Скрытое изображение для получения размеров */}
-                        <img
-                            ref={floorRef}
-                            src={floor}
-                            style={{ display: "none" }}
-                            alt=""
-                        />
-
-                        {/* Видимые элементы пола */}
-                        {floorWidth > 0 && (
-                            <>
-                                <img
-                                    src={floor}
-                                    className={css["floor"]}
-                                    style={{ left: floorPosition % 340 }}
-                                    alt="game floor"
-                                />
-                                <img
-                                    src={floor}
-                                    className={css["floor"]}
-                                    style={{
-                                        left: (floorPosition % 340) + 340,
-                                    }}
-                                    alt="game floor extension"
-                                />
-                            </>
-                        )}
-
-                        {/* Финишная черта */}
-                        {finishLine.visible && (
-                            <div
-                                className={css["finish"]}
-                                style={{ left: finishLine.x }}
-                            >
-                                <div className={css["finish-flag"]}>🏁</div>
-                                {/* <div className={css["finish-text"]}>ФИНИШ</div> */}
-                            </div>
-                        )}
-
-                        {/* Персонаж */}
-                        <img
-                            src={isJumping ? frameJump : currentFrame}
-                            className={classNames(
-                                css["character"],
-                                heroIsDamaged && css["character_damaged"]
-                            )}
-                            style={{
-                                bottom: isJumping ? JUMP_HEIGHT : 0,
-                                transition: isJumping
-                                    ? "bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                                    : "bottom 0.2s ease-out",
-                            }}
-                        />
-
-                        {/* Препятствия */}
-                        {obstacles.map((obs, i) => (
-                            <img
-                                key={i}
-                                src={
-                                    obs.type === 1
-                                        ? obstacle1
-                                        : obs.type === 2
-                                        ? obstacle2
-                                        : obstacle3
-                                }
-                                className={css["obstacle"]}
-                                style={{ left: obs.x }}
-                            />
-                        ))}
-                    </div>
-                </Div>
-            </div>
+                    </>
+                )}
+            </Div>
+            {gameComplete && (
+                <FixedLayout vertical="bottom">
+                    <Div>
+                        <Button color="yellow" onClick={() => routeNavigator.back(2)}>
+                            К заданиям
+                        </Button>
+                    </Div>
+                </FixedLayout>
+            )}
         </Panel>
     );
 };
