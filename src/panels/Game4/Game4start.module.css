@@ -3,27 +3,28 @@
     overflow: hidden;
 }
 
-
-.game-start-panel::before{
+.game-start-panel::before {
     content: '';
     position: fixed;
     left: 0;
-    top: -1px;
+    top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../assets/img/tasks/task5/task5-bg.jpg);
+    background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
-    background-size: calc(100% + 2px) auto;
+    background-size: cover;
 }
 
-.game-start-panel__content{
-    background-image: url(../../assets/img/tasks/task1/task1-content-bg.svg);
-    background-size: 100%;
+.game-start-panel__content {
+    background: #0000001F;
+    border-radius: 30px 30px 0 0;
+    padding: 0px 0 30px;
+    min-height: calc(100dvh - 100px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     margin-top: auto;
-    /* backdrop-filter: blur(10px); */
-    position: relative;
-    padding-top: 18vw;
-    /* min-height: 500px; */
+    display: flex;
+    flex-direction: column;
 }
 
 .game-start-panel__content_ios{
@@ -31,12 +32,44 @@
     padding-bottom: 45px;
 }
 
-.game-start-panel__char{
+.game-start-panel__img-wrapper {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    border-radius: 50%;
+    background-image: var(--yellow-gradient);
+    display: flex;
+    background-position: center;
+    box-shadow: 0px 5.46px 31.96px 0px #FFC30B8F, 0px 5.46px 53.12px 0px #FFC30B87, 6.83px -2.73px 15.57px 0px rgba(255, 255, 255, .05) inset;
+    border: 1px solid #FFFFFF61;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 45px;
+}
+
+.game-start-panel__img-wrapper:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-image: var(--red-gradient);
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    z-index: 1;
+    border: 0.88px solid #FFFFFF61;
+}
+
+.game-start-panel__img {
     position: absolute;
     left: 0;
     right: 0;
+    bottom: 15px;
     margin: auto;
-    top: -35vw;
-    width: 50vw;
+    width: 145px;
     height: auto;
+    z-index: 2;
 }

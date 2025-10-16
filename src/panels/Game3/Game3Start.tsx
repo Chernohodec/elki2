@@ -1,8 +1,14 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { classNames, Div, NavIdProps, Panel, Spacing, usePlatform } from "@vkontakte/vkui";
+import {
+    classNames,
+    Div,
+    NavIdProps,
+    Panel,
+    Spacing,
+    usePlatform,
+} from "@vkontakte/vkui";
 import { FC } from "react";
 import "swiper/css";
-import char3Image from "../../assets/img/task-pic3.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
@@ -12,7 +18,7 @@ import css from "./Game3start.module.css";
 
 export const Game3Start: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
-    const platform = usePlatform()
+    const platform = usePlatform();
 
     return (
         <Panel id={id} disableBackground className={css["game-start-panel"]}>
@@ -20,23 +26,44 @@ export const Game3Start: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                // title="О розыгрыше"
+                title="Елочка для Витали"
             />
-            <div className={classNames(css["game-start-panel__content"], css[`game-start-panel__content_${platform}`])}>
-                <img
-                    className={css["game-start-panel__char"]}
-                    width={170}
-                    src={char3Image}
-                    alt=""
-                />
+            <div
+                className={classNames(
+                    css["game-start-panel__content"],
+                    css[`game-start-panel__content_${platform}`]
+                )}
+            >
+                <div className={css["game-start-panel__img-wrapper"]}>
+                    <img
+                        className={css["game-start-panel__img"]}
+                        width={145}
+                        src={"assets/img/tasks/task3/character-pic.png"}
+                        alt=""
+                    />
+                </div>
                 <Div>
                     <Spacing size={35} />
-                    <Title align="center" color="black">Карта Тима</Title>
-                    <Spacing size={10} />
-                    <Text align="center" color="black">Тим — новый парень в школе Кристины. В его руках оказалась карта, ведущая к волшебному посоху. Правда, охотник её порвал. Перетаскивайте кусочки, совмещая их по форме и изображению, чтобы передать целую карту Финнику!</Text>
-                    <Spacing size={30} />
-                    <Button onClick={()=>routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME3}`)}>
-                        <span>Играть!</span>
+                    <Title align="center" color="yellow">
+                        Виталя должен добыть
+                        <br />
+                        самую красивую ель
+                    </Title>
+                    <Spacing size={5} />
+                    <Text align="center" color="white">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.Lorem ipsum dolor sit amet
+                        consectetur. Pretium placerat duis convallis felis eget
+                        nunc arcu id at. Facilisi augue ultrices molestie.
+                    </Text>
+                    <Spacing size={40} />
+                    <Button
+                        onClick={() =>
+                            routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME3}`)
+                        }
+                    >
+                        <span>Продолжить</span>
                     </Button>
                     <Spacing size={90} />
                 </Div>

@@ -33,6 +33,10 @@ import { Game1 } from "./panels/Game1/Game1";
 import { getUser } from "./api/user/getUser";
 import { Game2Start } from "./panels/Game2/Game2Start";
 import { Game2 } from "./panels/Game2/Game2";
+import { Game3Start } from "./panels/Game3/Game3Start";
+import { Game3 } from "./panels/Game3/Game3";
+import { Game4Start } from "./panels/Game4/Game4Start";
+import { Game4 } from "./panels/Game4/Game4";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -114,7 +118,6 @@ export const App = () => {
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME2}
                             />
-                            {/* 
                             <Game3Start nav={DEFAULT_VIEW_PANELS.GAME3_START} />
                             <Game3
                                 updateTasks={updateTasks}
@@ -125,6 +128,7 @@ export const App = () => {
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME4}
                             />
+                            {/* 
                             <Game5Start nav={DEFAULT_VIEW_PANELS.GAME5_START} />
                             <Game5
                                 updateTasks={updateTasks}

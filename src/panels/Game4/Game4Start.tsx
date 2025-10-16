@@ -1,8 +1,14 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { classNames, Div, NavIdProps, Panel, Spacing, usePlatform } from "@vkontakte/vkui";
+import {
+    classNames,
+    Div,
+    NavIdProps,
+    Panel,
+    Spacing,
+    usePlatform,
+} from "@vkontakte/vkui";
 import { FC } from "react";
 import "swiper/css";
-import char5Image from "../../assets/img/task-pic5.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
@@ -12,7 +18,7 @@ import css from "./Game4start.module.css";
 
 export const Game4Start: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
-    const platform = usePlatform()
+    const platform = usePlatform();
 
     return (
         <Panel id={id} disableBackground className={css["game-start-panel"]}>
@@ -20,23 +26,41 @@ export const Game4Start: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                // title="О розыгрыше"
+                title="Совет от Зины"
             />
-           <div className={classNames(css["game-start-panel__content"], css[`game-start-panel__content_${platform}`])}>
-                <img
-                    className={css["game-start-panel__char"]}
-                    width={170}
-                    src={char5Image}
-                    alt=""
-                />
+            <div
+                className={classNames(
+                    css["game-start-panel__content"],
+                    css[`game-start-panel__content_${platform}`]
+                )}
+            >
+                <div className={css["game-start-panel__img-wrapper"]}>
+                    <img
+                        className={css["game-start-panel__img"]}
+                        width={145}
+                        src={"assets/img/tasks/task4/character-pic.png"}
+                        alt=""
+                    />
+                </div>
                 <Div>
                     <Spacing size={35} />
-                    <Title align="center" color="black">Маскировка для домовых</Title>
-                    <Spacing size={10} />
-                    <Text align="center" color="black">Охотник на домовых Юджин почти догнал Финника! Помогите ему слиться с толпой: установите обложку страницы, чтобы помочь Финнику спрятаться!»</Text>
-                    <Spacing size={30} />
-                    <Button onClick={()=>routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME4}`)}>
-                        <span>Играть!</span>
+                    <Title align="center" color="yellow">Зина подготовила<br/>
+пару советов</Title>
+                    <Spacing size={5} />
+                    <Text align="center" color="white">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.Lorem ipsum dolor sit amet
+                        consectetur. Pretium placerat duis convallis felis eget
+                        nunc arcu id at. Facilisi augue ultrices molestie.
+                    </Text>
+                    <Spacing size={40} />
+                    <Button
+                        onClick={() =>
+                            routeNavigator.push(`/${DEFAULT_VIEW_PANELS.GAME4}`)
+                        }
+                    >
+                        <span>Продолжить</span>
                     </Button>
                     <Spacing size={90} />
                 </Div>
