@@ -1,33 +1,39 @@
-.settings-block{
-    margin-bottom: auto;
-}
-
 .settings-panel{
     position: relative;
+    overflow: hidden;
 }
 
-.settings-panel::before{
+.settings-panel::before {
     content: '';
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../assets/img/main-bg.png);
+    background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
-    background-size: contain;
-    background-color: #E4ECE3;
+    background-size: cover;
 }
 
-.settings-panel__content{
-    background: #E4ECE3;
+.settings-panel__content {
+    background: #0000001F;
     border-radius: 30px 30px 0 0;
     padding: 0px 0 30px;
-    min-height: calc(100dvh - 200px);
+    min-height: calc(100dvh - 100px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-panel__content_ios{
+    margin-bottom: -45px;
+    padding-bottom: 45px;
 }
 
 .settings-switch :global(input:checked + .vkuiSwitch__inputFake .vkuiSwitch__track){
-    background-color: #DD2085;
+    background-color: #FFC30B;
 }
 
 .video{

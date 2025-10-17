@@ -21,6 +21,7 @@ import css from "./Game4.module.css";
 import { Text } from "../../components/Text/Text";
 import { PlusBall } from "../../components/PlusBall/PlusBall";
 import { GameDone } from "../../components/GameDone/GameDone";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -46,12 +47,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showPopout(
-                        <GameCancel
-                            reloadHandler={() => routeNavigator.hidePopout()}
-                            backHandler={() => routeNavigator.replace(`/`)}
-                        />
-                    );
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
                 title="Совет от Зины"
             ></CustomPanelHeader>
@@ -140,7 +136,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                             placerat duis convallis felis eget nunc arcu id at.
                             Facilisi augue ultrices molestie.
                         </Text>
-                         <Spacing size={25} />
+                        <Spacing size={25} />
                         <PlusBall />
                     </div>
                 ) : (

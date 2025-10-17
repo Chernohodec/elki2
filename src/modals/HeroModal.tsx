@@ -1,69 +1,50 @@
-import { Icon24Dismiss } from "@vkontakte/icons";
 import {
-    useMetaParams,
-    useRouteNavigator,
+    useMetaParams
 } from "@vkontakte/vk-mini-apps-router";
 import {
     Div,
-    ModalPage,
-    ModalPageHeader,
+    ModalCard,
     NavIdProps,
-    PanelHeaderButton
+    Spacing
 } from "@vkontakte/vkui";
 import React from "react";
-import character1 from "../assets/img/map/map-item1.png";
-import character2 from "../assets/img/map/map-item2.png";
-import character3 from "../assets/img/map/map-item3.png";
-import character4 from "../assets/img/map/map-item4.png";
-import character5 from "../assets/img/map/map-item5.png";
-import character6 from "../assets/img/map/map-item6.png";
-import { checkTimeIsAllowed } from "../helpers/checkTimeIsAllowed";
+import { selectHeroes } from "../store/main.reducer";
+import css from './modals.module.css'
 import { useAppSelector } from "../store";
-import { } from "../store/main.reducer";
-import { selectTasks } from "../store/tasks.reducer";
+import { Title } from "../components/Title/Title";
+import { Text } from "../components/Text/Text";
+import { Button } from "../components/Button/Button";
 
 const HeroModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
-    // const chars = [
-    //     { id: 1, pic: character1 },
-    //     { id: 2, pic: character2 },
-    //     { id: 3, pic: character3 },
-    //     { id: 4, pic: character4 },
-    //     { id: 5, pic: character5 },
-    //     { id: 6, pic: character6 },
-    // ];
-
     // const routeNavigator = useRouteNavigator();
 
-    // const params = useMetaParams<{ action: string; value: number }>();
-    // const tasks = useAppSelector(selectTasks);
-    // const currentTask = tasks.find((task) => task.id === params?.value);
-    // const taskIsReady = checkTimeIsAllowed(currentTask?.activation_time);
-    // const currentCharPic = chars.find(
-    //     (char) => char.id === currentTask?.id
-    // )?.pic;
+    const params = useMetaParams<{ action: string; value: number }>();
+    const heroes = useAppSelector(selectHeroes);
+    const currentHero = heroes.find((hero) => hero.id === params?.value);
 
     return (
-        <ModalPage
-            className="modal"
-            hideCloseButton={true}
+        <ModalCard
+            className={css["modal"]}
             {...props}
             onClose={props.onClose}
-            dynamicContentHeight
-            header={
-                <ModalPageHeader
-                    after={
-                        <PanelHeaderButton onClick={props.onClose}>
-                            <Icon24Dismiss />
-                        </PanelHeaderButton>
-                    }
-                    noSeparator
-                ></ModalPageHeader>
-            }
         >
-            {/* {currentTask && (
-                <Div style={{ paddingTop: 0 }}></Div>
-            )} */}
-        </ModalPage>
+            <div className={css['modal__content']}>
+                <div className={css["hero-img-wrapper"]}>
+                    <img
+                        className={css["hero-img-wrapper__img"]}
+                        width={145}
+                        src={currentHero?.img}
+                        alt=""
+                    />
+                </div>
+                <Spacing size={20}/>
+                <Title align="center">{currentHero?.actor.name}</Title>
+                <Spacing size={5}/>
+                <Text align="center">{currentHero?.actor.text}</Text>
+                <Spacing size={35}/>
+                <Button onClick={props.onClose}>Продолжить</Button>
+            </div>
+        </ModalCard>
     );
 };
 

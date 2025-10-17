@@ -8,46 +8,16 @@ import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPane
 import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
 import css from "./About.module.css";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
+import { useAppSelector } from "../../store";
+import { selectHeroes } from "../../store/main.reducer";
 
 export const About: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
 
     const swiperRef = useRef();
 
-    const heroes = [
-        {
-            id: 1,
-            img: "assets/img/tasks/task2/character-pic.png",
-            actor: {
-                name: <p>Дядя юра</p>,
-                voice: "Дмитрий Нагиев",
-            },
-        },
-        {
-            id: 2,
-            img: "assets/img/tasks/task2/character-pic.png",
-            actor: {
-                name: <p>Дядя юра</p>,
-                voice: "Дмитрий Нагиев",
-            },
-        },
-        {
-            id: 3,
-            img: "assets/img/tasks/task2/character-pic.png",
-            actor: {
-                name: <p>Дядя юра</p>,
-                voice: "Дмитрий Нагиев",
-            },
-        },
-        {
-            id: 4,
-            img: "assets/img/tasks/task2/character-pic.png",
-            actor: {
-                name: <p>Дядя юра</p>,
-                voice: "Дмитрий Нагиев",
-            },
-        },
-    ];
+    const heroes = useAppSelector(selectHeroes);
 
     const gallery = [
         { id: 1, pic: "assets/img/movie-pic.jpg" },
@@ -137,7 +107,21 @@ export const About: FC<NavIdProps> = ({ id }) => {
                                         >
                                             {hero.actor.voice}
                                         </Title>
-                                        <Button color="yellow" size="small">
+                                        <Button
+                                            color="yellow"
+                                            size="small"
+                                            onClick={() =>
+                                                routeNavigator.showModal(
+                                                    DEFAULT_VIEW_MODALS.HERO_MODAL,
+                                                    {
+                                                        state: {
+                                                            action: "taskID",
+                                                            value: hero.id,
+                                                        },
+                                                    }
+                                                )
+                                            }
+                                        >
                                             О герое
                                         </Button>
                                     </div>
@@ -159,7 +143,9 @@ export const About: FC<NavIdProps> = ({ id }) => {
                                 <SwiperSlide key={photo.id}>
                                     <div className={css["gallery-photo"]}>
                                         <img
-                                            className={css["gallery-photo__img"]}
+                                            className={
+                                                css["gallery-photo__img"]
+                                            }
                                             src={photo.pic}
                                             alt=""
                                             width={330}
@@ -170,7 +156,7 @@ export const About: FC<NavIdProps> = ({ id }) => {
                         })}
                     </Swiper>
                 </div>
-                <Spacing size={35}/>
+                <Spacing size={35} />
                 <Button color="yellow">Купить билеты</Button>
             </Div>
         </Panel>

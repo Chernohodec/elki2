@@ -5,7 +5,6 @@ export interface Task {
     id: number;
     name: string;
     text: string;
-    image: string;
     type: 'parent' | 'kid';
     checked: boolean;
     active: boolean;
@@ -36,9 +35,8 @@ const initialState: TasksState = {
             id: 1,
             name: "Письмо Деду Морозу",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
-            image: 'assets/img/tasks/task1-icon.png',
             type: 'kid',
-            activation_time: "2025-08-18T12:08:13+03:00",
+            activation_time: "2025-10-17T12:08:13+03:00",
             active: true,
             order: 1,
             checked: false,
@@ -47,9 +45,8 @@ const initialState: TasksState = {
             id: 2,
             name: "Поймай пига",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
-            image: 'assets/img/tasks/task2-icon.png',
             type: 'parent',
-            activation_time: "2025-08-11T20:51:03+03:00",
+            activation_time: "2025-10-18T20:51:03+03:00",
             active: true,
             order: 2,
             checked: false,
@@ -58,9 +55,8 @@ const initialState: TasksState = {
             id: 3,
             name: "Елочка для Витали",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
-            image: 'assets/img/tasks/task3-icon.png',
             type: 'kid',
-            activation_time: "2025-08-11T20:52:04+03:00",
+            activation_time: "2025-10-19T20:52:04+03:00",
             active: true,
             order: 3,
             checked: false,
@@ -69,9 +65,8 @@ const initialState: TasksState = {
             id: 4,
             name: "Совет от Зины",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
-            image: 'assets/img/tasks/task4-icon.png',
             type: 'parent',
-            activation_time: "2025-08-11T20:52:11+03:00",
+            activation_time: "2025-10-20T20:52:11+03:00",
             active: true,
             order: 4,
             checked: false,
@@ -80,9 +75,8 @@ const initialState: TasksState = {
             id: 5,
             name: "Кулинарная игра",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
-            image: 'assets/img/tasks/task5-icon.png',
             type: 'kid',
-            activation_time: "2025-08-12T20:52:32+03:00",
+            activation_time: "2025-10-21T20:52:32+03:00",
             active: true,
             order: 5,
             checked: false,
@@ -91,9 +85,8 @@ const initialState: TasksState = {
             id: 6,
             name: "Найди отличия",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
-            image: 'assets/img/tasks/task6-icon.png',
             type: 'parent',
-            activation_time: "2025-08-26T12:08:37+03:00",
+            activation_time: "2025-10-22T12:08:37+03:00",
             active: true,
             order: 6,
             checked: false,

@@ -5,8 +5,9 @@ import {
 import { ModalRoot } from "@vkontakte/vkui";
 import React from "react";
 import { DEFAULT_VIEW_MODALS } from "../routes";
+import { CloseModal } from "./CloseModal";
 import { HeroModal } from "./HeroModal";
-import { TicketModal } from "./TicketModal";
+import { TaskModal } from "./TaskModal";
 
 const Modals: React.FC = () => {
     const { modal } = useActiveVkuiLocation();
@@ -18,8 +19,12 @@ const Modals: React.FC = () => {
                 id={DEFAULT_VIEW_MODALS.HERO_MODAL}
                 onClose={() => routeNavigator.hideModal()}
             />
-            <TicketModal
-                id={DEFAULT_VIEW_MODALS.TICKETS_MODAL}
+            <TaskModal
+                id={DEFAULT_VIEW_MODALS.TASK_MODAL}
+                onClose={() => routeNavigator.hideModal()}
+            />
+            <CloseModal
+                id={DEFAULT_VIEW_MODALS.CLOSE_MODAL}
                 onClose={() => routeNavigator.hideModal()}
             />
         </ModalRoot>

@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Game3.module.css";
 import TreeProgressBar from "../../components/TreeProgressBar/TreeProgressBar";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -131,12 +132,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showPopout(
-                        <GameCancel
-                            reloadHandler={() => routeNavigator.hidePopout()}
-                            backHandler={() => routeNavigator.replace(`/`)}
-                        />
-                    );
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
                 title="Елочка для Витали"
             ></CustomPanelHeader>

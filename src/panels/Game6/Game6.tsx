@@ -21,6 +21,7 @@ import css from "./Game6.module.css";
 import { Text } from "../../components/Text/Text";
 import { PlusBall } from "../../components/PlusBall/PlusBall";
 import { GameDone } from "../../components/GameDone/GameDone";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -42,12 +43,7 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showPopout(
-                        <GameCancel
-                            reloadHandler={() => routeNavigator.hidePopout()}
-                            backHandler={() => routeNavigator.replace(`/`)}
-                        />
-                    );
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
                 title="Найди отличия"
             ></CustomPanelHeader>
@@ -59,7 +55,9 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
             >
                 <div className={css["game-area"]}>
                     <div className={css["game-area__pic1"]}></div>
-                    <div className={css["game-area__counter"]}>{foundItems.length}/5</div>
+                    <div className={css["game-area__counter"]}>
+                        {foundItems.length}/5
+                    </div>
                     <div className={css["game-area__pic2"]}>
                         <button
                             className={classNames(

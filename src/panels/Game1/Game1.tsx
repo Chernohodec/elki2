@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Title } from "../../components/Title/Title";
 import { Button } from "../../components/Button/Button";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export type GameProps = {
     id: number;
@@ -67,11 +68,8 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
         >
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showPopout(
-                        <GameCancel
-                            reloadHandler={() => routeNavigator.hidePopout()}
-                            backHandler={() => routeNavigator.replace(`/`)}
-                        />
+                    routeNavigator.showModal(
+                        DEFAULT_VIEW_MODALS.CLOSE_MODAL
                     );
                 }}
                 title="Письмо деду морозу"
@@ -91,9 +89,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 (а) себя
                             </Title>
                             <Spacing size={10} />
-                            <div
-                                className={css["custom-select"]}
-                            >
+                            <div className={css["custom-select"]}>
                                 <div
                                     onClick={() => setInput1IsOpen(true)}
                                     className={css["custom-select__main-value"]}

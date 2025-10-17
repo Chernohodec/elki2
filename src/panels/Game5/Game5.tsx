@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game5.module.css";
 import { Button } from "../../components/Button/Button";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -726,12 +727,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showPopout(
-                        <GameCancel
-                            reloadHandler={() => routeNavigator.hidePopout()}
-                            backHandler={() => routeNavigator.replace(`/`)}
-                        />
-                    );
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
                 title="Кулинарная игра"
             ></CustomPanelHeader>
@@ -829,7 +825,10 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             {gameComplete && (
                 <FixedLayout vertical="bottom">
                     <Div>
-                        <Button color="yellow" onClick={() => routeNavigator.back(2)}>
+                        <Button
+                            color="yellow"
+                            onClick={() => routeNavigator.back(2)}
+                        >
                             К заданиям
                         </Button>
                     </Div>

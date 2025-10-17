@@ -10,7 +10,6 @@ import {
 } from "@vkontakte/vkui";
 import { FC } from "react";
 import "swiper/css";
-import char1Image from "../../assets/img/task-pic1.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
@@ -28,7 +27,7 @@ export const Game1Start: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                // title="О розыгрыше"
+                title="письмо деду морозу"
             />
             <div
                 className={classNames(
@@ -36,25 +35,30 @@ export const Game1Start: FC<NavIdProps> = ({ id }) => {
                     css[`game-start-panel__content_${platform}`]
                 )}
             >
-                <img
-                    className={css["game-start-panel__char"]}
-                    width={170}
-                    src={char1Image}
-                    alt=""
-                />
+                <div className={css["game-start-panel__img-wrapper"]}>
+                    <img
+                        className={css["game-start-panel__img"]}
+                        width={145}
+                        src={"assets/img/tasks/task1/character-pic.png"}
+                        alt=""
+                    />
+                </div>
                 <Div>
                     <Spacing size={35} />
-                    <Title align="center" color="black">
-                        Мелодия Кристины
+                    <Title align="center" color="yellow">
+                        Помоги ване
+                        <br />
+                        написать письмо
                     </Title>
-                    <Spacing size={10} />
-                    <Text align="center" color="black">
-                        Чтобы поддержать Финника в путешествии, Кристина играет
-                        его любимую мелодию. А вам нужно правильно её повторить,
-                        чтобы Финник точно услышал! Чем дольше играете без
-                        ошибок, тем дальше Финник идёт по карте.{" "}
+                    <Spacing size={5} />
+                    <Text align="center" color="white">
+                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                        duis convallis felis eget nunc arcu id at. Facilisi
+                        augue ultrices molestie.Lorem ipsum dolor sit amet
+                        consectetur. Pretium placerat duis convallis felis eget
+                        nunc arcu id at. Facilisi augue ultrices molestie.
                     </Text>
-                    <Spacing size={30} />
+                    <Spacing size={40} />
                     <Spacing size={90} />
                 </Div>
             </div>

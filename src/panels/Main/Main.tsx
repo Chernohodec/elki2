@@ -13,7 +13,7 @@ import {
     classNames,
     usePlatform,
 } from "@vkontakte/vkui";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Map } from "../../components/Map/Map";
@@ -23,6 +23,9 @@ import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Main.module.css";
+import { checkTimeIsAllowed } from "../../helpers/checkTimeIsAllowed";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
+import Timer from "../../components/Timer/Timer";
 
 export const Main: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -30,6 +33,8 @@ export const Main: FC<NavIdProps> = ({ id }) => {
     const isDesktop = platform === "vkcom";
     const dispatch = useAppDispatch();
     const tasks = useAppSelector(selectTasks);
+    const [showAllTasks, setShowAllTasks] = useState(false);
+    const displayedTasks = showAllTasks ? tasks : tasks.slice(0, 3);
     const tasksDone = tasks.filter((task) => !task.checked).length === 0;
     const { vk_user_id } = parseURLSearchParamsForGetLaunchParams(
         window.location.search
@@ -94,24 +99,30 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                 </div>
                 <Spacing size={20} />
                 <div className={css["tasks-list"]}>
-                    {tasks.map((task) => {
+                    {displayedTasks.map((task) => {
+                        const taskIsOpen = checkTimeIsAllowed(
+                            task.activation_time
+                        );
                         return (
                             <div className={css["tasks-item"]} key={task.id}>
                                 <div className={css["tasks-item__content"]}>
-                                    <div
-                                        className={classNames(
-                                            css["tasks-item__image"],
-                                            css[
-                                                `tasks-item__image_type_${task.type}`
-                                            ]
-                                        )}
-                                    >
-                                        <img
-                                            width={85}
-                                            src={task.image}
-                                            alt=""
-                                        />
-                                    </div>
+                                    {taskIsOpen && (
+                                        <div
+                                            className={classNames(
+                                                css["tasks-item__image"],
+                                                css[
+                                                    `tasks-item__image_type_${task.type}`
+                                                ]
+                                            )}
+                                        >
+                                            <img
+                                                width={85}
+                                                src={`assets/img/tasks/task${task.id}-icon.png`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    )}
+
                                     <div className={css["tasks-item__info"]}>
                                         <div
                                             className={classNames(
@@ -152,27 +163,90 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                             {task.name}
                                         </Title>
                                     </div>
-                                    <Button
-                                        className={css["tasks-item__button"]}
-                                        color={
-                                            task.type === "kid"
-                                                ? "yellow"
-                                                : "red"
-                                        }
-                                        size="small"
-                                    >
-                                        Выполнить
-                                    </Button>
+                                    {taskIsOpen ? (
+                                        <Button
+                                            className={
+                                                css["tasks-item__button"]
+                                            }
+                                            color={
+                                                task.type === "kid"
+                                                    ? "yellow"
+                                                    : "red"
+                                            }
+                                            size="small"
+                                            onClick={() =>
+                                                routeNavigator.showModal(
+                                                    DEFAULT_VIEW_MODALS.TASK_MODAL,
+                                                    {
+                                                        state: {
+                                                            action: "taskID",
+                                                            value: task.id,
+                                                        },
+                                                    }
+                                                )
+                                            }
+                                        >
+                                            Выполнить
+                                        </Button>
+                                    ) : (
+                                        <div
+                                            className={
+                                                css["tasks-item__closed"]
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    css[
+                                                        "tasks-item__timer-wrapper"
+                                                    ]
+                                                }
+                                            >
+                                                <Title
+                                                    size="xs"
+                                                    color="red-black"
+                                                     className={
+                                                        css["tasks-item__timer-text"]
+                                                    }
+                                                >
+                                                    До открытия:
+                                                </Title>
+                                                <Title
+                                                    className={
+                                                        css["tasks-item__timer"]
+                                                    }
+                                                    size="medium"
+                                                    color="red-black"
+                                                >
+                                                    <Timer
+                                                        time={
+                                                            task.activation_time
+                                                        }
+                                                    />
+                                                </Title>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         );
                     })}
                 </div>
-                <Spacing size={20} />
-                <Button color="transparent-yellow">
-                    <span>Показать все задания</span>
-                    <img src="assets/img/all-tasks-icon.svg" alt="" />
-                </Button>
+                {displayedTasks.length < 4 && (
+                    <>
+                        <Spacing size={20} />
+                        <Button
+                            color="transparent-yellow"
+                            onClick={() => setShowAllTasks(!showAllTasks)}
+                        >
+                            <span>
+                                {showAllTasks
+                                    ? "Скрыть"
+                                    : "Показать все задания"}
+                            </span>
+                            <img src="assets/img/all-tasks-icon.svg" alt="" />
+                        </Button>
+                    </>
+                )}
             </Div>
             <div className={classNames(css["main-page-banner"])}>
                 <Div className={css["main-page-content__text"]}>

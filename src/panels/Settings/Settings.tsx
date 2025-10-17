@@ -55,25 +55,25 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
                                 }}
                             />
                         }
-                        subtitle={<span>Пришлём уведомление, <br/>когда откроется новое задание</span>}
+                        subtitle={<span style={{color: '#ffffffaa'}}>Пришлём уведомление, <br/>когда откроется новое задание</span>}
                         before={
                             <Icon24NotificationOutline
-                                fill="#DD2085"
+                                fill="#FFC30B"
                                 width={28}
                                 height={28}
                             />
                         }
                     >
-                        Уведомления
+                        <span style={{color: '#fff'}}>Уведомления</span>
                     </SimpleCell>
                     <Spacing size={10} />
                     <SimpleCell
-                        before={<Icon28DocumentTextOutline fill="#DD2085" />}
-                        after={<Icon24ChevronCompactRight fill="#DD2085" />}
+                        before={<Icon28DocumentTextOutline fill="#FFC30B" />}
+                        after={<Icon24ChevronCompactRight fill="#FFC30B" />}
                         href="https://disk.yandex.ru/i/uL5nT6gWIG7_3w"
                         target="_blank"
                     >
-                        Правила сервиса
+                        <span style={{color: '#fff'}}>Правила сервиса</span>
                     </SimpleCell>
                     <Spacing size={30} />
                     <VkVideoBanner
@@ -81,7 +81,7 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
                         onClick={() => {}}
                     />
                     <Spacing size={20} />
-                    <Button href="https://www.afisha.ru/movie/finnik-2-306500/">Купить билеты</Button>
+                    <Button color="yellow" href="https://www.afisha.ru/movie/finnik-2-306500/">Купить билеты</Button>
                 </Div>
             </div>
         </Panel>

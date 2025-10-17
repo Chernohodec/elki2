@@ -17,6 +17,7 @@ import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
 import { Title } from "../../components/Title/Title";
 import { Button } from "../../components/Button/Button";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -123,12 +124,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showPopout(
-                        <GameCancel
-                            reloadHandler={() => routeNavigator.hidePopout()}
-                            backHandler={() => routeNavigator.replace(`/`)}
-                        />
-                    );
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
                 title="Поймай пига"
             ></CustomPanelHeader>

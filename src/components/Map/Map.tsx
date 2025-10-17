@@ -1,11 +1,6 @@
-import {
-    useActiveVkuiLocation,
-    useRouteNavigator,
-} from "@vkontakte/vk-mini-apps-router";
 import { classNames, Spacing, usePlatform } from "@vkontakte/vkui";
 import { MouseEventHandler } from "react";
 import "swiper/css";
-import { DEFAULT_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Button } from "../Button/Button";
@@ -22,18 +17,39 @@ export type Map = {
 
 export const Map = ({ ...props }: Map) => {
     const platform = usePlatform();
-    const isDesktop = platform === "vkcom";
-    const routeNavigator = useRouteNavigator();
-    const { panel: activePanel = DEFAULT_VIEW_PANELS.MAIN } =
-        useActiveVkuiLocation();
-    const isMainPanel = activePanel === DEFAULT_VIEW_PANELS.MAIN;
     const tasks = useAppSelector(selectTasks);
+    const taskImages = [
+        {
+            id: 1,
+            icon: "assets/img/tasks/task1-icon.png",
+        },
+        {
+            id: 2,
+            icon: "assets/img/tasks/task2-icon.png",
+        },
+        {
+            id: 3,
+            icon: "assets/img/tasks/task3-icon.png",
+        },
+        {
+            id: 4,
+            icon: "assets/img/tasks/task4-icon.png",
+        },
+        {
+            id: 5,
+            icon: "assets/img/tasks/task5-icon.png",
+        },
+        {
+            id: 6,
+            icon: "assets/img/tasks/task6-icon.png",
+        },
+    ];
 
     return (
         <div className={classNames(css["map"], props.className)}>
             <div className={classNames(css["map__image"])}>
                 <div className={classNames(css["tasks"])}>
-                    {tasks.map((task) => (
+                    {tasks.map((task, index) => (
                         <div className={css["task-item"]} key={task.id}>
                             <div className={css["task-item__content"]}>
                                 <div
@@ -42,7 +58,7 @@ export const Map = ({ ...props }: Map) => {
                                         css[`task-item__icon_type_${task.type}`]
                                     )}
                                 >
-                                    <img src={task.image} alt="" />
+                                    <img src={`assets/img/tasks/task${task.id}-icon.png`} alt="" />
                                 </div>
                                 <Spacing size={12} />
                                 <Title
@@ -67,7 +83,7 @@ export const Map = ({ ...props }: Map) => {
                                     <img
                                         className={css["task-item__image-pic"]}
                                         width={95}
-                                        src={task.image}
+                                        src={`assets/img/tasks/task${task.id}-icon.png`}
                                         alt=""
                                     />
                                     <div

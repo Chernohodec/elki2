@@ -112,7 +112,7 @@ export const App = () => {
                             <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
                             <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
 
-                            {/* <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} /> */}
+                            <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
                             <Game1
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME1}
@@ -137,7 +137,6 @@ export const App = () => {
                                 updateTasks={updateTasks}
                                 nav={DEFAULT_VIEW_PANELS.GAME5}
                             />
-                            
                             <Game6Start nav={DEFAULT_VIEW_PANELS.GAME6_START} />
                             <Game6
                                 updateTasks={updateTasks}
