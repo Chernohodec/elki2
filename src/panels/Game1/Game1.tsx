@@ -2,22 +2,22 @@ import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
     Div,
-    NavIdProps,
+    FixedLayout,
     Panel,
     Spacing,
     usePlatform,
 } from "@vkontakte/vkui";
 import { FC, useEffect, useState } from "react";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { GameCancel } from "../../components/GameCancel/GameCancel";
 import css from "./Game1.module.css";
 
 // Импортируем звуковые файлы
-import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks } from "../../store/tasks.reducer";
-import { Title } from "../../components/Title/Title";
 import { Button } from "../../components/Button/Button";
+import { Title } from "../../components/Title/Title";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
+import { GameDone } from "../../components/GameDone/GameDone";
 
 export type GameProps = {
     id: number;
@@ -27,6 +27,7 @@ export type GameProps = {
 export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
     const [currentStep, setCurrentStep] = useState(0);
+    const [gameComplete, setGameComplete] = useState(false);
     const [input1, setInput1] = useState("Выберите вариант");
     const [input2, setInput2] = useState("Выберите вариант");
     const [input1IsOpen, setInput1IsOpen] = useState(false);
@@ -60,6 +61,14 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
         setCurrentStep(currentStep + 1);
     };
 
+    const completeTask = () => {
+        // checkQuest(1).then(() => {
+        //     updateTasks();
+        // });
+        dispatch(setTaskChecked(1));
+        setGameComplete(true);
+    };
+
     return (
         <Panel
             id={id}
@@ -68,9 +77,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
         >
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showModal(
-                        DEFAULT_VIEW_MODALS.CLOSE_MODAL
-                    );
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
                 title="Письмо деду морозу"
             ></CustomPanelHeader>
@@ -81,7 +88,9 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                {currentStep === 0 && (
+                {gameComplete ? (
+                    <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
+                ) : currentStep === 0 ? (
                     <div className={css["mail-game"]}>
                         <div className={css["letter"]}>
                             <Title size="medium" align="center">
@@ -302,18 +311,9 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 type="text"
                                 maxLength={30}
                             />
-                            <Button
-                                disabled={!formIsValid}
-                                className={css["letter__submit"]}
-                                color="yellow"
-                                onClick={submitMail}
-                            >
-                                Отправить
-                            </Button>
                         </div>
                     </div>
-                )}
-                {currentStep === 1 && (
+                ) : currentStep === 1 ? (
                     <div className={css["mail-sending"]}>
                         <img
                             className={css["mail-sending__pic"]}
@@ -327,8 +327,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             Отправляем письмо...
                         </Title>
                     </div>
-                )}
-                {currentStep === 2 && (
+                ) : currentStep === 2 ? (
                     <div className={css["mail-sent"]}>
                         <Title color="yellow" align="center">
                             Пришло ответное письмо!
@@ -339,39 +338,71 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             src="assets/img/tasks/task1/mail-sent-pic.png"
                             alt=""
                         />
+                    </div>
+                ) : (
+                    currentStep === 3 && (
+                        <div className={css["mail-game"]}>
+                            <div className={css["letter"]}>
+                                <Title align="center">Привет Иван</Title>
+                                <Spacing size={10} />
+                                <Title
+                                    color="black"
+                                    size="medium"
+                                    align="center"
+                                >
+                                    Lorem ipsum dolor sit amet consectetur.
+                                    Ipsum id velit odio rutrum tortor nibh nisl.
+                                    Elementum enim condimentum euismod commodo
+                                    id. Purus eget cursus sit tortor justo amet.
+                                    Tempus nullam sodales leo fringilla commodo
+                                    donec justo massa sed. Etiam massa et at est
+                                    condimentum nec natoque.
+                                </Title>
+                            </div>
+                        </div>
+                    )
+                )}
+            </div>
+            <FixedLayout vertical="bottom">
+                <Div>
+                    {gameComplete ? (
                         <Button
                             color="yellow"
+                            className={css["letter__submit"]}
+                            onClick={() => routeNavigator.replace("/")}
+                        >
+                            К заданиям
+                        </Button>
+                    ) : currentStep === 0 ? (
+                        <Button
+                            disabled={!formIsValid}
+                            className={css["letter__submit"]}
+                            color="yellow"
+                            onClick={submitMail}
+                        >
+                            Отправить
+                        </Button>
+                    ) : currentStep === 1 ? (
+                        <></>
+                    ) : currentStep === 2 ? (
+                        <Button
+                            color="yellow"
+                            className={css["letter__submit"]}
                             onClick={() => setCurrentStep(3)}
                         >
                             Открыть конверт
                         </Button>
-                    </div>
-                )}
-                {currentStep === 3 && (
-                    <div className={css["mail-game"]}>
-                        <div className={css["letter"]}>
-                            <Title align="center">Привет Иван</Title>
-                            <Spacing size={10} />
-                            <Title color="black" size="medium" align="center">
-                                Lorem ipsum dolor sit amet consectetur. Ipsum id
-                                velit odio rutrum tortor nibh nisl. Elementum
-                                enim condimentum euismod commodo id. Purus eget
-                                cursus sit tortor justo amet. Tempus nullam
-                                sodales leo fringilla commodo donec justo massa
-                                sed. Etiam massa et at est condimentum nec
-                                natoque.
-                            </Title>
-                            <Button
-                                className={css["letter__submit"]}
-                                color="yellow"
-                                // onClick={submitMail}
-                            >
-                                Продолжить
-                            </Button>
-                        </div>
-                    </div>
-                )}
-            </div>
+                    ) : (
+                        <Button
+                            color="yellow"
+                            className={css["letter__submit"]}
+                            onClick={completeTask}
+                        >
+                            Продолжить
+                        </Button>
+                    )}
+                </Div>
+            </FixedLayout>
         </Panel>
     );
 };

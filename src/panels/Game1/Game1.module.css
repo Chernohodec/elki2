@@ -139,13 +139,9 @@
 }
 
 .letter__submit {
-    position: absolute;
-    width: 100%;
     margin: auto;
-    left: 0;
-    right: 0;
-    top: calc(100% + 25px);
     z-index: 2;
+    width: 330px;
 }
 
 .mail-sending {
@@ -173,6 +169,7 @@
 
 .mail-sent__pic{
     animation: floating 3s ease-in-out infinite;
+    margin: auto;
 }
 
 .mail-sent {

@@ -1,6 +1,8 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
+    Div,
+    FixedLayout,
     NavIdProps,
     Panel,
     Spacing,
@@ -13,10 +15,11 @@ import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPane
 import { GameCancel } from "../../components/GameCancel/GameCancel";
 import { Title } from "../../components/Title/Title";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks } from "../../store/tasks.reducer";
+import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game3.module.css";
 import TreeProgressBar from "../../components/TreeProgressBar/TreeProgressBar";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
+import { GameDone } from "../../components/GameDone/GameDone";
 
 export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -29,6 +32,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [onboardingDone, setOnboardingDone] = useState(false);
     const [gameActive, setGameActive] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [gameComplete, setGameComplete] = useState(false);
 
     const tapCountRef = useRef(0);
     const animationRef = useRef<number | null>(null);
@@ -39,6 +43,14 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
             routeNavigator.replace(`/`);
         }
     }, []);
+
+    const completeTask = () => {
+        // checkQuest(4).then(() => {
+        //     updateTasks();
+        // });
+        dispatch(setTaskChecked(3));
+        setGameComplete(true);
+    };
 
     const startGame = () => {
         setOnboardingDone(true);
@@ -103,20 +115,11 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     const gameWin = () => {
         setGameActive(false);
-
-        // Очищаем анимацию если она активна
         if (animationRef.current) {
             cancelAnimationFrame(animationRef.current);
         }
 
-        console.log("Победа! Прогресс достиг 100%!");
-
-        // Здесь можно добавить дополнительные действия при победе
-        // Например, показать победный экран или вызвать callback
-
-        if (updateTasks) {
-            updateTasks();
-        }
+        completeTask();
     };
 
     // Очистка анимации при размонтировании
@@ -142,71 +145,70 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                <div className={css["hit-tree-game"]}>
-                    <div className={css["game-area"]}>
-                        <div className={css["game-area__svg-wrapper"]}>
-                            <TreeProgressBar
-                                percents={percents}
-                                className={css["game-area__svg"]}
-                            />
-                        </div>
-                        <div
-                            className={css["game-area__tree"]}
-                            onClick={handleTreeTap}
-                            style={{
-                                cursor: gameActive ? "pointer" : "default",
-                                transform: isAnimating
-                                    ? "scale(0.95)"
-                                    : "scale(1)",
-                                transition: "transform 0.1s ease",
-                            }}
-                        >
-                            {!onboardingDone && (
-                                <img
-                                    src="assets/img/tasks/task2/touch-icon.svg"
-                                    className={css["game-area__pointer"]}
+                {!gameComplete ? (
+                    <div className={css["hit-tree-game"]}>
+                        <div className={css["game-area"]}>
+                            <div className={css["game-area__svg-wrapper"]}>
+                                <TreeProgressBar
+                                    percents={percents}
+                                    className={css["game-area__svg"]}
                                 />
-                            )}
+                            </div>
+                            <div
+                                className={css["game-area__tree"]}
+                                onClick={handleTreeTap}
+                                style={{
+                                    cursor: gameActive ? "pointer" : "default",
+                                    transform: isAnimating
+                                        ? "scale(0.95)"
+                                        : "scale(1)",
+                                    transition: "transform 0.1s ease",
+                                }}
+                            >
+                                {!onboardingDone && (
+                                    <img
+                                        src="assets/img/tasks/task2/touch-icon.svg"
+                                        className={css["game-area__pointer"]}
+                                    />
+                                )}
+                            </div>
                         </div>
+
+                        {/* Онбординг */}
+                        {!onboardingDone && (
+                            <div className={css["onboarding-wrapper"]}>
+                                <div className={css["onboarding"]}>
+                                    <Title align="center">
+                                        Тапайте по ели
+                                        <br />и заполняйте шкалу!
+                                    </Title>
+                                    <Spacing size={20} />
+                                    <Button color="red" onClick={startGame}>
+                                        Начать игру
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
                     </div>
-
-                    {/* Онбординг */}
-                    {!onboardingDone && (
-                        <div className={css["onboarding-wrapper"]}>
-                            <div className={css["onboarding"]}>
-                                <Title align="center">
-                                    Тапайте по ели
-                                    <br />и заполняйте шкалу!
-                                </Title>
-                                <Spacing size={20} />
-                                <Button color="red" onClick={startGame}>
-                                    Начать игру
-                                </Button>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Победный экран */}
-                    {percents >= 100 && (
-                        <div className={css["onboarding-wrapper"]}>
-                            <div className={css["onboarding"]}>
-                                <Title align="center">
-                                    Поздравляем!
-                                    <br />
-                                    Елочка наряжена!
-                                </Title>
-                                <Spacing size={20} />
-                                <Button
-                                    color="red"
-                                    onClick={() => routeNavigator.replace(`/`)}
-                                >
-                                    Завершить игру
-                                </Button>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                ) : (
+                    <GameDone
+                        pic="assets/img/tasks/task3/done.png"
+                        text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie."
+                    />
+                )}
             </div>
+            {gameComplete && (
+                <FixedLayout vertical="bottom">
+                    <Div>
+                        <Button
+                            color="yellow"
+                            onClick={() => routeNavigator.replace('/')}
+                        >
+                            К заданиям
+                        </Button>
+                    </Div>
+                </FixedLayout>
+            )}
         </Panel>
     );
 };

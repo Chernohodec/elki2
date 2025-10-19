@@ -55,7 +55,7 @@ export const CustomPanelHeader = ({
             )}
             delimiter="none"
             transparent={true}
-            fixed={isMainPanel ? true : false}
+            fixed={isMainPanel ? false : false}
             float={isMainPanel ? true : false}
             before={
                 onBackClick ? (

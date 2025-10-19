@@ -15,6 +15,7 @@
     border: 1px solid #FFFFFF52;
     border-radius: 34px;
     box-shadow: 0 5px 0 #FFFFFF70;
+    max-width: 450px;
 }
 
 .tabbar-item__content {
@@ -33,12 +34,12 @@
 
 .tabbar-item__content span {
     color: #989898;
-    font-size: 12px;
+    font-size: 11px;
     transition: .3s;
     text-transform: uppercase;
     font-weight: 600;
     font-family: OpinionPro;
-    letter-spacing: -0.6px;
+    letter-spacing: -0.7px;
 }
 
 .tabbar-item {

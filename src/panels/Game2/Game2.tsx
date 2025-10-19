@@ -2,6 +2,7 @@ import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
     Div,
+    FixedLayout,
     NavIdProps,
     Panel,
     Spacing,
@@ -13,11 +14,12 @@ import game2Title from "../../assets/img/tasks/task2/task2-header-title.png";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { GameCancel } from "../../components/GameCancel/GameCancel";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks } from "../../store/tasks.reducer";
+import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
 import { Title } from "../../components/Title/Title";
 import { Button } from "../../components/Button/Button";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
+import { GameDone } from "../../components/GameDone/GameDone";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -31,7 +33,16 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [score, setScore] = useState(0);
     const [activeHole, setActiveHole] = useState<number | null>(null);
     const [gameActive, setGameActive] = useState(false);
+    const [gameComplete, setGameComplete] = useState(false);
     const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+    const completeTask = () => {
+        // checkQuest(2).then(() => {
+        //     updateTasks();
+        // });
+        dispatch(setTaskChecked(2));
+        setGameComplete(true);
+    };
 
     useEffect(() => {
         if (!currentTask?.active) {
@@ -101,14 +112,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             clearInterval(gameIntervalRef.current);
             gameIntervalRef.current = null;
         }
-
-        // Здесь можно добавить логику завершения игры
-        console.log("Победа! Набрано 10 очков!");
-
-        // Пример вызова функции обновления задач
-        if (updateTasks) {
-            updateTasks();
-        }
+        completeTask()
     };
 
     // Функция для получения класса порядка для snowdrift-wrapper
@@ -134,111 +138,122 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                <div className={css["hit-pig-game"]}>
-                    <div className={css["hit-pig-counter"]}>
-                        <Title color="yellow">{score}/10</Title>
-                    </div>
-                    <div className={css["game-area"]}>
-                        {/* Первый ряд снежных сугробов */}
-                        <div className={css["snow-row"]}>
-                            {holes.slice(0, 3).map((holeIndex) => (
-                                <div
-                                    key={holeIndex}
-                                    className={classNames(
-                                        css["snowdrift-wrapper"],
-                                        getOrderClass(holeIndex)
-                                    )}
-                                    onClick={() => handleHoleClick(holeIndex)}
-                                    style={{
-                                        cursor: gameActive
-                                            ? "pointer"
-                                            : "default",
-                                    }}
-                                >
-                                    <div className={css["snowdrift"]}></div>
-                                    {!onboardingDone && holeIndex === 0 && (
-                                        <>
-                                            <img
-                                                src="assets/img/tasks/task2/touch-icon.svg"
-                                                className={
-                                                    css[
-                                                        "snowdrift-wrapper__pointer"
-                                                    ]
-                                                }
-                                            />
-                                            <div className={css["pig"]}></div>
-                                        </>
-                                    )}
-                                    {/* Свинья появляется только в активной яме */}
-                                    {activeHole === holeIndex && gameActive && (
-                                        <div className={css["pig"]}></div>
-                                    )}
-                                </div>
-                            ))}
+                {!gameComplete ? (
+                    <div className={css["hit-pig-game"]}>
+                        <div className={css["hit-pig-counter"]}>
+                            <Title color="yellow">{score}/10</Title>
                         </div>
+                        <div className={css["game-area"]}>
+                            {/* Первый ряд снежных сугробов */}
+                            <div className={css["snow-row"]}>
+                                {holes.slice(0, 3).map((holeIndex) => (
+                                    <div
+                                        key={holeIndex}
+                                        className={classNames(
+                                            css["snowdrift-wrapper"],
+                                            getOrderClass(holeIndex)
+                                        )}
+                                        onClick={() =>
+                                            handleHoleClick(holeIndex)
+                                        }
+                                        style={{
+                                            cursor: gameActive
+                                                ? "pointer"
+                                                : "default",
+                                        }}
+                                    >
+                                        <div className={css["snowdrift"]}></div>
+                                        {!onboardingDone && holeIndex === 0 && (
+                                            <>
+                                                <img
+                                                    src="assets/img/tasks/task2/touch-icon.svg"
+                                                    className={
+                                                        css[
+                                                            "snowdrift-wrapper__pointer"
+                                                        ]
+                                                    }
+                                                />
+                                                <div
+                                                    className={css["pig"]}
+                                                ></div>
+                                            </>
+                                        )}
+                                        {/* Свинья появляется только в активной яме */}
+                                        {activeHole === holeIndex &&
+                                            gameActive && (
+                                                <div
+                                                    className={css["pig"]}
+                                                ></div>
+                                            )}
+                                    </div>
+                                ))}
+                            </div>
 
-                        {/* Второй ряд снежных сугробов */}
-                        <div className={css["snow-row"]}>
-                            {holes.slice(3, 6).map((holeIndex) => (
-                                <div
-                                    key={holeIndex}
-                                    className={classNames(
-                                        css["snowdrift-wrapper"],
-                                        getOrderClass(holeIndex)
-                                    )}
-                                    onClick={() => handleHoleClick(holeIndex)}
-                                    style={{
-                                        cursor: gameActive
-                                            ? "pointer"
-                                            : "default",
-                                    }}
-                                >
-                                    <div className={css["snowdrift"]}></div>
-                                    {/* Свинья появляется только в активной яме */}
-                                    {activeHole === holeIndex && gameActive && (
-                                        <div className={css["pig"]}></div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    {!onboardingDone && (
-                        <div className={css["onboarding-wrapper"]}>
-                            <div className={css["onboarding"]}>
-                                <Title align="center">
-                                    Тапайте по пигу,
-                                    <br />
-                                    чтобы поймать его
-                                </Title>
-                                <Spacing size={20} />
-                                <Button color="red" onClick={startGame}>
-                                    Начать игру
-                                </Button>
+                            {/* Второй ряд снежных сугробов */}
+                            <div className={css["snow-row"]}>
+                                {holes.slice(3, 6).map((holeIndex) => (
+                                    <div
+                                        key={holeIndex}
+                                        className={classNames(
+                                            css["snowdrift-wrapper"],
+                                            getOrderClass(holeIndex)
+                                        )}
+                                        onClick={() =>
+                                            handleHoleClick(holeIndex)
+                                        }
+                                        style={{
+                                            cursor: gameActive
+                                                ? "pointer"
+                                                : "default",
+                                        }}
+                                    >
+                                        <div className={css["snowdrift"]}></div>
+                                        {/* Свинья появляется только в активной яме */}
+                                        {activeHole === holeIndex &&
+                                            gameActive && (
+                                                <div
+                                                    className={css["pig"]}
+                                                ></div>
+                                            )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    )}
-
-                    {/* Сообщение о победе */}
-                    {score >= 10 && (
-                        <div className={css["onboarding-wrapper"]}>
-                            <div className={css["onboarding"]}>
-                                <Title align="center">
-                                    Поздравляем!
-                                    <br />
-                                    Вы поймали 10 пигов!
-                                </Title>
-                                <Spacing size={20} />
-                                <Button
-                                    color="red"
-                                    onClick={() => routeNavigator.replace(`/`)}
-                                >
-                                    Завершить игру
-                                </Button>
+                        {!onboardingDone && (
+                            <div className={css["onboarding-wrapper"]}>
+                                <div className={css["onboarding"]}>
+                                    <Title align="center">
+                                        Тапайте по пигу,
+                                        <br />
+                                        чтобы поймать его
+                                    </Title>
+                                    <Spacing size={20} />
+                                    <Button color="red" onClick={startGame}>
+                                        Начать игру
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
+                ) : (
+                    <GameDone
+                        pic="assets/img/tasks/task2/done.png"
+                        text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie."
+                    />
+                )}
             </div>
+            {gameComplete && (
+                <FixedLayout vertical="bottom">
+                    <Div>
+                        <Button
+                            color="yellow"
+                            onClick={() => routeNavigator.replace("/")}
+                        >
+                            К заданиям
+                        </Button>
+                    </Div>
+                </FixedLayout>
+            )}
         </Panel>
     );
 };

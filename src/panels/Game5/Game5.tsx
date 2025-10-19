@@ -78,6 +78,14 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     const [gems, setGems] = useState<number[][]>([]);
 
+    const completeTask = () => {
+        // checkQuest(5).then(() => {
+        //     updateTasks();
+        // });
+        dispatch(setTaskChecked(5));
+        setGameComplete(true);
+    };
+
     // Инициализация игрового поля
     const initGame = () => {
         const newGems: number[][] = Array(config.countRows)
@@ -115,11 +123,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             });
 
             setTimeout(() => {
-                checkQuest(6).then(() => {
-                    updateTasks();
-                });
-                dispatch(setTaskChecked(6));
-                setGameComplete(true);
+                completeTask()
             }, allGems.length * 50 + 300);
         }
     }, [counters]);
@@ -827,7 +831,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     <Div>
                         <Button
                             color="yellow"
-                            onClick={() => routeNavigator.back(2)}
+                            onClick={() => routeNavigator.replace('/')}
                         >
                             К заданиям
                         </Button>
