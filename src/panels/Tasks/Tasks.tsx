@@ -92,7 +92,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
     const inviteFriend = async () => {
         bridge
             .send("VKWebAppShare", {
-                link: `https://vk.com/app53990455#/?referal_id=${vk_user_id}`,
+                link: `https://vk.com/app54237274#/?referal_id=${vk_user_id}`,
                 text: "Я помогаю Финнику добраться до волшебного посоха и участвую в розыгрыше призов. Присоединяйся!",
             })
             .then((data) => {
@@ -192,10 +192,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                     alt=""
                                 />
                                 <Spacing size={15} />
-                                <Title
-                                    color="white"
-                                    align="center"
-                                >
+                                <Title color="white" align="center">
                                     Получите больше
                                     <br />
                                     шаров за друзей

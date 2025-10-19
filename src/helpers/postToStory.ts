@@ -9,7 +9,7 @@ export const postToStory = async (url: string) => {
                 attachment: {
                     text: "open",
                     type: "url",
-                    url: "https://vk.com/app53990455",
+                    url: "https://vk.com/app54237274",
                 },
             })
 

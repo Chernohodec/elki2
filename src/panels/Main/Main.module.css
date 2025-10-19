@@ -135,6 +135,21 @@
     border-radius: 26px;
 }
 
+.tasks-item__done {
+    height: 42px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FCF0D1;
+    border-radius: 21px;
+    padding: 0 20px;
+    font-size: 14px;
+    font-family: OpinionPro;
+    text-transform: uppercase;
+    color: #6E000C;
+}
+
 .tasks-item__timer-wrapper{
     display: flex;
     align-items: center;

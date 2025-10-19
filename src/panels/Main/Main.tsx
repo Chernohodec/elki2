@@ -43,7 +43,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
     const inviteFriend = async () => {
         bridge
             .send("VKWebAppShare", {
-                link: `https://vk.com/app53990455#/?referal_id=${vk_user_id}`,
+                link: `https://vk.com/app54237274#/?referal_id=${vk_user_id}`,
                 text: "Я помогаю Финнику добраться до волшебного посоха и участвую в розыгрыше призов. Присоединяйся!",
             })
             .then((data) => {
@@ -103,6 +103,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                         const taskIsOpen = checkTimeIsAllowed(
                             task.activation_time
                         );
+
                         return (
                             <div className={css["tasks-item"]} key={task.id}>
                                 <div className={css["tasks-item__content"]}>
@@ -163,7 +164,15 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                             {task.name}
                                         </Title>
                                     </div>
-                                    {taskIsOpen ? (
+                                    {task.checked ? (
+                                        <div
+                                            className={
+                                                css["tasks-item__done"]
+                                            }
+                                        >
+                                            Выполнено
+                                        </div>
+                                    ) : taskIsOpen ? (
                                         <Button
                                             className={
                                                 css["tasks-item__button"]
@@ -204,8 +213,10 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                 <Title
                                                     size="xs"
                                                     color="red-black"
-                                                     className={
-                                                        css["tasks-item__timer-text"]
+                                                    className={
+                                                        css[
+                                                            "tasks-item__timer-text"
+                                                        ]
                                                     }
                                                 >
                                                     До открытия:
