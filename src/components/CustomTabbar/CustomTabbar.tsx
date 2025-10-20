@@ -47,7 +47,7 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             </button>
             <button
                 onClick={() =>
-                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.TASKS}?tab=friends`)
+                    routeNavigator.push(`/${DEFAULT_VIEW_PANELS.TASKS}?tab=tickets`)
                 }
                 className={classNames(
                     css["tabbar-item"],

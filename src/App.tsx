@@ -49,7 +49,6 @@ export const App = () => {
     const tasks = useAppSelector(selectTasks);
     const dispatch = useAppDispatch();
     const {
-        panelsHistory,
         panel: activePanel = DEFAULT_VIEW_PANELS.MAIN,
         view: activeView = DEFAULT_VIEW,
     } = useActiveVkuiLocation();
@@ -147,7 +146,7 @@ export const App = () => {
                 </SplitCol>
             )}
             {routerPopout}
-            {appIsLoaded && onboardingCompleted && !panelIsGame && (
+            {appIsLoaded && onboardingCompleted && !panelIsGame && activeView !== ONBOADING_VIEW && (
                 <CustomTabbar />
             )}
             <Modals />

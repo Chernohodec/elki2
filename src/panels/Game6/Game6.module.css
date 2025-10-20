@@ -34,20 +34,20 @@
 }
 
 .game-area {
-    width: 340px;
+    width: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 460px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15px;
 }
 
 .game-area__pic1 {
     display: flex;
-    width: 340px;
-    height: 225px;
+    width: 100%;
+    aspect-ratio: 16/9;
+    height: auto;
     background-image: url(../../../public/assets/img/tasks/task6/game-pic1.jpg);
     background-position: center;
     background-size: cover;
@@ -56,8 +56,8 @@
 
 .game-area__pic2 {
     display: flex;
-    width: 340px;
-    height: 225px;
+    width: 100%;
+    aspect-ratio: 16/9;
     background-image: url(../../../public/assets/img/tasks/task6/game-pic2.jpg);
     background-position: center;
     background-size: cover;
@@ -66,49 +66,51 @@
     position: relative;
 }
 
-.game-area__item{
+.game-area__item {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 5%;
+    height: auto;
+    aspect-ratio: 1/1;
     border-radius: 50%;
     background-image: url(../../../public/assets/img/tasks/task-done-pic.png);
-    background-size: 25px;
+    background-size: 100%;
     background-position: center;
+    background-repeat: no-repeat;
     z-index: 2;
     opacity: 0;
     transition: .3s;
 }
 
-.game-area__item_order_1{
-    left: 15px;
-    bottom: 15px;
+.game-area__item_order_1 {
+    left: 3.5%;
+    bottom: 3%;
 }
 
-.game-area__item_order_2{
-    left: 115px;
-    top: 95px;
+.game-area__item_order_2 {
+    left: 34%;
+    top: 42%;
 }
 
-.game-area__item_order_3{
-    left: 120px;
-    top: 120px;
+.game-area__item_order_3 {
+    left: 36.5%;
+    top: 52%;
 }
 
-.game-area__item_order_4{
-    right: 110px;
-    top: 90px;
+.game-area__item_order_4 {
+    right: 32%;
+    top: 40%;
 }
 
-.game-area__item_order_5{
-    right: 40px;
-    bottom: 25px;
+.game-area__item_order_5 {
+    right: 13%;
+    bottom: 10%;
 }
 
-.game-area__item_active{
+.game-area__item_active {
     opacity: 1;
 }
 
-.game-area__counter{
+.game-area__counter {
     position: absolute;
     left: 0;
     right: 0;

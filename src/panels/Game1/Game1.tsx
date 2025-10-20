@@ -12,12 +12,13 @@ import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPane
 import css from "./Game1.module.css";
 
 // Импортируем звуковые файлы
+import Confetti from "react-confetti";
 import { Button } from "../../components/Button/Button";
+import { GameDone } from "../../components/GameDone/GameDone";
 import { Title } from "../../components/Title/Title";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
-import { GameDone } from "../../components/GameDone/GameDone";
 
 export type GameProps = {
     id: number;
@@ -33,6 +34,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
     const [input1IsOpen, setInput1IsOpen] = useState(false);
     const [input2IsOpen, setInput2IsOpen] = useState(false);
     const [input3, setInput3] = useState("");
+    const [showConfetti, setShowConfetti] = useState(false);
     const formIsValid =
         input1 !== "Выберите вариант" &&
         input2 !== "Выберите вариант" &&
@@ -88,6 +90,15 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
+                {showConfetti && (
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={400}
+                        gravity={0.5}
+                        tweenDuration={900}
+                        className={css["game-start-panel__confetti"]}
+                    />
+                )}
                 {gameComplete ? (
                     <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
                 ) : currentStep === 0 ? (
@@ -105,7 +116,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 >
                                     <Title
                                         size="medium"
-                                        color="grey"
+                                        color={input1 === "Выберите вариант" ? "grey" : "black"}
                                         align="center"
                                     >
                                         {input1}
@@ -209,7 +220,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 >
                                     <Title
                                         size="medium"
-                                        color="grey"
+                                        color={input2 === "Выберите вариант" ? "grey" : "black"}
                                         align="center"
                                     >
                                         {input2}
@@ -326,6 +337,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                         <Title color="yellow" align="center">
                             Отправляем письмо...
                         </Title>
+                        <Spacing size={90} />
                     </div>
                 ) : currentStep === 2 ? (
                     <div className={css["mail-sent"]}>
@@ -338,6 +350,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             src="assets/img/tasks/task1/mail-sent-pic.png"
                             alt=""
                         />
+                        <Spacing size={90} />
                     </div>
                 ) : (
                     currentStep === 3 && (
@@ -364,7 +377,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                 )}
             </div>
             <FixedLayout vertical="bottom">
-                <Div>
+                <Div style={{paddingLeft: 22, paddingRight: 22}}>
                     {gameComplete ? (
                         <Button
                             color="yellow"

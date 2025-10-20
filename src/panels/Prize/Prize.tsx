@@ -136,19 +136,16 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                             <div className={css["prizes-info__number"]}>1</div>
                             <Title size="small" color="white">
                                 С 00.00.25 выполняйте задания
-                                <br />
-                                и копите шары, 1 шар = 1 шансу
-                                <br />в розыгрыше призов
+                                и копите шары, <br/>1 шар = 1 шансу
+                                в розыгрыше призов
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>2</div>
                             <Title size="small" color="white">
                                 Приглашайте друзей и получайте
-                                <br />
-                                дополнительные шары, увеличивая
-                                <br />
-                                свои шансы победы в розыгрыше
+                                дополнительные шары, <br/>увеличивая
+                                свои шансы победы в розыгрыше
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>

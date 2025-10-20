@@ -6,6 +6,8 @@ import { selectTasks } from "../../store/tasks.reducer";
 import { Button } from "../Button/Button";
 import { Title } from "../Title/Title";
 import css from "./Map.module.css";
+import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export type Map = {
     onBackClick?: MouseEventHandler<HTMLElement>;
@@ -18,32 +20,7 @@ export type Map = {
 export const Map = ({ ...props }: Map) => {
     const platform = usePlatform();
     const tasks = useAppSelector(selectTasks);
-    const taskImages = [
-        {
-            id: 1,
-            icon: "assets/img/tasks/task1-icon.png",
-        },
-        {
-            id: 2,
-            icon: "assets/img/tasks/task2-icon.png",
-        },
-        {
-            id: 3,
-            icon: "assets/img/tasks/task3-icon.png",
-        },
-        {
-            id: 4,
-            icon: "assets/img/tasks/task4-icon.png",
-        },
-        {
-            id: 5,
-            icon: "assets/img/tasks/task5-icon.png",
-        },
-        {
-            id: 6,
-            icon: "assets/img/tasks/task6-icon.png",
-        },
-    ];
+    const routeNavigator = useRouteNavigator();
 
     return (
         <div className={classNames(css["map"], props.className)}>
@@ -58,7 +35,10 @@ export const Map = ({ ...props }: Map) => {
                                         css[`task-item__icon_type_${task.type}`]
                                     )}
                                 >
-                                    <img src={`assets/img/tasks/task${task.id}-icon.png`} alt="" />
+                                    <img
+                                        src={`assets/img/tasks/task${task.id}-icon.png`}
+                                        alt=""
+                                    />
                                 </div>
                                 <Spacing size={12} />
                                 <Title
@@ -69,7 +49,22 @@ export const Map = ({ ...props }: Map) => {
                                     {task.name}
                                 </Title>
                                 <Spacing size={10} />
-                                <Button size="small">Выполнить</Button>
+                                <Button
+                                    size="small"
+                                    onClick={() =>
+                                        routeNavigator.showModal(
+                                            DEFAULT_VIEW_MODALS.TASK_MODAL,
+                                            {
+                                                state: {
+                                                    action: "taskID",
+                                                    value: task.id,
+                                                },
+                                            }
+                                        )
+                                    }
+                                >
+                                    Выполнить
+                                </Button>
                             </div>
                             <div className={css["task-item__image-wrapper"]}>
                                 <div

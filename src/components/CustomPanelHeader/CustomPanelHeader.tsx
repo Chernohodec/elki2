@@ -9,7 +9,11 @@ import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Title } from "../Title/Title";
 import css from "./CustomPanelHeader.module.css";
-import { Icon24Back, Icon28Settings, Icon28SettingsOutline } from "@vkontakte/icons";
+import {
+    Icon24Back,
+    Icon28Settings,
+    Icon28SettingsOutline,
+} from "@vkontakte/icons";
 
 export type CustomPanelHeader = {
     onBackClick?: MouseEventHandler<HTMLElement>;
@@ -50,23 +54,25 @@ export const CustomPanelHeader = ({
 
     return (
         <PanelHeader
-            className={classNames(
-                css["custom-header"],
-            )}
+            className={classNames(css["custom-header"])}
             delimiter="none"
             transparent={true}
             fixed={isMainPanel ? false : false}
             float={isMainPanel ? true : false}
             before={
                 onBackClick ? (
-                    <div
-                        className={css["header-back"]}
-                        onClick={onBackClick}
-                    >
-                        <Icon24Back color="#FFC30B"/>
+                    <div className={css["header-back"]} onClick={onBackClick}>
+                        <Icon24Back color="#FFC30B" />
                     </div>
                 ) : (
-                    <div className={css["task-counter"]}>
+                    <div
+                        className={css["task-counter"]}
+                        onClick={() =>
+                            routeNavigator.push(
+                                `/${DEFAULT_VIEW_PANELS.TASKS}?tab=tickets`
+                            )
+                        }
+                    >
                         <span className={css["task-counter__value"]}>
                             {finishedTasks.length}
                         </span>
@@ -75,9 +81,12 @@ export const CustomPanelHeader = ({
             }
             after={
                 settings && (
-                    <Icon28SettingsOutline onClick={() =>
+                    <Icon28SettingsOutline
+                        onClick={() =>
                             routeNavigator.push(DEFAULT_VIEW_PANELS.SETTINGS)
-                        } fill="#ffffff"/>
+                        }
+                        fill="#ffffff"
+                    />
                 )
             }
         >
@@ -91,7 +100,11 @@ export const CustomPanelHeader = ({
                     alt=""
                 />
             ) : (
-                <Title className={css["header-title"]} color="yellow" align="center">
+                <Title
+                    className={css["header-title"]}
+                    color="yellow"
+                    align="center"
+                >
                     {title}
                 </Title>
             )}

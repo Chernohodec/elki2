@@ -1,41 +1,42 @@
 @font-face {
-    font-family: "OpinionPro";
-    src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot");
-    src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot?#iefix")format("embedded-opentype"),
-        url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff")format("woff"),
-        url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff2")format("woff2"),
-        url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.ttf")format("truetype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: "OpinionPro";
+  src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot");
+  src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot?#iefix")format("embedded-opentype"),
+    url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff")format("woff"),
+    url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff2")format("woff2"),
+    url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.ttf")format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "Montserrat";
-    src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot");
-    src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot?#iefix")format("embedded-opentype"),
-        url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff")format("woff"),
-        url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff2")format("woff2"),
-        url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.ttf")format("truetype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Montserrat";
+  src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot");
+  src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot?#iefix")format("embedded-opentype"),
+    url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff")format("woff"),
+    url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff2")format("woff2"),
+    url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.ttf")format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 
 @font-face {
-    font-family: "Montserrat";
-    src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot");
-    src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot?#iefix")format("embedded-opentype"),
-        url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff")format("woff"),
-        url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff2")format("woff2"),
-        url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.ttf")format("truetype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Montserrat";
+  src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot");
+  src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot?#iefix")format("embedded-opentype"),
+    url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff")format("woff"),
+    url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff2")format("woff2"),
+    url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.ttf")format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-body,html {
+body,
+html {
   margin: 0;
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -92,6 +93,24 @@ a:hover {
   --yellow-gradient: linear-gradient(180deg, #FFC30B 0%, #FF9500 100%);
 }
 
-.vkuiModalPage__children{
+.vkuiModalPage__children {
   background-color: #EBF1F8;
+}
+
+.vkuiPanelHeader__ios .vkuiPanelHeader__before {
+  padding: 4px 0 4px 14px;
+}
+
+.vkuiPanelHeader__ios .vkuiPanelHeader__after {
+  padding: 4px 14px 4px 0;
+}
+
+@media screen and (min-width: 600px) {
+  .vkuiModalCard__hostMobile{
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+  }
 }

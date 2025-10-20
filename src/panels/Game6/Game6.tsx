@@ -8,6 +8,7 @@ import {
     usePlatform,
 } from "@vkontakte/vkui";
 import { FC, useEffect, useState } from "react";
+import Confetti from "react-confetti";
 import "swiper/css";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
@@ -21,6 +22,7 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
     const dispatch = useAppDispatch();
     const [gameComplete, setGameComplete] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
     const [foundItems, setFoundItems] = useState<number[]>([]);
     const platform = usePlatform();
     const currentTask = useAppSelector(selectTasks).find(
@@ -39,6 +41,7 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
         // });
         dispatch(setTaskChecked(6));
         setGameComplete(true);
+        setShowConfetti(true);
     };
 
     return (
@@ -55,8 +58,17 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
+                {showConfetti && (
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={400}
+                        gravity={0.5}
+                        tweenDuration={900}
+                        className={css["game-start-panel__confetti"]}
+                    />
+                )}
                 {!gameComplete ? (
-                    <div className={css["game-area"]}>
+                    <Div className={css["game-area"]}>
                         <div className={css["game-area__pic1"]}></div>
                         <div className={css["game-area__counter"]}>
                             {foundItems.length}/5
@@ -123,13 +135,13 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 }}
                             ></button>
                         </div>
-                    </div>
+                    </Div>
                 ) : (
                     <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
                 )}
             </div>
             <FixedLayout vertical="bottom">
-                <Div>
+                <Div style={{paddingLeft: 22, paddingRight: 22}}>
                     {!gameComplete ? (
                         <Button
                             disabled={foundItems.length !== 5}

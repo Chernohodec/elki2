@@ -8,24 +8,23 @@ import {
     Spacing,
     usePlatform,
 } from "@vkontakte/vkui";
+import { FC, useEffect, useState } from "react";
+import Confetti from "react-confetti";
+import "swiper/css";
 import item1Image from "../../../public/assets/img/tasks/task5/item1.png";
 import item2Image from "../../../public/assets/img/tasks/task5/item2.png";
 import item3Image from "../../../public/assets/img/tasks/task5/item3.png";
 import item4Image from "../../../public/assets/img/tasks/task5/item4.png";
 import item5Image from "../../../public/assets/img/tasks/task5/item5.png";
 import item6Image from "../../../public/assets/img/tasks/task5/item6.png";
-import { FC, useEffect, useState } from "react";
-import "swiper/css";
-import { checkQuest } from "../../api/user/checkQuest";
+import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { GameCancel } from "../../components/GameCancel/GameCancel";
 import { GameDone } from "../../components/GameDone/GameDone";
 import { preloadImages } from "../../helpers/preloadImages";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game5.module.css";
-import { Button } from "../../components/Button/Button";
-import { DEFAULT_VIEW_MODALS } from "../../routes";
 
 export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -36,6 +35,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     );
     const [counters, setCounters] = useState([0, 0, 0, 0]);
     const [gameComplete, setGameComplete] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
     const [touchStartPos, setTouchStartPos] = useState<{
         x: number;
         y: number;
@@ -84,6 +84,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         // });
         dispatch(setTaskChecked(5));
         setGameComplete(true);
+        setShowConfetti(true);
     };
 
     // Инициализация игрового поля
@@ -123,7 +124,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             });
 
             setTimeout(() => {
-                completeTask()
+                completeTask();
             }, allGems.length * 50 + 300);
         }
     }, [counters]);
@@ -741,6 +742,15 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
+                {showConfetti && (
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={400}
+                        gravity={0.5}
+                        tweenDuration={900}
+                        className={css["game-start-panel__confetti"]}
+                    />
+                )}
                 {gameComplete ? (
                     <GameDone
                         pic="assets/img/tasks/task5/done.png"
@@ -828,10 +838,10 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             </Div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div>
+                    <Div style={{paddingLeft: 22, paddingRight: 22}}>
                         <Button
                             color="yellow"
-                            onClick={() => routeNavigator.replace('/')}
+                            onClick={() => routeNavigator.replace("/")}
                         >
                             К заданиям
                         </Button>

@@ -8,18 +8,27 @@ import {
     Spacing,
     usePlatform,
 } from "@vkontakte/vkui";
-import { FC, useEffect, useState, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
+import Confetti from "react-confetti";
 import "swiper/css";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { GameCancel } from "../../components/GameCancel/GameCancel";
+import { GameDone } from "../../components/GameDone/GameDone";
 import { Title } from "../../components/Title/Title";
+import TreeProgressBar from "../../components/TreeProgressBar/TreeProgressBar";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game3.module.css";
-import TreeProgressBar from "../../components/TreeProgressBar/TreeProgressBar";
-import { DEFAULT_VIEW_MODALS } from "../../routes";
-import { GameDone } from "../../components/GameDone/GameDone";
+
+// Интерфейс для снежинки
+interface Snowflake {
+    id: number;
+    left: number;
+    size: number;
+    duration: number;
+    opacity: number;
+}
 
 export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -33,10 +42,13 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [gameActive, setGameActive] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
     const [gameComplete, setGameComplete] = useState(false);
+    const [snowflakes, setSnowflakes] = useState<Snowflake[]>([]);
+    const [showConfetti, setShowConfetti] = useState(false);
 
     const tapCountRef = useRef(0);
     const animationRef = useRef<number | null>(null);
     const lastTapTimeRef = useRef<number>(0);
+    const snowflakeIdRef = useRef(0);
 
     useEffect(() => {
         if (!currentTask?.active) {
@@ -45,11 +57,9 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     }, []);
 
     const completeTask = () => {
-        // checkQuest(4).then(() => {
-        //     updateTasks();
-        // });
         dispatch(setTaskChecked(3));
         setGameComplete(true);
+        setShowConfetti(true);
     };
 
     const startGame = () => {
@@ -57,6 +67,35 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         setGameActive(true);
         setPercents(0);
         tapCountRef.current = 0;
+    };
+
+    const createSnowflakes = (count: number = 15) => {
+        const newSnowflakes: Snowflake[] = [];
+
+        for (let i = 0; i < count; i++) {
+            snowflakeIdRef.current += 1;
+            newSnowflakes.push({
+                id: snowflakeIdRef.current,
+                left: Math.random() * 100, // случайная позиция по горизонтали (0-100%)
+                size: Math.random() * 8 + 4, // случайный размер (4-12px)
+                duration: Math.random() * 1 + 1, // случайная длительность (1-2 секунды)
+                opacity: Math.random() * 0.7 + 0.3, // случайная прозрачность (0.3-1)
+            });
+        }
+
+        setSnowflakes((prev) => [...prev, ...newSnowflakes]);
+
+        // Автоматически удаляем снежинки после завершения анимации
+        setTimeout(() => {
+            setSnowflakes((prev) =>
+                prev.filter(
+                    (flake) =>
+                        !newSnowflakes.some(
+                            (newFlake) => newFlake.id === flake.id
+                        )
+                )
+            );
+        }, 2000); // максимальное время жизни снежинки
     };
 
     const handleTreeTap = () => {
@@ -70,11 +109,13 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         lastTapTimeRef.current = currentTime;
         setIsAnimating(true);
 
+        // Создаем снежинки при каждом тапе
+        createSnowflakes(15);
+
         // Увеличиваем счетчик тапов
         tapCountRef.current += 1;
 
-        // Рассчитываем новые проценты (каждый тап добавляет ~8.33% для достижения 100% за 12 тапов)
-        // Можно настроить количество тапов для победы
+        // Рассчитываем новые проценты
         const tapsToWin = 12;
         const increment = 100 / tapsToWin;
         const newPercents = Math.min(100, percents + increment);
@@ -84,7 +125,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     };
 
     const animateProgress = (start: number, end: number) => {
-        const duration = 300; // длительность анимации в ms
+        const duration = 300;
         const startTime = Date.now();
 
         const updateProgress = () => {
@@ -92,18 +133,16 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            // easing функция для плавности
             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
             const currentValue = start + (end - start) * easeOutQuart;
 
-            setPercents(Math.round(currentValue * 10) / 10); // округление до 1 decimal
+            setPercents(Math.round(currentValue * 10) / 10);
 
             if (progress < 1) {
                 animationRef.current = requestAnimationFrame(updateProgress);
             } else {
                 setIsAnimating(false);
 
-                // Проверяем победу после завершения анимации
                 if (end >= 100) {
                     gameWin();
                 }
@@ -118,7 +157,6 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (animationRef.current) {
             cancelAnimationFrame(animationRef.current);
         }
-
         completeTask();
     };
 
@@ -145,8 +183,34 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
+                {showConfetti && (
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={400}
+                        gravity={0.5}
+                        tweenDuration={900}
+                        className={css["game-start-panel__confetti"]}
+                    />
+                )}
                 {!gameComplete ? (
-                    <div className={css["hit-tree-game"]}>
+                    <div className={css["hit-tree-game"]} onClick={startGame}>
+                        {/* Контейнер для снежинок */}
+                        <div className={css["snow-container"]}>
+                            {snowflakes.map((snowflake) => (
+                                <div
+                                    key={snowflake.id}
+                                    className={css["snowflake"]}
+                                    style={{
+                                        left: `${snowflake.left}%`,
+                                        width: `${snowflake.size}px`,
+                                        height: `${snowflake.size}px`,
+                                        animationDuration: `${snowflake.duration}s`,
+                                        opacity: snowflake.opacity,
+                                    }}
+                                />
+                            ))}
+                        </div>
+
                         <div className={css["game-area"]}>
                             <div className={css["game-area__svg-wrapper"]}>
                                 <TreeProgressBar
@@ -199,10 +263,10 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
             </div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div>
+                    <Div style={{paddingLeft: 22, paddingRight: 22}}>
                         <Button
                             color="yellow"
-                            onClick={() => routeNavigator.replace('/')}
+                            onClick={() => routeNavigator.replace("/")}
                         >
                             К заданиям
                         </Button>

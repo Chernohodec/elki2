@@ -43,7 +43,7 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                         alt=""
                     />
                 </div>
-                <Div>
+                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
                         Дамир и ужин
@@ -62,7 +62,7 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div>
+                <Div style={{paddingLeft: 22, paddingRight: 22}}>
                     <Button
                         color="yellow"
                         onClick={() =>

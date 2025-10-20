@@ -36,10 +36,14 @@
 .tips-slider {
     margin-top: auto;
     margin-bottom: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tips-slider :global(.swiper) {
     overflow: visible;
+    width: 630px;
 }
 
 .tips-slide {
@@ -91,4 +95,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 400px;
+    margin: auto;
 }

@@ -9,20 +9,19 @@ import {
     usePlatform,
 } from "@vkontakte/vkui";
 import { FC, useEffect, useState } from "react";
+import Confetti from "react-confetti";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { GameCancel } from "../../components/GameCancel/GameCancel";
+import { GameDone } from "../../components/GameDone/GameDone";
+import { PlusBall } from "../../components/PlusBall/PlusBall";
+import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game4.module.css";
-import { Text } from "../../components/Text/Text";
-import { PlusBall } from "../../components/PlusBall/PlusBall";
-import { GameDone } from "../../components/GameDone/GameDone";
-import { DEFAULT_VIEW_MODALS } from "../../routes";
-import { checkQuest } from "../../api/user/checkQuest";
 
 export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -34,6 +33,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     const currentTask = useAppSelector(selectTasks).find(
         (task) => task?.id === 4
     );
+    const [showConfetti, setShowConfetti] = useState(false);
 
     useEffect(() => {
         if (!currentTask?.active) {
@@ -51,6 +51,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
         // });
         dispatch(setTaskChecked(4));
         setGameComplete(true);
+        setShowConfetti(true);
     };
 
     return (
@@ -67,6 +68,15 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
+                {showConfetti && (
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={400}
+                        gravity={0.5}
+                        tweenDuration={900}
+                        className={css["game-start-panel__confetti"]}
+                    />
+                )}
                 {gameComplete ? (
                     <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
                 ) : currentStep === 0 ? (
@@ -79,18 +89,19 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                         </Title>
                         <div className={css["tips-slider"]}>
                             <Swiper
-                                slidesPerView={"auto"}
+                                slidesPerView={3}
                                 centeredSlides
                                 spaceBetween={30}
                                 className={css["tips-slider__swiper"]}
                                 onTransitionEnd={(swiper) =>
                                     setCurrentSlide(swiper.activeIndex)
                                 }
+                                loop={true}
                             >
                                 <SwiperSlide>
                                     <div className={css["tips-slide"]}>
                                         <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее
+                                            Надевайте шапку зимой так теплее 1
                                         </Title>
                                         <img
                                             width={140}
@@ -103,7 +114,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 <SwiperSlide>
                                     <div className={css["tips-slide"]}>
                                         <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее
+                                            Надевайте шапку зимой так теплее 2
                                         </Title>
                                         <img
                                             width={140}
@@ -116,7 +127,33 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 <SwiperSlide>
                                     <div className={css["tips-slide"]}>
                                         <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее
+                                            Надевайте шапку зимой так теплее 3
+                                        </Title>
+                                        <img
+                                            width={140}
+                                            className={css["tips-slide__pic"]}
+                                            src="assets/img/tasks/task4/hat.png"
+                                            alt=""
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <div className={css["tips-slide"]}>
+                                        <Title color="red-black" align="center">
+                                            Надевайте шапку зимой так теплее 4
+                                        </Title>
+                                        <img
+                                            width={140}
+                                            className={css["tips-slide__pic"]}
+                                            src="assets/img/tasks/task4/hat.png"
+                                            alt=""
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <div className={css["tips-slide"]}>
+                                        <Title color="red-black" align="center">
+                                            Надевайте шапку зимой так теплее 5
                                         </Title>
                                         <img
                                             width={140}
@@ -156,7 +193,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                 )}
             </div>
             <FixedLayout vertical="bottom">
-                <Div>
+                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
                     {gameComplete ? (
                         <Button
                             color="yellow"

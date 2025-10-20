@@ -9,17 +9,16 @@ import {
     usePlatform,
 } from "@vkontakte/vkui";
 import { FC, useEffect, useRef, useState } from "react";
+import Confetti from "react-confetti";
 import "swiper/css";
-import game2Title from "../../assets/img/tasks/task2/task2-header-title.png";
+import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { GameCancel } from "../../components/GameCancel/GameCancel";
+import { GameDone } from "../../components/GameDone/GameDone";
+import { Title } from "../../components/Title/Title";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
-import { Title } from "../../components/Title/Title";
-import { Button } from "../../components/Button/Button";
-import { DEFAULT_VIEW_MODALS } from "../../routes";
-import { GameDone } from "../../components/GameDone/GameDone";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -34,21 +33,39 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [activeHole, setActiveHole] = useState<number | null>(null);
     const [gameActive, setGameActive] = useState(false);
     const [gameComplete, setGameComplete] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
     const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    
+    // URL звука свиньи
+    const pigSoundUrl = "https://cdn.freesound.org/previews/543/543298_2086040-lq.mp3"; // Замените на ваш URL
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    // Инициализация звука по URL
+    useEffect(() => {
+        audioRef.current = new Audio(pigSoundUrl);
+        audioRef.current.volume = 0.3;
+        audioRef.current.preload = "auto"; // Предзагрузка звука
+        
+        // Очистка при размонтировании
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
+        };
+    }, [pigSoundUrl]);
 
     const completeTask = () => {
-        // checkQuest(2).then(() => {
-        //     updateTasks();
-        // });
         dispatch(setTaskChecked(2));
         setGameComplete(true);
+        setShowConfetti(true);
     };
 
     useEffect(() => {
         if (!currentTask?.active) {
             routeNavigator.replace(`/`);
         }
-    }, []);
+    }, [currentTask?.active, routeNavigator]);
 
     // Очистка интервала при размонтировании
     useEffect(() => {
@@ -72,17 +89,29 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         }
 
         gameIntervalRef.current = setInterval(() => {
-            // Выбираем случайную яму (от 0 до 5, так как у нас 6 snowdrift-wrapper)
             const randomHole = Math.floor(Math.random() * 6);
             setActiveHole(randomHole);
 
-            // Свинья появляется на 800-1200ms
             const showTime = 800 + Math.random() * 400;
 
             setTimeout(() => {
                 setActiveHole(null);
             }, showTime);
-        }, 1500); // Новое появление каждые 1.5 секунды
+        }, 1500);
+    };
+
+    const playPigSound = () => {
+        if (audioRef.current) {
+            // Сбрасываем звук на начало перед воспроизведением
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(error => {
+                console.log("Audio play failed:", error);
+                // Если воспроизведение не удалось, пытаемся перезагрузить звук
+                if (audioRef.current) {
+                    audioRef.current.load();
+                }
+            });
+        }
     };
 
     const handleHoleClick = (holeIndex: number) => {
@@ -90,10 +119,12 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
 
         // Если кликнули по активной яме со свиньей
         if (activeHole === holeIndex) {
+            // Воспроизводим звук
+            playPigSound();
+            
             setScore((prevScore) => {
                 const newScore = prevScore + 1;
 
-                // Проверяем победу
                 if (newScore >= 10) {
                     gameWin();
                 }
@@ -101,7 +132,6 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                 return newScore;
             });
 
-            // Сразу скрываем свинью после попадания
             setActiveHole(null);
         }
     };
@@ -112,16 +142,14 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             clearInterval(gameIntervalRef.current);
             gameIntervalRef.current = null;
         }
-        completeTask()
+        completeTask();
     };
 
-    // Функция для получения класса порядка для snowdrift-wrapper
     const getOrderClass = (index: number): string => {
         const orders = ["1", "2", "3", "1", "2", "3"];
         return css[`snowdrift-wrapper_order_${orders[index]}`];
     };
 
-    // Создаем массив из 6 ям (2 ряда по 3 ямы)
     const holes = Array.from({ length: 6 }, (_, index) => index);
 
     return (
@@ -138,6 +166,15 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
+                {showConfetti && (
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={400}
+                        gravity={0.5}
+                        tweenDuration={900}
+                        className={css["game-start-panel__confetti"]}
+                    />
+                )}
                 {!gameComplete ? (
                     <div className={css["hit-pig-game"]}>
                         <div className={css["hit-pig-counter"]}>
@@ -174,17 +211,23 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                                                     }
                                                 />
                                                 <div
-                                                    className={css["pig"]}
+                                                    className={classNames(
+                                                        css["pig"],
+                                                        css["pig_active"]
+                                                    )}
                                                 ></div>
                                             </>
                                         )}
                                         {/* Свинья появляется только в активной яме */}
-                                        {activeHole === holeIndex &&
-                                            gameActive && (
-                                                <div
-                                                    className={css["pig"]}
-                                                ></div>
-                                            )}
+                                        {gameActive && (
+                                            <div
+                                                className={classNames(
+                                                    css["pig"],
+                                                    activeHole === holeIndex &&
+                                                        css["pig_active"]
+                                                )}
+                                            ></div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -209,12 +252,15 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                                     >
                                         <div className={css["snowdrift"]}></div>
                                         {/* Свинья появляется только в активной яме */}
-                                        {activeHole === holeIndex &&
-                                            gameActive && (
-                                                <div
-                                                    className={css["pig"]}
-                                                ></div>
-                                            )}
+                                        {gameActive && (
+                                            <div
+                                                className={classNames(
+                                                    css["pig"],
+                                                    activeHole === holeIndex &&
+                                                        css["pig_active"]
+                                                )}
+                                            ></div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -244,7 +290,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             </div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div>
+                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                         <Button
                             color="yellow"
                             onClick={() => routeNavigator.replace("/")}
