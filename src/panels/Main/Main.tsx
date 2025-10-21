@@ -162,7 +162,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                 >
                                                     <img
                                                         width={85}
-                                                        src={`assets/img/tasks/task${task.id}-icon.png`}
+                                                        src={task.checked ? `assets/img/tasks/task-done-pic.png` : `assets/img/tasks/task${task.id}-icon.png`}
                                                         alt=""
                                                     />
                                                 </div>

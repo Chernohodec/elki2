@@ -1,6 +1,4 @@
-import {
-    parseURLSearchParamsForGetLaunchParams,
-} from "@vkontakte/vk-bridge";
+import { parseURLSearchParamsForGetLaunchParams } from "@vkontakte/vk-bridge";
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import { classNames, Spacing } from "@vkontakte/vkui";
 import { Button } from "../Button/Button";
@@ -19,8 +17,10 @@ export const InviteBanner = ({ inviteFriend }) => {
                 size="small"
                 color="white"
                 className={css["invite-banner__title"]}
-            >Приглашайте друзей<br/>
-и получайте шары!</Title>
+            >
+                Приглашайте друзей
+                <br />и получайте шары!
+            </Title>
             <Spacing size={5} />
             <Button
                 size="small"

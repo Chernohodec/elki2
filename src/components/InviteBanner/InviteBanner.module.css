@@ -17,3 +17,21 @@
 .invite-banner__button {
     width: 120px;
 }
+
+
+@media screen and (min-width: 600px) {
+    .invite-banner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 135px;
+    }
+
+    .invite-banner__title{
+        font-size: 22px;
+    }
+
+    .invite-banner__button{
+        height: 50px;
+    }
+}

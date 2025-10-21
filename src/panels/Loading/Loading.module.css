@@ -13,16 +13,15 @@
     height: 100vh;
     width: 100%;
     box-sizing: border-box;
-    background-image: url(../../../public/assets/img/loading-title.svg), url(../../assets/img/loading-bg.jpg);
+    background-image: url(../../../public/assets/img/loading-title.svg), url(../../assets/img/loading-bg-mobile.jpg);
     background-repeat: no-repeat;
-    background-position: center 10dvh, center 70%;
-    background-size: 350px, cover;
+    background-position: center 10dvh, center 100%;
+    background-size: 350px, calc(100% + 2px) auto;
 }
 
 
 @media screen and (min-width: 600px) {
-    .loading-page {
-        background-size: calc(100% + 2px);
-        background-position: center center;
+    .loading-page::before {
+        background-image: url(../../../public/assets/img/loading-title.svg), url(../../assets/img/loading-bg.jpg);
     }
 }
