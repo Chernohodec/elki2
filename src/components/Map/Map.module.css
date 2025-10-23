@@ -3,24 +3,26 @@
     width: 100%;
     overflow: auto;
     border-radius: 0 0 30px 30px;
+    position: relative;
+    overflow: hidden;
 }
 
 .map__image {
     background-image: url(../../../public/assets/img/map-bg.jpg);
     /* height: 100%; */
     height: 520px;
-    width: 2900px;
-    background-size: auto 100%;
+    width: 2886px;
+    background-size: auto calc(100% + 1px);
     background-position: 0 0;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 .tasks {
-    display: flex;
-    align-items: center;
-    gap: 270px;
-    padding-left: 170px;
-    padding-top: 105px;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
 }
 
 .task-item {
@@ -29,6 +31,44 @@
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    position: absolute;
+    z-index: 2;
+}
+
+.task-item_order_1 {
+    left: 250px;
+    bottom: 120px;
+}
+
+.task-item_order_2 {
+    left: 520px;
+    bottom: 120px;
+}
+
+.task-item_order_3 {
+    left: 850px;
+    bottom: 120px;
+}
+
+.task-item_order_4 {
+    left: 1250px;
+    bottom: 120px;
+}
+
+.task-item_order_5 {
+    left: 1630px;
+    bottom: 120px;
+}
+
+.task-item_order_6 {
+    left: 2285px;
+    bottom: 120px;
+}
+
+.task-item__title {
+    height: 32px;
+    display: flex;
+    align-items: center;
 }
 
 .task-item__content {
@@ -114,7 +154,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 0 10px 0 5px;
+    padding: 0 10px 0 4px;
     height: 32px;
     background-image: var(--yellow-gradient);
     border-radius: 16px;
@@ -122,7 +162,7 @@
     box-shadow: 6.83px -2.73px 15.57px 0px #FFFFFF33 inset, 0px 5.46px 31.96px 0px #FFC30B8F, 0px 5.46px 53.12px 0px #FFC30B87;
 }
 
-.task-item__character_type_parent{
+.task-item__character_type_parent {
     left: -10px;
 }
 
@@ -156,4 +196,640 @@
     background-color: #FFC30B2E;
     left: -15px;
     top: -15px;
+}
+
+.task-item__done {
+    height: 32px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FCF0D1;
+    border-radius: 26px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-family: OpinionPro;
+    text-transform: uppercase;
+    color: #6E000C;
+}
+
+.map__particles {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 520px;
+    opacity: .7;
+}
+
+.map__content {
+    position: relative;
+    z-index: 2;
+}
+
+.lights {
+    width: 100%;
+    height: 520px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.lights__light {
+    position: absolute;
+    background: #ffeb3b;
+    /* Цвет света */
+    border-radius: 2px;
+    opacity: 0.4;
+    animation: windowFlicker 40s infinite alternate;
+    box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
+    filter: blur(2px);
+}
+
+@keyframes windowFlicker {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        background: #ffeb3b;
+    }
+
+    25% {
+        opacity: 0.4;
+        background: #ff9800;
+    }
+
+    50% {
+        opacity: 0.5;
+        background: #ffff72;
+    }
+
+    75% {
+        opacity: 0.1;
+        background: #ffeb3b;
+    }
+}
+
+
+.lights__light_order_1 {
+    left: 355px;
+    bottom: 58px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_2 {
+    left: 370px;
+    bottom: 58px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+}
+
+.lights__light_order_3 {
+    left: 370px;
+    bottom: 84px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+}
+
+.lights__light_order_4 {
+    left: 357px;
+    bottom: 84px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_5 {
+    left: 370px;
+    bottom: 108px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_6 {
+    left: 357px;
+    bottom: 108px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+}
+
+.lights__light_order_7 {
+    left: 370px;
+    bottom: 134px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+}
+
+.lights__light_order_8 {
+    left: 357px;
+    bottom: 134px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_9 {
+    left: 370px;
+    bottom: 159px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+}
+
+.lights__light_order_10 {
+    left: 357px;
+    bottom: 159px;
+    width: 15px;
+    height: 20px;
+    animation: none;
+}
+
+.lights__light_order_11 {
+    left: 754px;
+    bottom: 60px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_12 {
+    left: 767px;
+    bottom: 60px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_13 {
+    left: 781px;
+    bottom: 61px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_14 {
+    left: 794px;
+    bottom: 61px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_15 {
+    left: 754px;
+    bottom: 88px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_16 {
+    left: 767px;
+    bottom: 88px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_17 {
+    left: 780px;
+    bottom: 88px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_18 {
+    left: 794px;
+    bottom: 88px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_19 {
+    left: 754px;
+    bottom: 116px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_20 {
+    left: 767px;
+    bottom: 116px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_21 {
+    left: 780px;
+    bottom: 116px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_22 {
+    left: 794px;
+    bottom: 116px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_23 {
+    left: 754px;
+    bottom: 143px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_24 {
+    left: 767px;
+    bottom: 143px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_25 {
+    left: 780px;
+    bottom: 143px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_26 {
+    left: 794px;
+    bottom: 143px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_27 {
+    left: 820px;
+    bottom: 146px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_28 {
+    left: 834px;
+    bottom: 146px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_29 {
+    left: 848px;
+    bottom: 146px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_30 {
+    left: 822px;
+    bottom: 118px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_31 {
+    left: 834px;
+    bottom: 118px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_32 {
+    left: 848px;
+    bottom: 118px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_33 {
+    left: 821px;
+    bottom: 90px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_34 {
+    left: 834px;
+    bottom: 90px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_35 {
+    left: 848px;
+    bottom: 90px;
+    width: 13px;
+    height: 20px;
+}
+
+
+
+
+.lights__light_order_36 {
+    left: 877px;
+    bottom: 87px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_37 {
+    left: 890px;
+    bottom: 87px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_38 {
+    left: 904px;
+    bottom: 87px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_39 {
+    left: 917px;
+    bottom: 87px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_40 {
+    left: 877px;
+    bottom: 60px;
+    width: 13px;
+    height: 20px;
+}
+
+.lights__light_order_41 {
+    left: 890px;
+    bottom: 60px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_42 {
+    left: 903px;
+    bottom: 60px;
+    width: 13px;
+    height: 20px;
+    animation: none;
+    display: none;
+}
+
+.lights__light_order_43 {
+    left: 918px;
+    bottom: 60px;
+    width: 13px;
+    height: 20px;
+}
+
+
+
+
+
+.lights__light_order_44 {
+    left: 1440px;
+    bottom: 225px;
+    width: 23px;
+    height: 20px;
+}
+
+.lights__light_order_45 {
+    left: 1393px;
+    bottom: 163px;
+    width: 23px;
+    height: 20px;
+}
+
+.lights__light_order_46 {
+    left: 1412px;
+    bottom: 163px;
+    width: 23px;
+    height: 20px;
+}
+
+.lights__light_order_47 {
+    left: 1440px;
+    bottom: 103px;
+    width: 23px;
+    height: 20px;
+}
+
+.lights__light_order_48 {
+    left: 1458px;
+    bottom: 103px;
+    width: 23px;
+    height: 20px;
+}
+
+
+
+
+.lights__light_order_49 {
+    left: 1663px;
+    bottom: 102px;
+    width: 18px;
+    height: 30px;
+}
+
+.lights__light_order_50 {
+    left: 1729px;
+    bottom: 102px;
+    width: 18px;
+    height: 30px;
+}
+
+.lights__light_order_51 {
+    left: 1753px;
+    bottom: 102px;
+    width: 18px;
+    height: 30px;
+}
+
+
+
+.lights__light_order_52 {
+    left: 1870px;
+    bottom: 106px;
+    width: 18px;
+    height: 30px;
+}
+
+.lights__light_order_53 {
+    left: 1908px;
+    bottom: 106px;
+    width: 18px;
+    height: 30px;
+}
+
+.lights__light_order_54 {
+    left: 1890px;
+    bottom: 159px;
+    width: 18px;
+    height: 28px;
+}
+
+.lights__light_order_55 {
+    left: 2037px;
+    bottom: 119px;
+    width: 18px;
+    height: 20px;
+}
+
+.lights__light_order_56 {
+    left: 2037px;
+    bottom: 85px;
+    width: 18px;
+    height: 20px;
+}
+
+.map__car1 {
+    position: absolute;
+    left: -100px;
+    bottom: 28px;
+    width: 90px;
+    height: 40px;
+    background-image: url(../../../public/assets/img/map-car1.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: carDrive 35s linear infinite;
+    animation-delay: calc(var(--delay, 0) * 1s);
+    filter: blur(0.5px)
+}
+
+.map__car1::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    bottom: -6px;
+    width: 19px;
+    height: 19px;
+    background-image: url(../../../public/assets/img/map-car-wheel1.png);
+    background-size: contain;
+    background-position: center;
+    animation: wheelRotation 1s linear infinite;
+}
+
+.map__car1::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    bottom: -6px;
+    width: 19px;
+    height: 19px;
+    background-image: url(../../../public/assets/img/map-car-wheel1.png);
+    background-size: contain;
+    background-position: center;
+    animation: wheelRotation 1s linear infinite;
+}
+
+.map__car2 {
+    position: absolute;
+    left: -100px;
+    bottom: 8px;
+    width: 90px;
+    height: 31px;
+    background-image: url(../../../public/assets/img/map-car2.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: carDrive 40s linear infinite;
+    animation-delay: calc(var(--delay, 0) * 1s);
+    filter: blur(0.5px)
+}
+
+.map__car2::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    bottom: -4px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../../../public/assets/img/map-car-wheel2.png);
+    background-size: contain;
+    background-position: center;
+    animation: wheelRotation 1s linear infinite;
+}
+
+.map__car2::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    bottom: -4px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../../../public/assets/img/map-car-wheel2.png);
+    background-size: contain;
+    background-position: center;
+    animation: wheelRotation 1s linear infinite;
+}
+
+@keyframes carDrive {
+    0% {
+        left: -100px;
+        transform: scaleX(1);
+    }
+
+    45% {
+        left: calc(100%);
+        transform: scaleX(1);
+    }
+
+    50% {
+        left: calc(100% + 90px);
+        transform: scaleX(-1);
+    }
+
+    95% {
+        left: -100px;
+        transform: scaleX(-1);
+    }
+
+    100% {
+        left: -100px;
+        transform: scaleX(1);
+    }
+}
+
+
+@keyframes wheelRotation {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

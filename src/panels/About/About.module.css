@@ -2,7 +2,7 @@
     position: relative;
 }
 
-.about-panel::before {
+/* .about-panel::before {
     content: '';
     position: fixed;
     left: 0;
@@ -12,7 +12,7 @@
     background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
 
 .about-panel-banner {
     display: flex;

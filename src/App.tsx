@@ -5,13 +5,30 @@ import {
     usePopout,
     useRouteNavigator,
 } from "@vkontakte/vk-mini-apps-router";
+import { getUser } from "./api/user/getUser";
 import { CustomTabbar } from "./components/CustomTabbar/CustomTabbar";
 import "./index.css";
 import { Modals } from "./modals";
+import { About } from "./panels/About/About";
+import { Game1 } from "./panels/Game1/Game1";
+import { Game1Start } from "./panels/Game1/Game1Start";
+import { Game2 } from "./panels/Game2/Game2";
+import { Game2Start } from "./panels/Game2/Game2Start";
+import { Game3 } from "./panels/Game3/Game3";
+import { Game3Start } from "./panels/Game3/Game3Start";
+import { Game4 } from "./panels/Game4/Game4";
+import { Game4Start } from "./panels/Game4/Game4Start";
+import { Game5 } from "./panels/Game5/Game5";
+import { Game5Start } from "./panels/Game5/Game5Start";
+import { Game6 } from "./panels/Game6/Game6";
+import { Game6Start } from "./panels/Game6/Game6Start";
 import { Loading } from "./panels/Loading/Loading";
 import { Main } from "./panels/Main/Main";
 import { OnboardingNotifications } from "./panels/OnboardingNotifications/OnboardingNotifications";
 import { OnboardingStart } from "./panels/OnboardingStart/OnboardingStart";
+import { Prize } from "./panels/Prize/Prize";
+import { Settings } from "./panels/Settings/Settings";
+import { Tasks } from "./panels/Tasks/Tasks";
 import {
     DEFAULT_VIEW,
     DEFAULT_VIEW_PANELS,
@@ -24,23 +41,7 @@ import {
     selectOnboardingComplete,
 } from "./store/main.reducer";
 import { selectTasks, setBalls, setTasks } from "./store/tasks.reducer";
-import { Tasks } from "./panels/Tasks/Tasks";
-import { Settings } from "./panels/Settings/Settings";
-import { About } from "./panels/About/About";
-import { Prize } from "./panels/Prize/Prize";
-import { Game1Start } from "./panels/Game1/Game1Start";
-import { Game1 } from "./panels/Game1/Game1";
-import { getUser } from "./api/user/getUser";
-import { Game2Start } from "./panels/Game2/Game2Start";
-import { Game2 } from "./panels/Game2/Game2";
-import { Game3Start } from "./panels/Game3/Game3Start";
-import { Game3 } from "./panels/Game3/Game3";
-import { Game4Start } from "./panels/Game4/Game4Start";
-import { Game4 } from "./panels/Game4/Game4";
-import { Game5Start } from "./panels/Game5/Game5Start";
-import { Game5 } from "./panels/Game5/Game5";
-import { Game6Start } from "./panels/Game6/Game6Start";
-import { Game6 } from "./panels/Game6/Game6";
+import Snowfall from "react-snowfall";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -82,74 +83,99 @@ export const App = () => {
     };
 
     return (
-        <SplitLayout>
-            {!appIsLoaded ? (
-                <Loading />
-            ) : (
-                <SplitCol>
-                    <Root activeView={activeView}>
-                        <View
-                            activePanel={activePanel}
-                            nav={ONBOADING_VIEW}
-                            onSwipeBackStart={() => "prevent"}
-                        >
-                            <OnboardingStart
-                                nav={ONBOARDING_VIEW_PANELS.START}
-                            />
-                            <OnboardingNotifications
-                                nav={ONBOARDING_VIEW_PANELS.NOTIFICATIONS}
-                            />
-                        </View>
-                        <View
-                            activePanel={activePanel}
-                            nav={DEFAULT_VIEW}
-                            onSwipeBackStart={() => "prevent"}
-                        >
-                            <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
-                            <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} />
-                            <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
-                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
-                            <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
+        <>
+            <div className="app-snow">
+                <Snowfall
+                    // The color of the snowflake, can be any valid CSS color.
+                    color="#fff"
+                    // Applied to the canvas element.
+                    style={{ background: "transparent" }}
+                    // Controls the number of snowflakes that are created (defaults to 150).
+                    snowflakeCount={200}
+                />
+            </div>
+            <SplitLayout>
+                {!appIsLoaded ? (
+                    <Loading />
+                ) : (
+                    <SplitCol>
+                        <Root activeView={activeView}>
+                            <View
+                                activePanel={activePanel}
+                                nav={ONBOADING_VIEW}
+                                onSwipeBackStart={() => "prevent"}
+                            >
+                                <OnboardingStart
+                                    nav={ONBOARDING_VIEW_PANELS.START}
+                                />
+                                <OnboardingNotifications
+                                    nav={ONBOARDING_VIEW_PANELS.NOTIFICATIONS}
+                                />
+                            </View>
+                            <View
+                                activePanel={activePanel}
+                                nav={DEFAULT_VIEW}
+                                onSwipeBackStart={() => "prevent"}
+                            >
+                                <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
+                                <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} />
+                                <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
+                                <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
+                                <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
 
-                            <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
-                            <Game1
-                                updateTasks={updateTasks}
-                                nav={DEFAULT_VIEW_PANELS.GAME1}
-                            />
-                            <Game2Start nav={DEFAULT_VIEW_PANELS.GAME2_START} />
-                            <Game2
-                                updateTasks={updateTasks}
-                                nav={DEFAULT_VIEW_PANELS.GAME2}
-                            />
-                            <Game3Start nav={DEFAULT_VIEW_PANELS.GAME3_START} />
-                            <Game3
-                                updateTasks={updateTasks}
-                                nav={DEFAULT_VIEW_PANELS.GAME3}
-                            />
-                            <Game4Start nav={DEFAULT_VIEW_PANELS.GAME4_START} />
-                            <Game4
-                                updateTasks={updateTasks}
-                                nav={DEFAULT_VIEW_PANELS.GAME4}
-                            />
-                            <Game5Start nav={DEFAULT_VIEW_PANELS.GAME5_START} />
-                            <Game5
-                                updateTasks={updateTasks}
-                                nav={DEFAULT_VIEW_PANELS.GAME5}
-                            />
-                            <Game6Start nav={DEFAULT_VIEW_PANELS.GAME6_START} />
-                            <Game6
-                                updateTasks={updateTasks}
-                                nav={DEFAULT_VIEW_PANELS.GAME6}
-                            />
-                        </View>
-                    </Root>
-                </SplitCol>
-            )}
-            {routerPopout}
-            {appIsLoaded && onboardingCompleted && !panelIsGame && activeView !== ONBOADING_VIEW && (
-                <CustomTabbar />
-            )}
-            <Modals />
-        </SplitLayout>
+                                <Game1Start
+                                    nav={DEFAULT_VIEW_PANELS.GAME1_START}
+                                />
+                                <Game1
+                                    updateTasks={updateTasks}
+                                    nav={DEFAULT_VIEW_PANELS.GAME1}
+                                />
+                                <Game2Start
+                                    nav={DEFAULT_VIEW_PANELS.GAME2_START}
+                                />
+                                <Game2
+                                    updateTasks={updateTasks}
+                                    nav={DEFAULT_VIEW_PANELS.GAME2}
+                                />
+                                <Game3Start
+                                    nav={DEFAULT_VIEW_PANELS.GAME3_START}
+                                />
+                                <Game3
+                                    updateTasks={updateTasks}
+                                    nav={DEFAULT_VIEW_PANELS.GAME3}
+                                />
+                                <Game4Start
+                                    nav={DEFAULT_VIEW_PANELS.GAME4_START}
+                                />
+                                <Game4
+                                    updateTasks={updateTasks}
+                                    nav={DEFAULT_VIEW_PANELS.GAME4}
+                                />
+                                <Game5Start
+                                    nav={DEFAULT_VIEW_PANELS.GAME5_START}
+                                />
+                                <Game5
+                                    updateTasks={updateTasks}
+                                    nav={DEFAULT_VIEW_PANELS.GAME5}
+                                />
+                                <Game6Start
+                                    nav={DEFAULT_VIEW_PANELS.GAME6_START}
+                                />
+                                <Game6
+                                    updateTasks={updateTasks}
+                                    nav={DEFAULT_VIEW_PANELS.GAME6}
+                                />
+                            </View>
+                        </Root>
+                    </SplitCol>
+                )}
+                {routerPopout}
+                {appIsLoaded &&
+                    onboardingCompleted &&
+                    !panelIsGame &&
+                    activeView !== ONBOADING_VIEW && <CustomTabbar />}
+                <Modals />
+            </SplitLayout>
+        </>
     );
 };

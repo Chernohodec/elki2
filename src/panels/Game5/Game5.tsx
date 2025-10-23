@@ -107,7 +107,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     // Проверка на завершение игры
     useEffect(() => {
-        if (counters.every((counter) => counter >= 10)) {
+        if (counters.every((counter) => counter >= 3)) {
             // Анимация завершения уровня
             const allGems = document.querySelectorAll(`.${css["game-gem"]}`);
             allGems.forEach((gem, index) => {
@@ -743,11 +743,11 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                 )}
             >
                 {showConfetti && (
-                    <Confetti
+                   <Confetti
                         recycle={false}
-                        numberOfPieces={400}
-                        gravity={0.5}
-                        tweenDuration={900}
+                        numberOfPieces={200}
+                        gravity={0.6}
+                        tweenDuration={200}
                         className={css["game-start-panel__confetti"]}
                     />
                 )}
@@ -785,7 +785,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                                             css["game-header__item-counter"]
                                         }
                                     >
-                                        {counter > 9 ? 10 : counter}/10
+                                        {counter > 2 ? 3 : counter}/3
                                     </span>
                                 </div>
                             ))}

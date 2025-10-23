@@ -94,7 +94,7 @@ const TreeProgressBar = ({ percents, className }: TreeProgressBarProps) => {
                     strokeDasharray={circumference}
                     strokeDashoffset={strokeDashoffset}
                     style={{
-                        transition: "stroke-dashoffset 0.3s ease",
+                        transition: "stroke-dashoffset 0.3s linear",
                         filter: "drop-shadow(0px 2px 8px rgba(234, 3, 0, 0.5))",
                     }}
                 />

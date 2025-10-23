@@ -2,7 +2,7 @@ import {
     useActiveVkuiLocation,
     useRouteNavigator,
 } from "@vkontakte/vk-mini-apps-router";
-import { ModalRoot } from "@vkontakte/vkui";
+import { ModalRoot, PlatformProvider } from "@vkontakte/vkui";
 import React from "react";
 import { DEFAULT_VIEW_MODALS } from "../routes";
 import { CloseModal } from "./CloseModal";
@@ -14,6 +14,7 @@ const Modals: React.FC = () => {
     const routeNavigator = useRouteNavigator();
 
     return (
+        <PlatformProvider value="ios">
         <ModalRoot activeModal={modal}>
             <HeroModal
                 id={DEFAULT_VIEW_MODALS.HERO_MODAL}
@@ -28,6 +29,7 @@ const Modals: React.FC = () => {
                 onClose={() => routeNavigator.hideModal()}
             />
         </ModalRoot>
+        </PlatformProvider>
     );
 };
 

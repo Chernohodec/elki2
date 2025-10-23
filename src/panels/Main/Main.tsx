@@ -162,7 +162,11 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                 >
                                                     <img
                                                         width={85}
-                                                        src={task.checked ? `assets/img/tasks/task-done-pic.png` : `assets/img/tasks/task${task.id}-icon.png`}
+                                                        src={
+                                                            task.checked
+                                                                ? `assets/img/tasks/task-done-pic.png`
+                                                                : `assets/img/tasks/task${task.id}-icon.png`
+                                                        }
                                                         alt=""
                                                     />
                                                 </div>
@@ -304,35 +308,33 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                 <Spacing size={50} />
             </Div>
             <div className={classNames(css["main-page-banner"])}>
-                <Div className={css["main-page-content__text"]}>
-                    <VkVideoBanner
-                        href="https://trk.mail.ru/c/kkhk46"
-                        onClick={() => {}}
-                    />
-                    <Spacing size={15} />
-                    <Title color="red" align="center">
-                        смотрите Ёлки 12
-                        <br />в кино с 18 декабря!
-                    </Title>
-                    <Spacing size={10} />
-                    <Text align="center">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.
-                    </Text>
-                    <Spacing size={15} />
-                    <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
-                        Купить билеты
-                    </Button>
-                    <Spacing size={10} />
-                    <Button
-                        color="transparent"
-                        href="https://www.afisha.ru/movie/finnik-2-306500/"
-                    >
-                        Подробнее о фильме
-                    </Button>
-                    <Spacing size={100} />
-                </Div>
+                <VkVideoBanner
+                    href="https://trk.mail.ru/c/kkhk46"
+                    onClick={() => {}}
+                />
+                <Spacing size={30} />
+                <Title color="red" align="center">
+                    смотрите Ёлки 12
+                    <br />в кино с 18 декабря!
+                </Title>
+                <Spacing size={10} />
+                <Text align="center">
+                    Lorem ipsum dolor sit amet consectetur. Pretium placerat
+                    duis convallis felis eget nunc arcu id at. Facilisi augue
+                    ultrices molestie.
+                </Text>
+                <Spacing size={30} />
+                <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
+                    Купить билеты
+                </Button>
+                <Spacing size={10} />
+                <Button
+                    color="transparent"
+                    href="https://www.afisha.ru/movie/finnik-2-306500/"
+                >
+                    Подробнее о фильме
+                </Button>
+                <Spacing size={100} />
             </div>
         </Panel>
     );

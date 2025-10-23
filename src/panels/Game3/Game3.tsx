@@ -47,6 +47,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     const tapCountRef = useRef(0);
     const animationRef = useRef<number | null>(null);
+    const decayIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const lastTapTimeRef = useRef<number>(0);
     const snowflakeIdRef = useRef(0);
 
@@ -67,9 +68,42 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         setGameActive(true);
         setPercents(0);
         tapCountRef.current = 0;
+        startDecay();
     };
 
-    const createSnowflakes = (count: number = 15) => {
+    // Функция для постоянного уменьшения процентов (2 раза в секунду)
+    const startDecay = () => {
+        stopDecay(); // Останавливаем предыдущий интервал
+        
+        const decayPerTick = 2; // На сколько процентов уменьшается за тик
+        const tickInterval = 200; // Интервал в миллисекундах (2 раза в секунду = 500ms)
+
+        decayIntervalRef.current = setInterval(() => {
+            if (!gameActive || gameComplete) {
+                return;
+            }
+
+            setPercents(prev => {
+                let newValue = prev - decayPerTick;
+                
+                // Не даем уйти ниже 0%
+                if (newValue < 0) {
+                    newValue = 0;
+                }
+                
+                return Math.max(0, newValue);
+            });
+        }, tickInterval);
+    };
+
+    const stopDecay = () => {
+        if (decayIntervalRef.current) {
+            clearInterval(decayIntervalRef.current);
+            decayIntervalRef.current = null;
+        }
+    };
+
+    const createSnowflakes = (count: number = 30) => {
         const newSnowflakes: Snowflake[] = [];
 
         for (let i = 0; i < count; i++) {
@@ -115,9 +149,8 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         // Увеличиваем счетчик тапов
         tapCountRef.current += 1;
 
-        // Рассчитываем новые проценты
-        const tapsToWin = 12;
-        const increment = 100 / tapsToWin;
+        // Рассчитываем новые проценты - увеличиваем на фиксированное значение
+        const increment = 8; // Увеличиваем на 8% за тап
         const newPercents = Math.min(100, percents + increment);
 
         // Плавная анимация заполнения
@@ -136,7 +169,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
             const currentValue = start + (end - start) * easeOutQuart;
 
-            setPercents(Math.round(currentValue * 10) / 10);
+            setPercents(Math.round(currentValue * 11) / 10);
 
             if (progress < 1) {
                 animationRef.current = requestAnimationFrame(updateProgress);
@@ -154,18 +187,33 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     const gameWin = () => {
         setGameActive(false);
+        stopDecay();
         if (animationRef.current) {
             cancelAnimationFrame(animationRef.current);
         }
         completeTask();
     };
 
-    // Очистка анимации при размонтировании
+    // Запускаем/останавливаем уменьшение в зависимости от состояния игры
+    useEffect(() => {
+        if (gameActive && !gameComplete) {
+            startDecay();
+        } else {
+            stopDecay();
+        }
+
+        return () => {
+            stopDecay();
+        };
+    }, [gameActive, gameComplete]);
+
+    // Очистка всех анимаций при размонтировании
     useEffect(() => {
         return () => {
             if (animationRef.current) {
                 cancelAnimationFrame(animationRef.current);
             }
+            stopDecay();
         };
     }, []);
 
@@ -186,14 +234,14 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                 {showConfetti && (
                     <Confetti
                         recycle={false}
-                        numberOfPieces={400}
-                        gravity={0.5}
-                        tweenDuration={900}
+                        numberOfPieces={200}
+                        gravity={0.6}
+                        tweenDuration={200}
                         className={css["game-start-panel__confetti"]}
                     />
                 )}
                 {!gameComplete ? (
-                    <div className={css["hit-tree-game"]} onClick={startGame}>
+                    <div className={css["hit-tree-game"]} onClick={()=>!gameActive && startGame()}>
                         {/* Контейнер для снежинок */}
                         <div className={css["snow-container"]}>
                             {snowflakes.map((snowflake) => (
@@ -217,17 +265,30 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                                     percents={percents}
                                     className={css["game-area__svg"]}
                                 />
+                                {/* Отладочная информация */}
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    left: '10px',
+                                    background: 'rgba(0,0,0,0.7)',
+                                    color: 'white',
+                                    padding: '5px',
+                                    borderRadius: '5px',
+                                    fontSize: '12px'
+                                }}>
+                                    {Math.round(percents)}%
+                                </div>
                             </div>
                             <div
                                 className={css["game-area__tree"]}
                                 onClick={handleTreeTap}
-                                style={{
-                                    cursor: gameActive ? "pointer" : "default",
-                                    transform: isAnimating
-                                        ? "scale(0.95)"
-                                        : "scale(1)",
-                                    transition: "transform 0.1s ease",
-                                }}
+                                // style={{
+                                //     cursor: gameActive ? "pointer" : "default",
+                                //     transform: isAnimating
+                                //         ? "translateX: 20px"
+                                //         : "translateX: 0",
+                                //     transition: "transform 0.1s ease",
+                                // }}
                             >
                                 {!onboardingDone && (
                                     <img

@@ -104,4 +104,5 @@
     grid-gap: 10px;
     position: relative;
     z-index: 2;
+    line-height: 1.5;
 }

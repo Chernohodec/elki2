@@ -24,6 +24,7 @@ import {
 } from "../../store/main.reducer";
 import css from "./OnboardingNotifications.module.css";
 import { sendBridgeTrack } from "../../helpers/sendBridgeTrack";
+import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 
 export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -35,6 +36,7 @@ export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
 
     return (
         <Panel id={id} disableBackground>
+            <CustomPanelHeader />
             <div className={classNames(css["onboarding-page"])}>
                 <div className={css["onboarding-content-wrapper"]}>
                     <div className={css["onboarding-content"]}>
@@ -45,12 +47,15 @@ export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
                             Получайте уведомления <br />о новых заданиях
                         </Title>
                         <Spacing size={20} />
-                        <Text className={css["onboarding-content__text"]} align="center">
+                        <Text
+                            className={css["onboarding-content__text"]}
+                            align="center"
+                        >
                             Lorem ipsum dolor sit amet consectetur. Pretium
                             placerat duis convallis felis eget nunc arcu id at.
                             Facilisi augue ultrices molestie.
                         </Text>
-                        <Spacing size={25}/>
+                        <Spacing size={25} />
                         <Button
                             onClick={() => {
                                 askAllowNotifications();
@@ -71,7 +76,7 @@ export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
                                 sendBridgeTrack("registration");
                             }}
                         >
-                           Пропустить
+                            Пропустить
                         </Button>
                     </div>
                 </div>

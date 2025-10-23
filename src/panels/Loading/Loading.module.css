@@ -23,5 +23,6 @@
 @media screen and (min-width: 600px) {
     .loading-page::before {
         background-image: url(../../../public/assets/img/loading-title.svg), url(../../assets/img/loading-bg.jpg);
+        background-size: 350px, cover;
     }
 }

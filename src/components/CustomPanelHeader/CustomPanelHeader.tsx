@@ -2,9 +2,9 @@ import {
     useActiveVkuiLocation,
     useRouteNavigator,
 } from "@vkontakte/vk-mini-apps-router";
-import { classNames, PanelHeader, usePlatform } from "@vkontakte/vkui";
+import { classNames, PanelHeader, PlatformProvider, usePlatform } from "@vkontakte/vkui";
 import { MouseEventHandler, ReactNode } from "react";
-import { DEFAULT_VIEW_PANELS } from "../../routes";
+import { DEFAULT_VIEW_PANELS, ONBOARDING_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Title } from "../Title/Title";
@@ -49,10 +49,14 @@ export const CustomPanelHeader = ({
     const { panel: activePanel } = useActiveVkuiLocation();
     const isMainPanel = activePanel === DEFAULT_VIEW_PANELS.MAIN;
     const isAboutPanel = activePanel === DEFAULT_VIEW_PANELS.ABOUT;
+    const isOnboarding =
+        activePanel === ONBOARDING_VIEW_PANELS.START ||
+        activePanel === ONBOARDING_VIEW_PANELS.NOTIFICATIONS;
     const isTaskPage = taskPages.includes(activePanel);
     const finishedTasks = tasks.filter((task) => task.checked);
 
     return (
+        <PlatformProvider value="ios">
         <PanelHeader
             className={classNames(css["custom-header"])}
             delimiter="none"
@@ -64,7 +68,7 @@ export const CustomPanelHeader = ({
                     <div className={css["header-back"]} onClick={onBackClick}>
                         <Icon24Back color="#FFC30B" />
                     </div>
-                ) : (
+                ) : isMainPanel &&  (
                     <div
                         className={css["task-counter"]}
                         onClick={() =>
@@ -92,7 +96,7 @@ export const CustomPanelHeader = ({
         >
             {props.children ? (
                 props.children
-            ) : isMainPanel ? (
+            ) : isMainPanel || isOnboarding ? (
                 <img
                     className={css["header-logo"]}
                     width={80}
@@ -109,5 +113,6 @@ export const CustomPanelHeader = ({
                 </Title>
             )}
         </PanelHeader>
+        </PlatformProvider>
     );
 };

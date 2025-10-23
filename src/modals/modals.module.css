@@ -91,7 +91,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 0 10px 0 5px;
+    padding: 0 10px 0 4px;
     height: 32px;
     background-image: var(--yellow-gradient);
     border-radius: 16px;

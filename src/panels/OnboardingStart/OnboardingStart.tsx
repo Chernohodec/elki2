@@ -7,12 +7,15 @@ import { ONBOARDING_VIEW_PANELS } from "../../routes";
 
 import { Button } from "../../components/Button/Button";
 import css from "./OnboardingStart.module.css";
+import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 
 export const OnboardingStart: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
 
     return (
-        <Panel id={id}>
+        <Panel id={id} disableBackground>
+            <CustomPanelHeader />
+
             <div className={classNames(css["onboarding-page"])}>
                 <div className={css["onboarding-content-wrapper"]}>
                     <div className={css["onboarding-content"]}>

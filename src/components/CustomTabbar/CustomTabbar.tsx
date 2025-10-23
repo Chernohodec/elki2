@@ -42,7 +42,8 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             >
                 <div className={css["tabbar-item__content"]}>
                     <img src={'assets/img/tasks-icon.svg'} alt="" />
-                    <span>Задания</span>
+                    <img src={'assets/img/tasks-icon-text.svg'} alt="" />
+                    {/* <span>Задания</span> */}
                 </div>
             </button>
             <button
@@ -56,7 +57,8 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             >
                 <div className={css["tabbar-item__content"]}>
                     <img src={'assets/img/balls-icon.svg'} alt="" />
-                    <span>Мои шары</span>
+                    {/* <span>Мои шары</span> */}
+                    <img src={'assets/img/balls-icon-text.svg'} alt="" />
                 </div>
             </button>
             <button
@@ -70,7 +72,8 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             >
                 <div className={css["tabbar-item__content"]}>
                     <img src={'assets/img/gifts-icon.svg'} alt="" />
-                    <span>О розыгрыше</span>
+                    <img src={'assets/img/gifts-icon-text.svg'} alt="" />
+                    {/* <span>О розыгрыше</span> */}
                 </div>
             </button>
             <button
@@ -84,7 +87,8 @@ export const CustomTabbar = ({ ...props }: CustomTabbar) => {
             >
                 <div className={css["tabbar-item__content"]}>
                     <img src={'assets/img/about-icon.svg'} alt="" />
-                    <span>О фильме</span>
+                    <img src={'assets/img/about-icon-text.svg'} alt="" />
+                    {/* <span>О фильме</span> */}
                 </div>
             </button>
         </div>

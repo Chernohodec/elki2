@@ -169,9 +169,9 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                 {showConfetti && (
                     <Confetti
                         recycle={false}
-                        numberOfPieces={400}
-                        gravity={0.5}
-                        tweenDuration={900}
+                        numberOfPieces={200}
+                        gravity={0.6}
+                        tweenDuration={200}
                         className={css["game-start-panel__confetti"]}
                     />
                 )}

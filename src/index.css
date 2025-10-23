@@ -105,6 +105,16 @@ a:hover {
   padding: 4px 14px 4px 0;
 }
 
+.vkuiPanelHeader__android .vkuiPanelHeader__before:not(:empty),
+.vkuiPanelHeader__vkcom .vkuiPanelHeader__before:not(:empty) {
+  padding: 4px 0 4px 14px;
+}
+
+.vkuiPanelHeader__android .vkuiPanelHeader__after:not(:empty),
+.vkuiPanelHeader__vkcom .vkuiPanelHeader__after:not(:empty) {
+  padding: 4px 14px 4px 0;
+}
+
 @media screen and (min-width: 600px) {
   .vkuiModalCard__hostMobile {
     bottom: 0;
@@ -137,4 +147,26 @@ a:hover {
   margin-right: auto;
   margin-top: -30px;
   border: 1px solid #FFFFFF42;
+}
+
+/* .simplebar-vertical.map__track{
+  display: none;
+} */
+
+.app-snow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100dvh;
+  z-index: 0;
+  /* background-image: ; */
+  background-image: url(../public/assets/img/main-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.app-snow canvas{
+  width: 100%;
+  height: 100%;
 }

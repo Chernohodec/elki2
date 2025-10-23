@@ -110,7 +110,8 @@
 
 /* Анимация при нажатии на елку */
 .game-area__tree:active {
-    transform: scale(0.95);
+    /* transform: scale(0.95); */
+    transform: translateX(10px);
 }
 
 .game-area__pointer {
@@ -123,10 +124,10 @@
 
 @keyframes bounce {
     0%, 100% {
-        transform: translateY(0);
+        transform: translateX(0);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateX(-10px);
     }
 }
 
