@@ -13,7 +13,8 @@
 }
 
 .button:not(.button_platform_ios):hover {
-    opacity: .7;
+    /* opacity: .7; */
+    transform: translateY(-5px);
 }
 
 .button_size_normal {
@@ -73,6 +74,10 @@
     border: 1px solid #FFFFFF61;
     color: #6E000C;
     text-shadow: 0px 1px 0px 0px #FFFFFF40;
+}
+
+.button_color_yellow:hover {
+    /* box-shadow: 5px -2px 30.4px 0px #FFFFFF66 inset, 0px 4px 40.4px 0px #FFC30B8F, 0px 4px 50.9px 0px #FFC30B87; */
 }
 
 .button_color_transparent {

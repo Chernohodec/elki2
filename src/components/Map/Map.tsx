@@ -4,7 +4,6 @@ import { MouseEventHandler } from "react";
 import Snowfall from "react-snowfall";
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
-import "swiper/css";
 import { checkTimeIsAllowed } from "../../helpers/checkTimeIsAllowed";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppSelector } from "../../store";
@@ -77,7 +76,6 @@ export const Map = ({ ...props }: Map) => {
                         )}
                     >
                         <Snowfall
-                            // The color of the snowflake, can be any valid CSS color.
                             color="#fff"
                             // Applied to the canvas element.
                             style={{ background: "transparent" }}

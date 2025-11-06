@@ -111,7 +111,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             <Spacing size={10} />
                             <div className={css["custom-select"]}>
                                 <div
-                                    onClick={() => setInput1IsOpen(true)}
+                                    onClick={() => setInput1IsOpen(!input1IsOpen)}
                                     className={css["custom-select__main-value"]}
                                 >
                                     <Title
@@ -215,7 +215,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             <Spacing size={10} />
                             <div className={css["custom-select"]}>
                                 <div
-                                    onClick={() => setInput2IsOpen(true)}
+                                    onClick={() => setInput2IsOpen(!input2IsOpen)}
                                     className={css["custom-select__main-value"]}
                                 >
                                     <Title

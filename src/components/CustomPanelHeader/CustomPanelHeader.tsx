@@ -85,12 +85,14 @@ export const CustomPanelHeader = ({
             }
             after={
                 settings && (
+                    <div className={css["header-settings"]}>
                     <Icon28SettingsOutline
                         onClick={() =>
                             routeNavigator.push(DEFAULT_VIEW_PANELS.SETTINGS)
                         }
                         fill="#ffffff"
                     />
+                    </div>
                 )
             }
         >

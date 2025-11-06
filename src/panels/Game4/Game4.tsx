@@ -177,15 +177,9 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 alt=""
                             />
                             <Spacing size={20} />
-                            <Title align="center" color="yellow">
-                                Отличный совет
-                            </Title>
+                            <Title align="center" color="yellow">Отличный выбор</Title>
                             <Spacing size={5} />
-                            <Text color="white" align="center">
-                                Lorem ipsum dolor sit amet consectetur. Pretium
-                                placerat duis convallis felis eget nunc arcu id
-                                at. Facilisi augue ultrices molestie.
-                            </Text>
+                            <Text color="white" align="center">С таким напутствием точно не пропадёшь! Пусть близкие узнают, что посоветовала вам Зина на Новый год.</Text>
                             <Spacing size={25} />
                             <PlusBall />
                         </div>

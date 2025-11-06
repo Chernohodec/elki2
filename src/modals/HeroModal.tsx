@@ -1,5 +1,6 @@
 import {
-    useMetaParams
+    useMetaParams,
+    useSearchParams
 } from "@vkontakte/vk-mini-apps-router";
 import {
     Div,
@@ -18,9 +19,9 @@ import { Button } from "../components/Button/Button";
 const HeroModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
     // const routeNavigator = useRouteNavigator();
 
-    const params = useMetaParams<{ action: string; value: number }>();
+    const [params, setParams] = useSearchParams();
     const heroes = useAppSelector(selectHeroes);
-    const currentHero = heroes.find((hero) => hero.id === params?.value);
+    const currentHero = heroes.find((hero) => hero.id === params.get('game'));
 
     return (
         <ModalCard

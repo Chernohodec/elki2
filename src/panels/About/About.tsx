@@ -1,6 +1,6 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
-import { FC, useRef } from "react";
+import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
+import { FC, useRef, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "../../components/Button/Button";
@@ -14,9 +14,7 @@ import { selectHeroes } from "../../store/main.reducer";
 
 export const About: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
-
-    const swiperRef = useRef();
-
+    const swiperRef = useRef(null);
     const heroes = useAppSelector(selectHeroes);
 
     const gallery = [
@@ -137,7 +135,36 @@ export const About: FC<NavIdProps> = ({ id }) => {
                 </Title>
                 <Spacing size={20} />
                 <div className={css["gallery-slider"]}>
-                    <Swiper spaceBetween={50} slidesPerView={1} loop={true}>
+                    <button
+                        className={classNames(css["gallery-slider__prev"])}
+                        onClick={() => swiperRef.current?.slidePrev()}
+                    >
+                        <img
+                            width={16}
+                            height={16}
+                            src="/assets/img/slider-arrow.svg"
+                            alt=""
+                        />
+                    </button>
+                    <button
+                        className={classNames(css["gallery-slider__next"])}
+                        onClick={() => swiperRef.current?.slideNext()}
+                    >
+                        <img
+                            width={16}
+                            height={16}
+                            src="/assets/img/slider-arrow.svg"
+                            alt=""
+                        />
+                    </button>
+                    <Swiper
+                        onBeforeInit={(swiper) => {
+                            swiperRef.current = swiper;
+                        }}
+                        spaceBetween={0}
+                        slidesPerView={1}
+                        loop={true}
+                    >
                         {gallery.map((photo) => {
                             return (
                                 <SwiperSlide key={photo.id}>

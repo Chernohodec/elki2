@@ -3,7 +3,7 @@
     overflow: hidden;
 }
 
-/* .settings-panel::before {
+.settings-panel::before {
     content: '';
     position: fixed;
     left: 0;
@@ -13,7 +13,7 @@
     background-image: url(../../../public/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-} */
+}
 
 .settings-panel__content {
     background: #0000001F;

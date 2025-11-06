@@ -20,6 +20,7 @@
     background-color: #FFC30B12;
     border: 1px solid #FFC30B61;
     padding: 0 18px;
+    cursor: pointer;
 }
 
 .task-counter span {
@@ -44,14 +45,6 @@
 }
 
 .header-settings {
-    width: 68px;
-    height: 52px;
-    background-image: url(../../assets/img/settings-icon.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    position: relative;
-    z-index: 2;
     cursor: pointer;
 }
 
@@ -64,6 +57,7 @@
     align-items: center;
     justify-content: center;
     border: 1px solid #FFC30B61;
+    cursor: pointer;
 }
 
 .header-title {

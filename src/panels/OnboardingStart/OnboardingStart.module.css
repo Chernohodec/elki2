@@ -19,8 +19,8 @@
     position: fixed;
     left: 0;
     top: 0;
-    background-image: url(../../../public/assets/img/onboarding-gifts.png);
-    background-size: 65vh, cover;
+    background-image: url(../../../public/assets/img/onboarding-gifts.png), url(../../../public/assets/img/main-bg.jpg);
+    background-size: contain, cover;
     background-position: center 20%, center;
     background-repeat: no-repeat;
 }

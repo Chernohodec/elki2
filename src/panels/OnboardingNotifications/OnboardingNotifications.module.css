@@ -19,8 +19,8 @@
     position: fixed;
     left: 0;
     top: 0;
-    background-image: url(../../../public/assets/img/onboarding-bells.png);
-    background-size: 105% auto, cover, cover;
+    background-image: url(../../../public/assets/img/onboarding-bells.png), url(../../../public/assets/img/onboarding-bg.png), url(../../../public/assets/img/main-bg.jpg);
+    background-size: contain, cover, cover;
     background-position: center 15%, center, center;
     background-repeat: no-repeat;
 }
