@@ -100,23 +100,29 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                     />
                 )}
                 {gameComplete ? (
-                    <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
+                    <GameDone text="Ура, Ваня стал на шаг ближе к Великому Устюгу! Впереди его ждут новые приключения, а вас — увлекательные задания." />
                 ) : currentStep === 0 ? (
                     <div className={css["mail-game"]}>
                         <div className={css["letter"]}>
                             <Title size="medium" align="center">
-                                Дорогой дедушка мороз, <br />в этот год я вел
-                                (а) себя
+                                Здравствуй, Дедушка Мороз!
+                                <br />В этом году я вел(а) себя
                             </Title>
                             <Spacing size={10} />
                             <div className={css["custom-select"]}>
                                 <div
-                                    onClick={() => setInput1IsOpen(!input1IsOpen)}
+                                    onClick={() =>
+                                        setInput1IsOpen(!input1IsOpen)
+                                    }
                                     className={css["custom-select__main-value"]}
                                 >
                                     <Title
                                         size="medium"
-                                        color={input1 === "Выберите вариант" ? "grey" : "black"}
+                                        color={
+                                            input1 === "Выберите вариант"
+                                                ? "grey"
+                                                : "black"
+                                        }
                                         align="center"
                                     >
                                         {input1}
@@ -131,96 +137,98 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                         <button
                                             className={classNames(
                                                 css["custom-select__button"],
-                                                input1 === "Хорошо" &&
+                                                input1 === "хорошо и послушно" &&
                                                     css[
                                                         "custom-select__button_active"
                                                     ]
                                             )}
                                             onClick={() => {
-                                                setInput1("Хорошо");
+                                                setInput1("хорошо и послушно");
                                                 setInput1IsOpen(false);
                                             }}
                                         >
                                             <Title
                                                 size="medium"
                                                 color={
-                                                    input1 === "Хорошо"
+                                                    input1 === "хорошо и послушно"
                                                         ? "white"
                                                         : "red"
                                                 }
                                                 align="center"
                                             >
-                                                Хорошо
+                                                хорошо и послушно
                                             </Title>
                                         </button>
                                         <button
                                             className={classNames(
                                                 css["custom-select__button"],
-                                                input1 === "Плохо" &&
+                                                input1 === "лучше, чем в прошлом" &&
                                                     css[
                                                         "custom-select__button_active"
                                                     ]
                                             )}
                                             onClick={() => {
-                                                setInput1("Плохо");
+                                                setInput1("лучше, чем в прошлом");
                                                 setInput1IsOpen(false);
                                             }}
                                         >
                                             <Title
                                                 size="medium"
                                                 color={
-                                                    input1 === "Плохо"
+                                                    input1 === "лучше, чем в прошлом"
                                                         ? "white"
                                                         : "red"
                                                 }
                                                 align="center"
                                             >
-                                                Плохо
+                                                лучше, чем в прошлом
                                             </Title>
                                         </button>
                                         <button
                                             className={classNames(
                                                 css["custom-select__button"],
-                                                input1 === "Нормально" &&
+                                                input1 === "плохо (и не горжусь)" &&
                                                     css[
                                                         "custom-select__button_active"
                                                     ]
                                             )}
                                             onClick={() => {
-                                                setInput1("Нормально");
+                                                setInput1("плохо (и не горжусь)");
                                                 setInput1IsOpen(false);
                                             }}
                                         >
                                             <Title
                                                 size="medium"
                                                 color={
-                                                    input1 === "Нормально"
+                                                    input1 === "плохо (и не горжусь)"
                                                         ? "white"
                                                         : "red"
                                                 }
                                                 align="center"
                                             >
-                                                Нормально
+                                                плохо (и не горжусь)
                                             </Title>
                                         </button>
                                     </div>
                                 )}
                             </div>
                             <Spacing size={20} />
-                            <Title size="medium" align="center">
-                                Я сделал много разных
-                                <br />
-                                дел например:
-                            </Title>
+                            <Title size="medium" align="center">У МЕНЯ СТОЛЬКО ВСЕГО ПОЛУЧИЛОСЬ СДЕЛАТЬ, НАПРИМЕР</Title>
                             <Spacing size={10} />
                             <div className={css["custom-select"]}>
                                 <div
-                                    onClick={() => setInput2IsOpen(!input2IsOpen)}
+                                    onClick={() =>
+                                        setInput2IsOpen(!input2IsOpen)
+                                    }
                                     className={css["custom-select__main-value"]}
                                 >
                                     <Title
                                         size="medium"
-                                        color={input2 === "Выберите вариант" ? "grey" : "black"}
+                                        color={
+                                            input2 === "Выберите вариант"
+                                                ? "grey"
+                                                : "black"
+                                        }
                                         align="center"
                                     >
                                         {input2}
@@ -312,7 +320,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             </div>
                             <Spacing size={20} />
                             <Title size="medium" align="center">
-                                Поэтому я хочу получить:
+                               ПОЭТОМУ, ПОЖАЛУЙСТА, ПОДАРИ МНЕ
                             </Title>
                             <Spacing size={10} />
                             <input
@@ -356,28 +364,21 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                     currentStep === 3 && (
                         <div className={css["mail-game"]}>
                             <div className={css["letter"]}>
-                                <Title align="center">Привет Иван</Title>
+                                <Title align="center">Здравствуй
+Иван</Title>
                                 <Spacing size={10} />
                                 <Title
                                     color="black"
                                     size="medium"
                                     align="center"
-                                >
-                                    Lorem ipsum dolor sit amet consectetur.
-                                    Ipsum id velit odio rutrum tortor nibh nisl.
-                                    Elementum enim condimentum euismod commodo
-                                    id. Purus eget cursus sit tortor justo amet.
-                                    Tempus nullam sodales leo fringilla commodo
-                                    donec justo massa sed. Etiam massa et at est
-                                    condimentum nec natoque.
-                                </Title>
+                                >Ох как радостно мне стало от мысли, что ты посвящаешь себя хорошим поступкам. Это достойно восхищения! Грядущий год подарит ещё больше счастливых и по‑настоящему волшебных моментов. Встречай их с улыбкой и открытым сердцем — и всё непременно сбудется. С наступающим Новым годом, мой дорогой друг.<br/><br/>Искренне твой,<br/>Дед Мороз</Title>
                             </div>
                         </div>
                     )
                 )}
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                     {gameComplete ? (
                         <Button
                             color="yellow"

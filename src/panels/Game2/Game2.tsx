@@ -30,14 +30,19 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     );
     const [onboardingDone, setOnboardingDone] = useState(false);
     const [score, setScore] = useState(0);
+    const [lives, setLives] = useState(3); // Добавляем состояние для жизней
     const [activeHole, setActiveHole] = useState<number | null>(null);
+    const [activeAnimalType, setActiveAnimalType] = useState<
+        "pig" | "horse" | "deer" | "cat"
+    >("pig"); // Тип активного животного
     const [gameActive, setGameActive] = useState(false);
     const [gameComplete, setGameComplete] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
-    
+
     // URL звука свиньи
-    const pigSoundUrl = "https://cdn.freesound.org/previews/543/543298_2086040-lq.mp3"; // Замените на ваш URL
+    const pigSoundUrl =
+        "https://cdn.freesound.org/previews/543/543298_2086040-lq.mp3"; // Замените на ваш URL
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     // Инициализация звука по URL
@@ -45,7 +50,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         audioRef.current = new Audio(pigSoundUrl);
         audioRef.current.volume = 0.3;
         audioRef.current.preload = "auto"; // Предзагрузка звука
-        
+
         // Очистка при размонтировании
         return () => {
             if (audioRef.current) {
@@ -80,6 +85,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         setOnboardingDone(true);
         setGameActive(true);
         setScore(0);
+        setLives(3); // Сбрасываем жизни при начале игры
         startGameLoop();
     };
 
@@ -90,6 +96,21 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
 
         gameIntervalRef.current = setInterval(() => {
             const randomHole = Math.floor(Math.random() * 6);
+
+            // Случайно выбираем тип животного (70% свинья, 30% другие животные)
+            const animalRandom = Math.random();
+            let animalType: "pig" | "horse" | "deer" | "cat" = "pig";
+
+            if (animalRandom < 0.7) {
+                animalType = "pig";
+            } else if (animalRandom < 0.8) {
+                animalType = "horse";
+            } else if (animalRandom < 0.9) {
+                animalType = "deer";
+            } else {
+                animalType = "cat";
+            }
+            setActiveAnimalType(animalType);
             setActiveHole(randomHole);
 
             const showTime = 800 + Math.random() * 400;
@@ -104,7 +125,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (audioRef.current) {
             // Сбрасываем звук на начало перед воспроизведением
             audioRef.current.currentTime = 0;
-            audioRef.current.play().catch(error => {
+            audioRef.current.play().catch((error) => {
                 console.log("Audio play failed:", error);
                 // Если воспроизведение не удалось, пытаемся перезагрузить звук
                 if (audioRef.current) {
@@ -117,20 +138,40 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const handleHoleClick = (holeIndex: number) => {
         if (!gameActive) return;
 
-        // Если кликнули по активной яме со свиньей
+        // Если кликнули по активной яме с животным
         if (activeHole === holeIndex) {
-            // Воспроизводим звук
-            playPigSound();
-            
-            setScore((prevScore) => {
-                const newScore = prevScore + 1;
+            // Если это свинья - добавляем очки
+            if (activeAnimalType === "pig") {
+                // Воспроизводим звук
+                playPigSound();
 
-                if (newScore >= 10) {
-                    gameWin();
-                }
+                setScore((prevScore) => {
+                    const newScore = prevScore + 1;
 
-                return newScore;
-            });
+                    if (newScore >= 10) {
+                        gameWin();
+                    }
+
+                    return newScore;
+                });
+            } else {
+                // Если это другое животное - отнимаем жизнь
+                setLives((prevLives) => {
+                    const newLives = prevLives - 1;
+
+                    if (newLives <= 0) {
+                        // Игра окончена при 0 жизней
+                        setGameActive(false);
+                        if (gameIntervalRef.current) {
+                            clearInterval(gameIntervalRef.current);
+                            gameIntervalRef.current = null;
+                        }
+                        // Здесь можно добавить логику для завершения игры при потере всех жизней
+                    }
+
+                    return newLives;
+                });
+            }
 
             setActiveHole(null);
         }
@@ -150,7 +191,45 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         return css[`snowdrift-wrapper_order_${orders[index]}`];
     };
 
+    const getAnimalClass = (): string => {
+        switch (activeAnimalType) {
+            case "horse":
+                return css["horse"];
+            case "deer":
+                return css["deer"];
+            case "cat":
+                return css["cat"];
+            default:
+                return css["pig"];
+        }
+    };
+
     const holes = Array.from({ length: 6 }, (_, index) => index);
+
+    // Функция для отображения сердечек (жизней)
+    const renderHearts = () => {
+        const hearts = [];
+        for (let i = 0; i < 3; i++) {
+            if (i < lives) {
+                hearts.push(
+                    <img
+                        key={i}
+                        src="/assets/img/tasks/task2/heart-icon.svg"
+                        alt="❤"
+                    />
+                );
+            } else {
+                hearts.push(
+                    <img
+                        key={i}
+                        src="/assets/img/tasks/task2/heart-broken-icon.svg"
+                        alt="💔"
+                    />
+                );
+            }
+        }
+        return hearts;
+    };
 
     return (
         <Panel id={id} disableBackground className={css["game-panel"]}>
@@ -177,9 +256,15 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                 )}
                 {!gameComplete ? (
                     <div className={css["hit-pig-game"]}>
-                        <div className={css["hit-pig-counter"]}>
-                            <Title color="yellow">{score}/10</Title>
+                        <div className={css["hit-pig-game__header"]}>
+                            <div className={css["hit-pig-counter"]}>
+                                <Title color="yellow">{score}/10</Title>
+                            </div>
+                            <div className={css["hit-pig-lives"]}>
+                                {renderHearts()}
+                            </div>
                         </div>
+
                         <div className={css["game-area"]}>
                             {/* Первый ряд снежных сугробов */}
                             <div className={css["snow-row"]}>
@@ -218,16 +303,17 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                                                 ></div>
                                             </>
                                         )}
-                                        {/* Свинья появляется только в активной яме */}
-                                        {gameActive && (
-                                            <div
-                                                className={classNames(
-                                                    css["pig"],
-                                                    activeHole === holeIndex &&
+                                        {/* Животное появляется только в активной яме */}
+                                        {gameActive &&
+                                            activeHole === holeIndex && (
+                                                <div
+                                                    className={classNames(
+                                                        css["pig"],
+                                                        getAnimalClass(),
                                                         css["pig_active"]
-                                                )}
-                                            ></div>
-                                        )}
+                                                    )}
+                                                ></div>
+                                            )}
                                     </div>
                                 ))}
                             </div>
@@ -251,16 +337,17 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                                         }}
                                     >
                                         <div className={css["snowdrift"]}></div>
-                                        {/* Свинья появляется только в активной яме */}
-                                        {gameActive && (
-                                            <div
-                                                className={classNames(
-                                                    css["pig"],
-                                                    activeHole === holeIndex &&
+                                        {/* Животное появляется только в активной яме */}
+                                        {gameActive &&
+                                            activeHole === holeIndex && (
+                                                <div
+                                                    className={classNames(
+                                                        css["pig"],
+                                                        getAnimalClass(),
                                                         css["pig_active"]
-                                                )}
-                                            ></div>
-                                        )}
+                                                    )}
+                                                ></div>
+                                            )}
                                     </div>
                                 ))}
                             </div>
@@ -284,7 +371,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                 ) : (
                     <GameDone
                         pic="assets/img/tasks/task2/done.png"
-                        text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie."
+                        text="Поймать Пига оказалось непросто, но письмо снова в наших руках. Перед новыми заданиями не помешает хорошенько согреться!"
                     />
                 )}
             </div>

@@ -32,28 +32,64 @@ const initialState: Main = {
         },
         {
             id: 2,
-            img: "assets/img/tasks/task2/character-pic.png",
+            img: "assets/img/tasks/task5/character-pic.png",
             actor: {
-                name: "Дядя юра",
-                voice: "Дмитрий Нагиев",
+                name: "ДАМИР",
+                voice: "РУЗИЛЬ МИНЕКАЕВ",
                 text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
             },
         },
         {
             id: 3,
-            img: "assets/img/tasks/task2/character-pic.png",
+            img: "assets/img/tasks/task4/character-pic.png",
             actor: {
-                name: "Дядя юра",
-                voice: "Дмитрий Нагиев",
+                name: "Зина",
+                voice: "ОЛЬГА КАРТУНКОВА",
                 text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
             },
         },
         {
             id: 4,
+            img: "assets/img/tasks/task3/character-pic.png",
+            actor: {
+                name: "ВИТАЛИК",
+                voice: "АНДРЕЙ РОЖКОВ",
+                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+            },
+        },
+        {
+            id: 5,
+            img: "assets/img/tasks/task6/character-pic.png",
+            actor: {
+                name: "Аня",
+                voice: "ТИНА СТОЙИЛКОВИЧ",
+                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+            },
+        },
+        {
+            id: 6,
             img: "assets/img/tasks/task2/character-pic.png",
             actor: {
-                name: "Дядя юра",
-                voice: "Дмитрий Нагиев",
+                name: "ВИТАЛИК",
+                voice: "АНДРЕЙ РОЖКОВ",
+                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+            },
+        },
+        {
+            id: 7,
+            img: "assets/img/actors/actor6.png",
+            actor: {
+                name: "ИГОРЬ",
+                voice: "ДМИТРИЙ ЖУРАВЛЁВ",
+                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+            },
+        },
+        {
+            id: 8,
+            img: "assets/img/actors/actor7.png",
+            actor: {
+                name: "Света",
+                voice: "ЮЛИЯ ТОПОЛЬНИЦКАЯ",
                 text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
             },
         },

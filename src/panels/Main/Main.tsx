@@ -313,16 +313,9 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                     onClick={() => {}}
                 />
                 <Spacing size={30} />
-                <Title color="red" align="center">
-                    смотрите Ёлки 12
-                    <br />в кино с 18 декабря!
-                </Title>
+                <Title color="red" align="center">«ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ</Title>
                 <Spacing size={10} />
-                <Text align="center">
-                    Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                    duis convallis felis eget nunc arcu id at. Facilisi augue
-                    ultrices molestie.
-                </Text>
+                <Text align="center">Главная новогодняя комедия страны возвращается на экраны! Пять новелл о настоящем чуде сделают праздник особенно тёплым.</Text>
                 <Spacing size={30} />
                 <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
                     Купить билеты

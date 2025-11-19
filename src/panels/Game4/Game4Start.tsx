@@ -45,20 +45,9 @@ export const Game4Start: FC<NavIdProps> = ({ id }) => {
                 </div>
                 <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
                     <Spacing size={35} />
-                    <Title align="center" color="yellow">
-                        Зина подготовила
-                        <br />
-                        пару советов
-                    </Title>
+                    <Title align="center" color="yellow">ЗИНЕ ЕСТЬ ЧЕМ ПОДЕЛИТЬСЯ</Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.Lorem ipsum dolor sit amet
-                        consectetur. Pretium placerat duis convallis felis eget
-                        nunc arcu id at. Facilisi augue ultrices molestie.
-                    </Text>
-                    <Spacing size={40} />
+                    <Text align="center" color="white">Жить одной в лесу скучно, а выговориться так хочется! Повезло вам повстречать Зину — она всегда даст совет и поможет делом. Выберите лучшую рекомендацию и поделитесь ею в истории.</Text>
 
                     <Spacing size={90} />
                 </Div>

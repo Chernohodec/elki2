@@ -318,7 +318,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                 ) : (
                     <GameDone
                         pic="assets/img/tasks/task3/done.png"
-                        text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie."
+                        text="Фух, успели! Отпускаем Виталика домой украшать красавицу-ёлку, а сами готовимся к новому приключению."
                     />
                 )}
             </div>

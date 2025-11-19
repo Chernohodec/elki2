@@ -60,18 +60,38 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
     const prizes = [
         {
             id: 1,
-            text: "Планшет",
-            img: "assets/img/prize1.png",
+            text: "3D принтер",
+            img: "/assets/img/prizes/prize1.png",
         },
         {
             id: 2,
-            text: "Планшет",
-            img: "assets/img/prize1.png",
+            text: "Электрогриль",
+            img: "/assets/img/prizes/prize2.png",
         },
         {
             id: 3,
             text: "Планшет",
-            img: "assets/img/prize1.png",
+            img: "/assets/img/prizes/prize3.png",
+        },
+        {
+            id: 4,
+            text: "Умные очки",
+            img: "/assets/img/prizes/prize4.png",
+        },
+        {
+            id: 5,
+            text: "Тяжелое одеяло",
+            img: "/assets/img/prizes/prize5.png",
+        },
+        {
+            id: 6,
+            text: "Фирменный мерч",
+            img: "/assets/img/prizes/prize6.png",
+        },
+        {
+            id: 7,
+            text: "Билеты в кино",
+            img: "/assets/img/prizes/prize7.png",
         },
     ];
 
@@ -106,7 +126,7 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                 }}
                 title="О розыгрыше"
             />
-            <Spacing size={240}/>
+            <Spacing size={240} />
             <div className={css["prizes-panel__content"]}>
                 <Div>
                     <div className={css["prizes-panel__banner"]}>
@@ -121,39 +141,40 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                             className={css["prizes-panel__title"]}
                             color="white"
                         >
-                            Выполняйте задания <br />и выигрывайте призы!
+                            Выполняйте задания
+                            <br />и выигрывайте призы!
                         </Title>
                         <Spacing size={10} />
                         <Text align="center" color="gray">
-                            Lorem ipsum dolor sit amet consectetur. Pretium
-                            placerat duis convallis felis eget nunc arcu id at.
-                            Facilisi augue ultrices molestie.
+                            У Вани из Кирова есть заветное желание, которое
+                            может исполнить только Дед Мороз. Помогите мальчику
+                            добраться до дома волшебника в Великом Устюге, а
+                            родителям — догнать своего сына. В дороге вас ждут
+                            увлекательные приключения, знакомство с новыми
+                            героями и, наконец, розыгрыш классных призов!
                         </Text>
                     </div>
                     <Spacing size={25} />
                     <div className={css["prizes-info"]}>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>1</div>
-                            <Title size="small" color="white">
-                                С 00.00.25 выполняйте задания
-                                и копите шары, <br/>1 шар = 1 шансу
-                                в розыгрыше призов
+                            <Title size="small" color="white" className={css["prizes-info__text"]}>
+                                До 12 января выполняйте задания <br/>и накапливайте
+                                шары. Чем их больше, <br/>тем выше шансы выиграть
+                                приз
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>2</div>
-                            <Title size="small" color="white">
-                                Приглашайте друзей и получайте
-                                дополнительные шары, <br/>увеличивая
-                                свои шансы победы в розыгрыше
+                            <Title size="small" color="white" className={css["prizes-info__text"]}>
+                                Приглашайте друзей и получайте <br/>дополнительные
+                                шары, чтобы стать <br/>ещё ближе к победе
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>3</div>
-                            <Title size="small" color="white">
-                                00.00.25 подведем итоги в нашем
-                                <br />
-                                сообществе ВКонтакте
+                            <Title size="small" color="white" className={css["prizes-info__text"]}>
+                                16 января мы назовём имена <br/>15 победителей в сообществе <br/>«Ёлки 12» во «ВКонтакте»
                             </Title>
                         </div>
                     </div>
@@ -198,6 +219,7 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                                                 }
                                                 color="white"
                                                 align="center"
+                                                size="medium"
                                             >
                                                 {prize.text}
                                             </Title>
@@ -246,16 +268,9 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                         onClick={() => {}}
                     />
                     <Spacing size={15} />
-                    <Title color="red" align="center">
-                        смотрите Ёлки 12
-                        <br />в кино с 18 декабря!
-                    </Title>
+                    <Title color="red" align="center">«ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ</Title>
                     <Spacing size={10} />
-                    <Text align="center">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.
-                    </Text>
+                    <Text align="center">Главная новогодняя комедия страны возвращается на экраны! Пять новелл о настоящем чуде сделают праздник особенно тёплым.</Text>
                     <Spacing size={15} />
                     <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
                         Купить билеты

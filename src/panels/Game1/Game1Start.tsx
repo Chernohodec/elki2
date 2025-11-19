@@ -51,13 +51,7 @@ export const Game1Start: FC<NavIdProps> = ({ id }) => {
                         написать письмо
                     </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.Lorem ipsum dolor sit amet
-                        consectetur. Pretium placerat duis convallis felis eget
-                        nunc arcu id at. Facilisi augue ultrices molestie.
-                    </Text>
+                    <Text align="center" color="white">Какая поездка в дом Деда Мороза без письма с заветным желанием? Заполните пропуски в послании — можно выбрать предложенные варианты или придумать свои.</Text>
                     <Spacing size={40} />
                     <Spacing size={90} />
                 </Div>

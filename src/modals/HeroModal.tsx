@@ -1,35 +1,24 @@
-import {
-    useMetaParams,
-    useSearchParams
-} from "@vkontakte/vk-mini-apps-router";
-import {
-    Div,
-    ModalCard,
-    NavIdProps,
-    Spacing
-} from "@vkontakte/vkui";
+import { useMetaParams } from "@vkontakte/vk-mini-apps-router";
+import { ModalCard, NavIdProps, Spacing } from "@vkontakte/vkui";
 import React from "react";
-import { selectHeroes } from "../store/main.reducer";
-import css from './modals.module.css'
-import { useAppSelector } from "../store";
-import { Title } from "../components/Title/Title";
-import { Text } from "../components/Text/Text";
 import { Button } from "../components/Button/Button";
+import { Text } from "../components/Text/Text";
+import { Title } from "../components/Title/Title";
+import { useAppSelector } from "../store";
+import { selectHeroes } from "../store/main.reducer";
+import css from "./modals.module.css";
 
 const HeroModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
-    // const routeNavigator = useRouteNavigator();
 
-    const [params, setParams] = useSearchParams();
+    const params = useMetaParams<{
+        hero: string;
+    }>();
     const heroes = useAppSelector(selectHeroes);
-    const currentHero = heroes.find((hero) => hero.id === params.get('game'));
+    const currentHero = heroes.find((hero) => hero.id === params?.hero);
 
     return (
-        <ModalCard
-            className={css["modal"]}
-            {...props}
-            onClose={props.onClose}
-        >
-            <div className={css['modal__content']}>
+        <ModalCard className={css["modal"]} {...props} onClose={props.onClose}>
+            <div className={css["modal__content"]}>
                 <div className={css["hero-img-wrapper"]}>
                     <img
                         className={css["hero-img-wrapper__img"]}
@@ -38,11 +27,11 @@ const HeroModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
                         alt=""
                     />
                 </div>
-                <Spacing size={20}/>
+                <Spacing size={20} />
                 <Title align="center">{currentHero?.actor.name}</Title>
-                <Spacing size={5}/>
+                <Spacing size={5} />
                 <Text align="center">{currentHero?.actor.text}</Text>
-                <Spacing size={35}/>
+                <Spacing size={35} />
                 <Button onClick={props.onClose}>Продолжить</Button>
             </div>
         </ModalCard>

@@ -28,13 +28,12 @@ export const useInit = () => {
         try {
             const userInfo = await getUser(referalID);
             console.log(userInfo);
-            dispatch(setFriends(userInfo.referals));
             dispatch(
                 setTasks(userInfo.quests.sort((a, b) => a.order - b.order))
             );
-            dispatch(setBalls(userInfo.balls));
-            dispatch(setNotificationIsAllowed(userInfo.notificationIsAllowed));
-            dispatch(setOnboardingComplete(userInfo.onboardingIsCompleted));
+            dispatch(setBalls(userInfo.tickets));
+            dispatch(setNotificationIsAllowed(userInfo.is_notifications_allowed));
+            dispatch(setOnboardingComplete(userInfo.is_onboarded));
             setLoading(false);
         } catch (e) {
             console.log(e);

@@ -1,6 +1,6 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import { classNames, Spacing } from "@vkontakte/vkui";
-import { MouseEventHandler } from "react";
+import { createRef, MouseEventHandler, useEffect, useRef } from "react";
 import Snowfall from "react-snowfall";
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
@@ -23,10 +23,70 @@ export type Map = {
 export const Map = ({ ...props }: Map) => {
     const tasks = useAppSelector(selectTasks);
     const routeNavigator = useRouteNavigator();
+    const scrollableNodeRef = createRef<HTMLDivElement>();
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
+
+    useEffect(() => {
+        const scrollableNode = scrollableNodeRef.current;
+
+        if (!scrollableNode) return;
+
+        const handleMouseDown = (e: MouseEvent) => {
+            isDragging.current = true;
+            startX.current = e.pageX - scrollableNode.offsetLeft;
+            scrollLeft.current = scrollableNode.scrollLeft;
+
+            // Добавляем класс для изменения курсора
+            scrollableNode.style.cursor = "grabbing";
+            scrollableNode.style.userSelect = "none";
+        };
+
+        const handleMouseLeave = () => {
+            isDragging.current = false;
+            scrollableNode.style.cursor = "grab";
+        };
+
+        const handleMouseUp = () => {
+            isDragging.current = false;
+            scrollableNode.style.cursor = "grab";
+            scrollableNode.style.userSelect = "auto";
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!isDragging.current) return;
+            e.preventDefault();
+
+            const x = e.pageX - scrollableNode.offsetLeft;
+            const walk = (x - startX.current) * 2; // Множитель для скорости скролла
+            scrollableNode.scrollLeft = scrollLeft.current - walk;
+        };
+
+        // Добавляем обработчики событий
+        scrollableNode.addEventListener("mousedown", handleMouseDown);
+        scrollableNode.addEventListener("mouseleave", handleMouseLeave);
+        scrollableNode.addEventListener("mouseup", handleMouseUp);
+        scrollableNode.addEventListener("mousemove", handleMouseMove);
+
+        // Устанавливаем начальный курсор
+        scrollableNode.style.cursor = "grab";
+
+        return () => {
+            // Очистка обработчиков при размонтировании
+            scrollableNode.removeEventListener("mousedown", handleMouseDown);
+            scrollableNode.removeEventListener("mouseleave", handleMouseLeave);
+            scrollableNode.removeEventListener("mouseup", handleMouseUp);
+            scrollableNode.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
 
     return (
         <div className={classNames(css["map"], props.className)}>
             <SimpleBar
+                scrollableNodeProps={{
+                    ref: scrollableNodeRef,
+                }}
                 classNames={{
                     scrollbar: "map__scrollbar",
                     track: "map__track",

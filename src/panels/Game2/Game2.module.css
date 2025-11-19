@@ -70,6 +70,23 @@
     flex-direction: column;
 }
 
+.hit-pig-game__header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40px;
+    margin: auto;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hit-pig-lives {
+    display: flex;
+    align-items: center;
+}
+
 .hit-pig-counter {
     width: 140px;
     height: 63px;
@@ -84,11 +101,6 @@
     z-index: 2;
     padding: 5px 0 0 22px;
     border: 2.22px solid #E74D07;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 40px;
-    margin: auto;
     box-shadow: 11.08px -4.43px 25.25px 0px rgba(255, 255, 255, .05) inset, 0px 8.86px 51.84px 0px #EA03008F,
         0px 8.86px 86.17px 0px #EA030087;
 }
@@ -109,7 +121,7 @@
     margin-right: auto;
 }
 
-.snow-row:last-child{
+.snow-row:last-child {
     z-index: 2;
 }
 
@@ -119,7 +131,7 @@
     height: 90px;
 }
 
-.snowdrift{
+.snowdrift {
     position: absolute;
     background-image: url(../../../public/assets/img/tasks/task2/snow.png);
     background-size: contain;
@@ -178,7 +190,23 @@
     height: 0;
 }
 
-.pig_active{
+.pig.horse {
+    background-image: url(../../../public/assets/img/tasks/task2/horse.png);
+}
+
+.pig.horse {
+    background-image: url(../../../public/assets/img/tasks/task2/horse.png);
+}
+
+.pig.deer {
+    background-image: url(../../../public/assets/img/tasks/task2/deer.png);
+}
+
+.pig.cat {
+    background-image: url(../../../public/assets/img/tasks/task2/cat.png);
+}
+
+.pig_active {
     height: 144px;
 }
 

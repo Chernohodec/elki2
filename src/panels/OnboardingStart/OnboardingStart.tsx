@@ -15,24 +15,19 @@ export const OnboardingStart: FC<NavIdProps> = ({ id }) => {
     return (
         <Panel id={id} disableBackground>
             <CustomPanelHeader />
-
             <div className={classNames(css["onboarding-page"])}>
                 <div className={css["onboarding-content-wrapper"]}>
                     <div className={css["onboarding-content"]}>
                         <div className={css["onboarding-content__title"]}>
                             <Title align={TitleAlign.center}>
-                                Помогите Ване и его родителям добраться до своей
-                                цели!
+                                ПОМОГИТЕ ВАНЕ И ЕГО РОДИТЕЛЯМ ДОБРАТЬСЯ
+                                ДО ВЕЛИКОГО УСТЮГА!
                             </Title>
                             <Spacing size={5} />
                             <Text
                                 className={css["onboarding-content__text"]}
                                 align="center"
-                            >
-                                Lorem ipsum dolor sit amet consectetur. Pretium
-                                placerat duis convallis felis eget nunc arcu id
-                                at. Facilisi augue ultrices molestie.
-                            </Text>
+                            >У Вани из Кирова есть заветное желание, которое может исполнить только один волшебник. Помогите мальчику добраться до дома Деда Мороза, а родителям — догнать своего сына. За каждое задание вы получите шары для участия в розыгрыше классных призов: всего будет 15 победителей — их мы узнаем 16 января!</Text>
                             <Spacing size={35} />
                             <Button
                                 onClick={() => {

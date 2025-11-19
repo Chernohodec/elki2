@@ -51,13 +51,7 @@ export const Game3Start: FC<NavIdProps> = ({ id }) => {
                         самую красивую ель
                     </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.Lorem ipsum dolor sit amet
-                        consectetur. Pretium placerat duis convallis felis eget
-                        nunc arcu id at. Facilisi augue ultrices molestie.
-                    </Text>
+                    <Text align="center" color="white">Виталик всё к Новому году приготовил... Ой, где же ёлка? Пока забывчивый герой ищет топор и выдвигается в лес, запоминайте правила: тапать на ёлку нужно быстро и точно.</Text>
                     <Spacing size={40} />
                     <Spacing size={90} />
                 </Div>

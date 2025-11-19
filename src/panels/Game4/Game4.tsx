@@ -54,6 +54,34 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
         setShowConfetti(true);
     };
 
+    const advices = [
+        {
+            id: 1,
+            title: "Берите искусственную ёлку, она надёжнее",
+            pic: "/assets/img/tasks/task4/pic1.png",
+        },
+        {
+            id: 2,
+            title: "Когда скучно, спойте любимую песню",
+            pic: "/assets/img/tasks/task4/pic2.png",
+        },
+        {
+            id: 3,
+            title: "Замените колбасу на говядину в оливье",
+            pic: "/assets/img/tasks/task4/pic3.png",
+        },
+        {
+            id: 4,
+            title: "Если ноет спина, прикупите аппликатор",
+            pic: "/assets/img/tasks/task4/pic4.png",
+        },
+        {
+            id: 5,
+            title: "Отвечайте добром на добро",
+            pic: "/assets/img/tasks/task4/pic5.png",
+        },
+    ];
+
     return (
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
@@ -78,7 +106,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                     />
                 )}
                 {gameComplete ? (
-                    <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
+                    <GameDone text="Зина сказала нам по секрету, что делиться опытом с вами — одно удовольствие! Не сбавляйте темп: родители ещё не добрались до Вани и Деда Мороза." />
                 ) : currentStep === 0 ? (
                     <>
                         <Spacing size={25} />
@@ -98,71 +126,30 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 }
                                 loop={true}
                             >
-                                <SwiperSlide>
-                                    <div className={css["tips-slide"]}>
-                                        <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее 1
-                                        </Title>
-                                        <img
-                                            width={140}
-                                            className={css["tips-slide__pic"]}
-                                            src="assets/img/tasks/task4/hat.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className={css["tips-slide"]}>
-                                        <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее 2
-                                        </Title>
-                                        <img
-                                            width={140}
-                                            className={css["tips-slide__pic"]}
-                                            src="assets/img/tasks/task4/hat.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className={css["tips-slide"]}>
-                                        <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее 3
-                                        </Title>
-                                        <img
-                                            width={140}
-                                            className={css["tips-slide__pic"]}
-                                            src="assets/img/tasks/task4/hat.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className={css["tips-slide"]}>
-                                        <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее 4
-                                        </Title>
-                                        <img
-                                            width={140}
-                                            className={css["tips-slide__pic"]}
-                                            src="assets/img/tasks/task4/hat.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className={css["tips-slide"]}>
-                                        <Title color="red-black" align="center">
-                                            Надевайте шапку зимой так теплее 5
-                                        </Title>
-                                        <img
-                                            width={140}
-                                            className={css["tips-slide__pic"]}
-                                            src="assets/img/tasks/task4/hat.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                </SwiperSlide>
+                                {advices.map((advice) => (
+                                    <SwiperSlide key={advice.id}>
+                                        <div className={css["tips-slide"]}>
+                                            <Title
+                                                color="red-black"
+                                                align="center"
+                                                className={
+                                                    css["tips-slide__title"]
+                                                }
+                                            >
+                                                {advice.title}
+                                            </Title>
+                                            <img
+                                                // width={140}
+                                                className={classNames(
+                                                    css["tips-slide__pic"],
+                                                    advice.id === 3 && css["tips-slide__meat"]
+                                                )}
+                                                src={advice.pic}
+                                                alt=""
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
                             </Swiper>
                         </div>
                     </>
@@ -171,15 +158,21 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                         <div className={css["advice-block"]}>
                             <Spacing size={25} />
                             <img
-                                width={160}
-                                height={240}
-                                src="assets/img/loading-bg.jpg"
+                                width={150}
+                                // height={240}
+                                src={`assets/img/tasks/task4/story-pic${currentSlide+1}.jpg`}
                                 alt=""
                             />
                             <Spacing size={20} />
-                            <Title align="center" color="yellow">Отличный выбор</Title>
+                            <Title align="center" color="yellow">
+                                Отличный выбор
+                            </Title>
                             <Spacing size={5} />
-                            <Text color="white" align="center">С таким напутствием точно не пропадёшь! Пусть близкие узнают, что посоветовала вам Зина на Новый год.</Text>
+                            <Text color="white" align="center">
+                                С таким напутствием точно не пропадёшь! Пусть
+                                близкие узнают, что посоветовала вам Зина на
+                                Новый год.
+                            </Text>
                             <Spacing size={25} />
                             <PlusBall />
                         </div>
@@ -187,7 +180,13 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                 )}
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div
+                    style={{
+                        paddingLeft: 22,
+                        paddingRight: 22,
+                        margin: "auto",
+                    }}
+                >
                     {gameComplete ? (
                         <Button
                             color="yellow"

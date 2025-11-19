@@ -43,7 +43,7 @@
 
 .tips-slider :global(.swiper) {
     overflow: visible;
-    width: 630px;
+    width: 660px;
 }
 
 .tips-slide {
@@ -53,8 +53,8 @@
     flex-direction: column;
     justify-content: space-between;
     padding-top: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-image: var(--yellow-gradient);
     box-shadow: 0px 5.46px 31.96px 0px #FFC30B8F, 0px 5.46px 53.12px 0px #FFC30B87;
     border: 1.37px solid #FFFFFF61;
@@ -66,10 +66,15 @@
 
 .tips-slide__pic {
     position: absolute;
-    bottom: -40px;
+    bottom: 0px;
     left: 0;
     right: 0;
     margin: auto;
+    width: 100%;
+}
+
+.tips-slide__meat{
+    width: 170px;
 }
 
 .tips-slider__swiper :global(.swiper-slide) {
@@ -89,6 +94,10 @@
 .tips-slider__swiper :global(.swiper-slide-next)+:global(.swiper-slide) .tips-slide {
     transform: rotate(7deg) translateY(60px);
     opacity: .6;
+}
+
+.tips-slide__title{
+    font-size: 20px;
 }
 
 .advice-block{

@@ -43,7 +43,13 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                         alt=""
                     />
                 </div>
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div
+                    style={{
+                        paddingLeft: 22,
+                        paddingRight: 22,
+                        margin: "auto",
+                    }}
+                >
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
                         Дамир и ужин
@@ -51,18 +57,12 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                         что может пойти не так
                     </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.Lorem ipsum dolor sit amet
-                        consectetur. Pretium placerat duis convallis felis eget
-                        nunc arcu id at. Facilisi augue ultrices molestie.
-                    </Text>
+                    <Text align="center" color="white">Наш Дамир совсем замотался! Хотел бы он отдыхать с беременной женой, но работа не ждёт. Передвигайте одинаковые элементы в один ряд — помогите Дамиру приготовить блюдо к новогоднему банкету.</Text>
                     <Spacing size={130} />
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

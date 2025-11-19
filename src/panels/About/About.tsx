@@ -42,18 +42,15 @@ export const About: FC<NavIdProps> = ({ id }) => {
             <div className={css["about-panel-description"]}>
                 <Title color="yellow" align="center">
                     смотрите Ёлки 12
-                    <br />в кино с 18 декабря!
+                    <br />
+                    в кино с 18 декабря
                 </Title>
                 <Spacing size={5} />
                 <Text
                     align="center"
                     color="white"
                     className={css["about-panel-description__text"]}
-                >
-                    Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                    duis convallis felis eget nunc arcu id at. Facilisi augue
-                    ultrices molestie.
-                </Text>
+                >Главная новогодняя комедия страны снова на экранах! За хорошее настроение отвечают пять новелл, полных тепла, доброго юмора и атмосферы всеобщего праздника. У руля в этом году — Жора Крыжовников, в ролях: Дмитрий Нагиев, Рузиль Минекаев, Дмитрий Журавлёв, Андрей Рожков, Ольга Картункова, Тина Стойилкович и др. </Text>
                 <Spacing size={25} />
                 <Button color="yellow">Купить билеты</Button>
             </div>
@@ -113,8 +110,7 @@ export const About: FC<NavIdProps> = ({ id }) => {
                                                     DEFAULT_VIEW_MODALS.HERO_MODAL,
                                                     {
                                                         state: {
-                                                            action: "taskID",
-                                                            value: hero.id,
+                                                            hero: hero.id,
                                                         },
                                                     }
                                                 )
@@ -131,7 +127,7 @@ export const About: FC<NavIdProps> = ({ id }) => {
             </Div>
             <Div className={css["about-panel-gallery"]}>
                 <Title color="yellow" align="center">
-                    Галлерея
+                    Галерея
                 </Title>
                 <Spacing size={20} />
                 <div className={css["gallery-slider"]}>

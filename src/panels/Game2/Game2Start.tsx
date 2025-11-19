@@ -43,27 +43,30 @@ export const Game2Start: FC<NavIdProps> = ({ id }) => {
                         alt=""
                     />
                 </div>
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div
+                    style={{
+                        paddingLeft: 22,
+                        paddingRight: 22,
+                        margin: "auto",
+                    }}
+                >
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
-                        Помоги дяде юре
-                        <br />
-                        поймать пига
+                        ПОМОГИТЕ ДЯДЕ ЮРЕ ВЕРНУТЬ ПИСЬМО
                     </Title>
                     <Spacing size={5} />
                     <Text align="center" color="white">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.Lorem ipsum dolor sit amet
-                        consectetur. Pretium placerat duis convallis felis eget
-                        nunc arcu id at. Facilisi augue ultrices molestie.
+                        Не успел дядя Юра отвернуться — Костю с письмом как
+                        ветром сдуло! К этому минипигу нужен особый подход.
+                        Чтобы поймать его, тапайте по экрану и прислушивайтесь
+                        к подсказкам дяди Юры.
                     </Text>
                     <Spacing size={40} />
                     <Spacing size={90} />
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

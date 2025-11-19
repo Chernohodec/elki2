@@ -45,18 +45,10 @@ export const Game6Start: FC<NavIdProps> = ({ id }) => {
                 </div>
                 <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
                     <Spacing size={35} />
-                    <Title align="center" color="yellow">
-                        Судьбоносный танец
-                        <br />с Вадимом на балу
-                    </Title>
+                    <Title align="center" color="yellow">Судьбоносный танец<br/>
+с Вадимом на балу</Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">
-                        Lorem ipsum dolor sit amet consectetur. Pretium placerat
-                        duis convallis felis eget nunc arcu id at. Facilisi
-                        augue ultrices molestie.Lorem ipsum dolor sit amet
-                        consectetur. Pretium placerat duis convallis felis eget
-                        nunc arcu id at. Facilisi augue ultrices molestie.
-                    </Text>
+                    <Text align="center" color="white">Официантка Аня встретила инструктора Вадима и как по волшебству оказалась на праздничном балу. Найдите пять отличий между кадрами с ней — до Великого Устюга останется рукой подать!</Text>
                     <Spacing size={130} />
                 </Div>
             </div>

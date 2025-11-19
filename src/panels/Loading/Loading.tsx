@@ -15,30 +15,40 @@ export const Loading: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
     const dispatch = useAppDispatch();
     const onboardingComplete = useAppSelector(selectOnboardingComplete);
-    const {isLoading, init} = useInit()
-    const [timeIsLoading, setTimeIsLoading] = useState(true)
+    const { isLoading, init } = useInit();
+    const [timeIsLoading, setTimeIsLoading] = useState(true);
 
     useEffect(() => {
-        init()
+        // init();
         const loading = setTimeout(() => {
-            setTimeIsLoading(false)
+            setTimeIsLoading(false);
         }, 3000);
         return () => clearTimeout(loading);
     }, []);
 
-    useEffect(()=>{
-        if(!isLoading && !timeIsLoading){
+    useEffect(() => {
+        if (!isLoading && !timeIsLoading) {
             dispatch(setAppIsLoaded(true));
-            if(!onboardingComplete){
-                routeNavigator.push(`/${ONBOARDING_VIEW_PANELS.START}`)
+            if (!onboardingComplete) {
+                routeNavigator.replace(`/${ONBOARDING_VIEW_PANELS.START}`);
+            } else {
+                routeNavigator.replace(`/`);
             }
         }
-    },[isLoading, timeIsLoading])
+    }, [isLoading, timeIsLoading, onboardingComplete]);
+
+    useEffect(() => {
+        if (!isLoading && !timeIsLoading) {
+            dispatch(setAppIsLoaded(true));
+            if (!onboardingComplete) {
+                routeNavigator.push(`/${ONBOARDING_VIEW_PANELS.START}`);
+            }
+        }
+    }, [isLoading, timeIsLoading]);
 
     return (
         <Panel id={id}>
-            <Div className={css["loading-page"]}>
-            </Div>
+            <Div className={css["loading-page"]}></Div>
         </Panel>
     );
 };

@@ -120,8 +120,6 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                         </Snackbar>
                     );
 
-                    // Этим выбранным пользователям
-                    // не удалось отправить приглашения
                     console.log("Приглашения не отправлены", data.notSentIds);
                 }
             })
@@ -180,7 +178,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                     </div>
                     <Spacing size={15} />
                     {currentTab === "friends" ? (
-                        friends.length === 0 ? (
+                        friends?.length === 0 ? (
                             <>
                                 <img
                                     width={170}
@@ -198,12 +196,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                     шаров за друзей
                                 </Title>
                                 <Spacing size={5} />
-                                <Text align="center" color="gray">
-                                    Lorem ipsum dolor sit amet consectetur.
-                                    Pretium placerat duis convallis felis eget
-                                    nunc arcu id at. Facilisi augue ultrices
-                                    molestie.
-                                </Text>
+                                <Text align="center" color="gray">Друг в беде не бросит, шанс на приз умножит! Зовите в игру своих друзей, чтобы увеличить вероятность победы в розыгрыше. </Text>
                                 <Spacing size={15} />
                                 <Button onClick={inviteFriend}>
                                     Пригласить
@@ -213,7 +206,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                             <>
                                 <InviteBanner inviteFriend={inviteFriend} />
                                 <Spacing size={15} />
-                                {friends.length > 0 && (
+                                {friends?.length > 0 && (
                                     <Div className={css["friends-list"]}>
                                         {friends.map((friend) => {
                                             return (

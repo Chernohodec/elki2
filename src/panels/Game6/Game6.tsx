@@ -137,7 +137,7 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
                         </div>
                     </Div>
                 ) : (
-                    <GameDone text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie." />
+                    <GameDone text="Вас не проведёшь! Благодаря вам Ваня и родители успешно добрались до Великого Устюга. Теперь семья снова вместе — ведь Новый год нужно встречать с близкими!" />
                 )}
             </div>
             <FixedLayout vertical="bottom">

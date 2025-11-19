@@ -754,7 +754,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                 {gameComplete ? (
                     <GameDone
                         pic="assets/img/tasks/task5/done.png"
-                        text="Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie."
+                        text="Отличная работа! Вы спасли Дамира от нагоняя начальника и приблизили родителей Вани к цели. Набирайтесь сил перед новыми авантюрами."
                     />
                 ) : (
                     <>

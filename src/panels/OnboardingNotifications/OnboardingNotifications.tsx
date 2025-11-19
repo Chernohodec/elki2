@@ -44,16 +44,18 @@ export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
                             align={TitleAlign.center}
                             className={css["onboarding-content__title"]}
                         >
-                            Получайте уведомления <br />о новых заданиях
+                            ВКЛЮЧИТЕ УВЕДОМЛЕНИЯ
+                            <br />О НОВЫХ ЗАДАНИЯХ
                         </Title>
                         <Spacing size={20} />
                         <Text
                             className={css["onboarding-content__text"]}
                             align="center"
                         >
-                            Lorem ipsum dolor sit amet consectetur. Pretium
-                            placerat duis convallis felis eget nunc arcu id at.
-                            Facilisi augue ultrices molestie.
+                            Задания будут открываться постепенно. Наши герои
+                            идут разными путями, поэтому приключений вдвое
+                            больше! Получайте уведомления, чтобы ничего
+                            не пропустить.
                         </Text>
                         <Spacing size={25} />
                         <Button
