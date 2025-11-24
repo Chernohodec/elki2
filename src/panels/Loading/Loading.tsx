@@ -19,7 +19,7 @@ export const Loading: FC<NavIdProps> = ({ id }) => {
     const [timeIsLoading, setTimeIsLoading] = useState(true);
 
     useEffect(() => {
-        // init();
+        init();
         const loading = setTimeout(() => {
             setTimeIsLoading(false);
         }, 3000);

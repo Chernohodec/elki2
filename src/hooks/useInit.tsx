@@ -20,8 +20,6 @@ export const useInit = () => {
     const [params] = useSearchParams();
     const referalID = params.get("referal_id");
 
-    // 867521052
-
     const init = async () => {
         setLoading(true);
 
@@ -29,11 +27,11 @@ export const useInit = () => {
             const userInfo = await getUser(referalID);
             console.log(userInfo);
             dispatch(
-                setTasks(userInfo.quests.sort((a, b) => a.order - b.order))
+                setTasks(userInfo.data.quests.sort((a, b) => a.order - b.order))
             );
-            dispatch(setBalls(userInfo.tickets));
-            dispatch(setNotificationIsAllowed(userInfo.is_notifications_allowed));
-            dispatch(setOnboardingComplete(userInfo.is_onboarded));
+            dispatch(setBalls(userInfo.data.tickets));
+            dispatch(setNotificationIsAllowed(userInfo.data.is_notifications_allowed));
+            dispatch(setOnboardingComplete(userInfo.data.is_onboarded));
             setLoading(false);
         } catch (e) {
             console.log(e);

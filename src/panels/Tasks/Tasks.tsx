@@ -83,6 +83,8 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
         window.location.search
     );
 
+    console.log(tasks)
+
     useEffect(() => {
         if (currentPathTab) {
             setCurrentTab(currentPathTab);

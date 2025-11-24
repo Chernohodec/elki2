@@ -26,7 +26,7 @@ const TaskModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
     const currentTask = tasks.find((task) => task.id === params?.value);
 
     return (
-        <ModalCard className={css["modal"]} {...props} onClose={props.onClose}>
+        <ModalCard  className={css["modal"]} {...props} onClose={props.onClose}>
             {currentTask && (
                 <div className={css["modal__content"]}>
                     <div className={css["modal__image-wrapper"]}>
