@@ -14,7 +14,7 @@
     top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../../public/assets/img/main-bg.jpg);
+    background-image: url(/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -33,7 +33,7 @@
 
 .onboarding-wrapper {
     width: calc(100% - 30px);
-    background: url(../../../public/assets/img/progressbar-bg.jpg), var(--yellow-gradient);
+    background: url(/assets/img/progressbar-bg.jpg), var(--yellow-gradient);
     border-radius: 60px 60px 0 0;
     padding: 4px 4px 0;
     margin-left: auto;
@@ -58,7 +58,7 @@
 }
 
 .hit-pig-game {
-    background-image: url(../../../public/assets/img/tasks/task2/game-bg.jpg);
+    background-image: url(/assets/img/tasks/task2/game-bg.jpg);
     min-height: calc(100dvh - 100px);
     background-repeat: no-repeat;
     border-radius: 30px 30px 0 0;
@@ -91,7 +91,7 @@
     width: 140px;
     height: 63px;
     border-radius: 32px;
-    background-image: url(../../../public/assets/img/tasks/task2/counter-pig.png), var(--red-gradient);
+    background-image: url(/assets/img/tasks/task2/counter-pig.png), var(--red-gradient);
     background-repeat: no-repeat;
     background-position: calc(100% - 15px) center, center;
     background-size: 40px, cover;
@@ -133,7 +133,7 @@
 
 .snowdrift {
     position: absolute;
-    background-image: url(../../../public/assets/img/tasks/task2/snow.png);
+    background-image: url(/assets/img/tasks/task2/snow.png);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -176,7 +176,7 @@
     position: absolute;
     width: 94px;
     height: 144px;
-    background-image: url(../../../public/assets/img/tasks/task2/pig.png);
+    background-image: url(/assets/img/tasks/task2/pig.png);
     background-repeat: no-repeat;
     background-position: center 0;
     background-size: 160px;
@@ -186,24 +186,24 @@
     /* top: -80px; */
     bottom: 40px;
     z-index: 1;
-    transition: 0.3s ease;
+    transition: 0.3s height ease;
     height: 0;
 }
 
 .pig.horse {
-    background-image: url(../../../public/assets/img/tasks/task2/horse.png);
+    background-image: url(/assets/img/tasks/task2/horse.png);
 }
 
 .pig.horse {
-    background-image: url(../../../public/assets/img/tasks/task2/horse.png);
+    background-image: url(/assets/img/tasks/task2/horse.png);
 }
 
 .pig.deer {
-    background-image: url(../../../public/assets/img/tasks/task2/deer.png);
+    background-image: url(/assets/img/tasks/task2/deer.png);
 }
 
 .pig.cat {
-    background-image: url(../../../public/assets/img/tasks/task2/cat.png);
+    background-image: url(/assets/img/tasks/task2/cat.png);
 }
 
 .pig_active {

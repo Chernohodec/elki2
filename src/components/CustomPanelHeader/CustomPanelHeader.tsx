@@ -53,7 +53,7 @@ export const CustomPanelHeader = ({
         activePanel === ONBOARDING_VIEW_PANELS.START ||
         activePanel === ONBOARDING_VIEW_PANELS.NOTIFICATIONS;
     const isTaskPage = taskPages.includes(activePanel);
-    const finishedTasks = tasks.filter((task) => task.checked);
+    const finishedTasks = tasks.filter((task) => task.completed);
 
     return (
         <PlatformProvider value="ios">

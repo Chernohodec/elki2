@@ -1,12 +1,13 @@
 .game-failed{
     width: 100%;
-    height: 100dvh;
+    height: calc(100dvh - 200px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    padding-bottom: 150px;
+    /* backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); */
     justify-content: center;
 }
 

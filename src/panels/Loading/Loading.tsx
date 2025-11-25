@@ -30,9 +30,9 @@ export const Loading: FC<NavIdProps> = ({ id }) => {
         if (!isLoading && !timeIsLoading) {
             dispatch(setAppIsLoaded(true));
             if (!onboardingComplete) {
-                routeNavigator.replace(`/${ONBOARDING_VIEW_PANELS.START}`);
+                // routeNavigator.replace(`/${ONBOARDING_VIEW_PANELS.START}`);
             } else {
-                routeNavigator.replace(`/`);
+                // routeNavigator.replace(`/`);
             }
         }
     }, [isLoading, timeIsLoading, onboardingComplete]);

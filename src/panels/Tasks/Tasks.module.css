@@ -9,7 +9,7 @@
     top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../../public/assets/img/main-bg.jpg);
+    background-image: url(/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -83,12 +83,12 @@
     width: 120px;
 }
 
-.tasks-item_checked {
+.tasks-item_completed {
     background-image: url(../../assets/img/task-bg-done.png);
     position: relative;
 }
 
-.tasks-item_checked:before {
+.tasks-item_completed:before {
     content: '';
     position: absolute;
     left: 190px;
@@ -102,7 +102,7 @@
     z-index: 2;
 }
 
-.task-ticket {
+.task-ball {
     display: flex;
     align-items: center;
     height: 70px;
@@ -114,7 +114,7 @@
     gap: 10px;
 }
 
-.task-ticket span {
+.task-ball span {
     height: 30px;
     background-color: #00000012;
     border-radius: 15px;
@@ -125,18 +125,18 @@
     gap: 7px;
 }
 
-.tasks-tickets {
+.tasks-balls {
     display: flex;
     flex-direction: column;
     grid-gap: 7px;
 }
 
-.task-ticket__text {
+.task-ball__text {
     text-transform: uppercase;
     margin-right: auto;
 }
 
-.tasks-tickets__button {
+.tasks-balls__button {
     height: 55px;
     color: #003137;
     border: 1px dashed #0031373D;
@@ -147,7 +147,7 @@
 }
 
 .big-counter {
-    background-image: url(../../../public/assets/img/big-counter-bg.png);
+    background-image: url(/assets/img/big-counter-bg.png);
     background-repeat: no-repeat;
     background-position: 100% 100%;
     background-size: contain;

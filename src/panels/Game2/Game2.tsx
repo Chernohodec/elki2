@@ -17,8 +17,11 @@ import { GameDone } from "../../components/GameDone/GameDone";
 import { Title } from "../../components/Title/Title";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
+import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
+import { checkQuest } from "../../api/user/checkQuest";
+import { GameFailed } from "../../components/GameFailed/GameFailed";
+import { motion } from "framer-motion";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -31,6 +34,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [onboardingDone, setOnboardingDone] = useState(false);
     const [score, setScore] = useState(0);
     const [lives, setLives] = useState(3); // Добавляем состояние для жизней
+    const [gameOver, setGameOver] = useState(false);
     const [activeHole, setActiveHole] = useState<number | null>(null);
     const [activeAnimalType, setActiveAnimalType] = useState<
         "pig" | "horse" | "deer" | "cat"
@@ -61,16 +65,19 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     }, [pigSoundUrl]);
 
     const completeTask = () => {
-        dispatch(setTaskChecked(2));
+        checkQuest(2).then(() => {
+            updateTasks();
+        });
+        dispatch(setTaskCompleted(2));
         setGameComplete(true);
         setShowConfetti(true);
     };
 
     useEffect(() => {
-        if (!currentTask?.active) {
+        if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
-    }, [currentTask?.active, routeNavigator]);
+    }, []);
 
     // Очистка интервала при размонтировании
     useEffect(() => {
@@ -86,6 +93,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         setGameActive(true);
         setScore(0);
         setLives(3); // Сбрасываем жизни при начале игры
+        setGameOver(false);
         startGameLoop();
     };
 
@@ -231,6 +239,13 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         return hearts;
     };
 
+    useEffect(() => {
+        if (lives === 0) {
+            setGameActive(false);
+            setGameOver(true);
+        }
+    }, [lives]);
+
     return (
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
@@ -245,136 +260,185 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                {showConfetti && (
-                    <Confetti
-                        recycle={false}
-                        numberOfPieces={200}
-                        gravity={0.6}
-                        tweenDuration={200}
-                        className={css["game-start-panel__confetti"]}
-                    />
-                )}
-                {!gameComplete ? (
-                    <div className={css["hit-pig-game"]}>
-                        <div className={css["hit-pig-game__header"]}>
-                            <div className={css["hit-pig-counter"]}>
-                                <Title color="yellow">{score}/10</Title>
-                            </div>
-                            <div className={css["hit-pig-lives"]}>
-                                {renderHearts()}
-                            </div>
-                        </div>
-
-                        <div className={css["game-area"]}>
-                            {/* Первый ряд снежных сугробов */}
-                            <div className={css["snow-row"]}>
-                                {holes.slice(0, 3).map((holeIndex) => (
-                                    <div
-                                        key={holeIndex}
-                                        className={classNames(
-                                            css["snowdrift-wrapper"],
-                                            getOrderClass(holeIndex)
-                                        )}
-                                        onClick={() =>
-                                            handleHoleClick(holeIndex)
-                                        }
-                                        style={{
-                                            cursor: gameActive
-                                                ? "pointer"
-                                                : "default",
-                                        }}
-                                    >
-                                        <div className={css["snowdrift"]}></div>
-                                        {!onboardingDone && holeIndex === 0 && (
-                                            <>
-                                                <img
-                                                    src="assets/img/tasks/task2/touch-icon.svg"
-                                                    className={
-                                                        css[
-                                                            "snowdrift-wrapper__pointer"
-                                                        ]
-                                                    }
-                                                />
-                                                <div
-                                                    className={classNames(
-                                                        css["pig"],
-                                                        css["pig_active"]
-                                                    )}
-                                                ></div>
-                                            </>
-                                        )}
-                                        {/* Животное появляется только в активной яме */}
-                                        {gameActive &&
-                                            activeHole === holeIndex && (
-                                                <div
-                                                    className={classNames(
-                                                        css["pig"],
-                                                        getAnimalClass(),
-                                                        css["pig_active"]
-                                                    )}
-                                                ></div>
-                                            )}
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Второй ряд снежных сугробов */}
-                            <div className={css["snow-row"]}>
-                                {holes.slice(3, 6).map((holeIndex) => (
-                                    <div
-                                        key={holeIndex}
-                                        className={classNames(
-                                            css["snowdrift-wrapper"],
-                                            getOrderClass(holeIndex)
-                                        )}
-                                        onClick={() =>
-                                            handleHoleClick(holeIndex)
-                                        }
-                                        style={{
-                                            cursor: gameActive
-                                                ? "pointer"
-                                                : "default",
-                                        }}
-                                    >
-                                        <div className={css["snowdrift"]}></div>
-                                        {/* Животное появляется только в активной яме */}
-                                        {gameActive &&
-                                            activeHole === holeIndex && (
-                                                <div
-                                                    className={classNames(
-                                                        css["pig"],
-                                                        getAnimalClass(),
-                                                        css["pig_active"]
-                                                    )}
-                                                ></div>
-                                            )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        {!onboardingDone && (
-                            <div className={css["onboarding-wrapper"]}>
-                                <div className={css["onboarding"]}>
-                                    <Title align="center">
-                                        Тапайте по пигу,
-                                        <br />
-                                        чтобы поймать его
-                                    </Title>
-                                    <Spacing size={20} />
-                                    <Button color="red" onClick={startGame}>
-                                        Начать игру
-                                    </Button>
+                <motion.div
+                    key={[gameOver, showConfetti, gameComplete]}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {showConfetti && (
+                        <Confetti
+                            recycle={false}
+                            numberOfPieces={200}
+                            gravity={0.6}
+                            tweenDuration={200}
+                            className={css["game-start-panel__confetti"]}
+                        />
+                    )}
+                    {gameOver ? (
+                        <GameFailed
+                            reloadHandler={startGame}
+                            backHandler={() =>
+                                routeNavigator.showModal(
+                                    DEFAULT_VIEW_MODALS.CLOSE_MODAL
+                                )
+                            }
+                        />
+                    ) : !gameComplete ? (
+                        <div className={css["hit-pig-game"]}>
+                            <div className={css["hit-pig-game__header"]}>
+                                <div className={css["hit-pig-counter"]}>
+                                    <Title color="yellow">{score}/10</Title>
+                                </div>
+                                <div className={css["hit-pig-lives"]}>
+                                    {renderHearts()}
                                 </div>
                             </div>
-                        )}
-                    </div>
-                ) : (
-                    <GameDone
-                        pic="assets/img/tasks/task2/done.png"
-                        text="Поймать Пига оказалось непросто, но письмо снова в наших руках. Перед новыми заданиями не помешает хорошенько согреться!"
-                    />
-                )}
+
+                            <div className={css["game-area"]}>
+                                {/* Первый ряд снежных сугробов */}
+                                <div className={css["snow-row"]}>
+                                    {holes.slice(0, 3).map((holeIndex) => (
+                                        <div
+                                            key={holeIndex}
+                                            className={classNames(
+                                                css["snowdrift-wrapper"],
+                                                getOrderClass(holeIndex)
+                                            )}
+                                            onClick={() =>
+                                                handleHoleClick(holeIndex)
+                                            }
+                                            style={{
+                                                cursor: gameActive
+                                                    ? "pointer"
+                                                    : "default",
+                                            }}
+                                        >
+                                            <div
+                                                className={css["snowdrift"]}
+                                            ></div>
+                                            {!onboardingDone &&
+                                                holeIndex === 0 && (
+                                                    <>
+                                                        <img
+                                                            src="assets/img/tasks/task2/touch-icon.svg"
+                                                            className={
+                                                                css[
+                                                                    "snowdrift-wrapper__pointer"
+                                                                ]
+                                                            }
+                                                        />
+                                                        <div
+                                                            className={classNames(
+                                                                css["pig"],
+                                                                css[
+                                                                    "pig_active"
+                                                                ]
+                                                            )}
+                                                        ></div>
+                                                    </>
+                                                )}
+                                            {/* Животное появляется только в активной яме */}
+
+                                            <div
+                                                className={classNames(
+                                                    css["pig"],
+                                                    getAnimalClass(),
+                                                    gameActive &&
+                                                        activeHole ===
+                                                            holeIndex &&
+                                                        css["pig_active"]
+                                                )}
+                                            ></div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Второй ряд снежных сугробов */}
+                                <div className={css["snow-row"]}>
+                                    {holes.slice(3, 6).map((holeIndex) => (
+                                        <div
+                                            key={holeIndex}
+                                            className={classNames(
+                                                css["snowdrift-wrapper"],
+                                                getOrderClass(holeIndex)
+                                            )}
+                                            onClick={() =>
+                                                handleHoleClick(holeIndex)
+                                            }
+                                            style={{
+                                                cursor: gameActive
+                                                    ? "pointer"
+                                                    : "default",
+                                            }}
+                                        >
+                                            <div
+                                                className={css["snowdrift"]}
+                                            ></div>
+                                            {/* Животное появляется только в активной яме */}
+
+                                            <div
+                                                className={classNames(
+                                                    css["pig"],
+                                                    getAnimalClass(),
+                                                    gameActive &&
+                                                        activeHole ===
+                                                            holeIndex &&
+                                                        css["pig_active"]
+                                                )}
+                                            ></div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            {!onboardingDone && (
+                                <div className={css["onboarding-wrapper"]}>
+                                    <div className={css["onboarding"]}>
+                                        <Title align="center">
+                                            Тапайте по пигу,
+                                            <br />
+                                            чтобы поймать его
+                                        </Title>
+                                        <Spacing size={20} />
+                                        <Button color="red" onClick={startGame}>
+                                            Начать игру
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <GameDone
+                            pic="assets/img/tasks/task2/done.png"
+                            text="Поймать Пига оказалось непросто, но письмо снова в наших руках. Перед новыми заданиями не помешает хорошенько согреться!"
+                        />
+                    )}
+                </motion.div>
             </div>
+            {gameOver && (
+                <FixedLayout vertical="bottom">
+                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                        <Button
+                            className={css["game-failed__button"]}
+                            onClick={startGame}
+                        >
+                            Повторить попытку
+                        </Button>
+                        <Spacing size={15} />
+                        <Button
+                            color="transparent-yellow"
+                            onClick={() =>
+                                routeNavigator.showModal(
+                                    DEFAULT_VIEW_MODALS.CLOSE_MODAL
+                                )
+                            }
+                        >
+                            Попробую позже
+                        </Button>
+                    </Div>
+                </FixedLayout>
+            )}
             {gameComplete && (
                 <FixedLayout vertical="bottom">
                     <Div style={{ paddingLeft: 22, paddingRight: 22 }}>

@@ -10,6 +10,7 @@ import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Button } from "../Button/Button";
 import { Title } from "../Title/Title";
+import { Fireworks } from "@fireworks-js/react";
 import css from "./Map.module.css";
 
 export type Map = {
@@ -94,6 +95,33 @@ export const Map = ({ ...props }: Map) => {
                 style={{ height: "525px" }}
             >
                 <div className={classNames(css["map__image"])}>
+                    <div className={css["map__fireworks"]}>
+                        <Fireworks
+                            options={{
+                                hue: { min: 40, max: 40 },
+                                acceleration: 1, // Медленное ускорение для плавности
+                                brightness: { min: 40, max: 70 }, // Приглушенная яркость
+                                decay: { min: 0.02, max: 0.04 }, // Медленное затухание
+                                delay: { min: 15, max: 25 }, // Редкие запуски
+                                rocketsPoint: {
+                                    min: 40,
+                                    max: 60,
+                                }, // Высота взрыва (ниже = дальше)
+                                lineWidth: {
+                                    explosion: { min: 0.5, max: 1.5 },
+                                    trace: { min: 0.3, max: 1 },
+                                }, // Тонкие линии
+                                lineStyle: "round",
+                                explosion: 6, // Меньше частиц при взрыве
+                                intensity: 20, // Низкая интенсивность
+                                flickering: 20, // Слабый эффект мерцания
+                                opacity: 0.4, // Полупрозрачность для далекого вида
+                                traceLength: 2, // Короткие следы
+                                traceSpeed: 6, // Медленная скорость
+                                particles: 25, // Мало частиц
+                            }}
+                        />
+                    </div>
                     <div className={css["lights"]}>
                         {[...Array(60)].map((item, index) => {
                             return (
@@ -188,7 +216,7 @@ export const Map = ({ ...props }: Map) => {
                                                 {task.name}
                                             </Title>
                                             <Spacing size={10} />
-                                            {task.checked ? (
+                                            {task.completed ? (
                                                 <div
                                                     className={
                                                         css["task-item__done"]
@@ -235,7 +263,7 @@ export const Map = ({ ...props }: Map) => {
                                                 }
                                                 width={95}
                                                 src={
-                                                    task.checked
+                                                    task.completed
                                                         ? `assets/img/tasks/task-done-pic.png`
                                                         : `assets/img/tasks/task${task.id}-icon.png`
                                                 }

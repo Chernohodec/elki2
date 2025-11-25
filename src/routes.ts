@@ -10,11 +10,12 @@ import {
 export const DEFAULT_ROOT = "default_root";
 export const DEFAULT_VIEW = "default_view";
 export const ONBOADING_VIEW = "onboarding_view";
-// export const LOADING_VIEW = "loading_view";
+export const LOADING_VIEW = "loading_view";
 
 export const ONBOARDING_VIEW_PANELS = {
     START: "onboarding_start",
     NOTIFICATIONS: "onboarding_notifications",
+    LOADING: "loading"
 } as const;
 
 export const DEFAULT_VIEW_PANELS = {

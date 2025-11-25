@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
     background-size: 95px, cover;
     background-position: 17px center, center;
-    background-image: url(../../../public/assets/img/friends-pic.png), linear-gradient(180deg, #EA0300 0%, #840715 100%);
+    background-image: url(/assets/img/friends-pic.png), linear-gradient(180deg, #EA0300 0%, #840715 100%);
     padding-left: 120px;
 
 }

@@ -1,10 +1,10 @@
 @font-face {
   font-family: "OpinionPro";
-  src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot");
-  src: url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot?#iefix")format("embedded-opentype"),
-    url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff")format("woff"),
-    url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff2")format("woff2"),
-    url("../public/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.ttf")format("truetype");
+  src: url("/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot");
+  src: url("/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.eot?#iefix")format("embedded-opentype"),
+    url("/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff")format("woff"),
+    url("/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.woff2")format("woff2"),
+    url("/assets/fonts/OpinionPro-Bold/OpinionPro-Bold.ttf")format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -12,11 +12,11 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot");
-  src: url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot?#iefix")format("embedded-opentype"),
-    url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff")format("woff"),
-    url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff2")format("woff2"),
-    url("../public/assets/fonts/Montserrat-Regular/Montserrat-Regular.ttf")format("truetype");
+  src: url("/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot");
+  src: url("/assets/fonts/Montserrat-Regular/Montserrat-Regular.eot?#iefix")format("embedded-opentype"),
+    url("/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff")format("woff"),
+    url("/assets/fonts/Montserrat-Regular/Montserrat-Regular.woff2")format("woff2"),
+    url("/assets/fonts/Montserrat-Regular/Montserrat-Regular.ttf")format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,11 +25,11 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot");
-  src: url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot?#iefix")format("embedded-opentype"),
-    url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff")format("woff"),
-    url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff2")format("woff2"),
-    url("../public/assets/fonts/Montserrat-Bold/Montserrat-Bold.ttf")format("truetype");
+  src: url("/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot");
+  src: url("/assets/fonts/Montserrat-Bold/Montserrat-Bold.eot?#iefix")format("embedded-opentype"),
+    url("/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff")format("woff"),
+    url("/assets/fonts/Montserrat-Bold/Montserrat-Bold.woff2")format("woff2"),
+    url("/assets/fonts/Montserrat-Bold/Montserrat-Bold.ttf")format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

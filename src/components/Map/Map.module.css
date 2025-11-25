@@ -8,7 +8,7 @@
 }
 
 .map__image {
-    background-image: url(../../../public/assets/img/map-bg.jpg);
+    background-image: url(/assets/img/map-bg.jpg);
     /* height: 100%; */
     height: 520px;
     width: 2886px;
@@ -16,6 +16,7 @@
     background-position: 0 0;
     background-repeat: no-repeat;
     position: relative;
+    overflow: hidden;
 }
 
 .tasks {
@@ -75,7 +76,7 @@
     width: 100%;
     height: 185px;
     clip-path: polygon(28.956% 0.826%, 72.054% 0.826%, 72.054% 0.826%, 76.587% 1.125%, 80.887% 1.991%, 84.897% 3.377%, 88.559% 5.235%, 91.815% 7.519%, 94.608% 10.182%, 96.881% 13.176%, 98.575% 16.455%, 99.634% 19.971%, 100% 23.678%, 100% 74.612%, 100% 74.612%, 99.683% 77.827%, 98.764% 80.878%, 97.294% 83.722%, 95.323% 86.319%, 92.899% 88.629%, 90.075% 90.61%, 86.898% 92.223%, 83.42% 93.425%, 79.69% 94.176%, 75.758% 94.435%, 72.187% 94.435%, 72.187% 94.435%, 70.362% 94.481%, 68.55% 94.616%, 66.756% 94.841%, 64.985% 95.153%, 63.243% 95.552%, 61.533% 96.037%, 59.86% 96.605%, 58.229% 97.256%, 56.646% 97.989%, 55.114% 98.802%, 52.999% 100%, 52.999% 100%, 52.535% 100.23%, 52.048% 100.408%, 51.543% 100.536%, 51.027% 100.613%, 50.505% 100.638%, 49.983% 100.613%, 49.467% 100.536%, 48.962% 100.408%, 48.475% 100.23%, 48.011% 100%, 45.896% 98.802%, 45.896% 98.802%, 44.365% 97.989%, 42.781% 97.256%, 41.15% 96.605%, 39.478% 96.037%, 37.767% 95.552%, 36.025% 95.153%, 34.254% 94.841%, 32.46% 94.616%, 30.648% 94.481%, 28.823% 94.435%, 25.253% 94.435%, 25.253% 94.435%, 21.32% 94.176%, 17.59% 93.425%, 14.112% 92.223%, 10.935% 90.61%, 8.111% 88.629%, 5.687% 86.319%, 3.716% 83.722%, 2.246% 80.878%, 1.327% 77.827%, 1.01% 74.612%, 1.01% 23.678%, 1.01% 23.678%, 1.376% 19.971%, 2.435% 16.455%, 4.129% 13.176%, 6.402% 10.182%, 9.195% 7.519%, 12.452% 5.235%, 16.113% 3.377%, 20.123% 1.991%, 24.423% 1.125%, 28.956% 0.826%);
-    background-image: url(../../../public/assets/img/map-frame.png);
+    background-image: url(/assets/img/map-frame.png);
     background-repeat: no-repeat;
     background-position: center 100%;
     background-size: calc(100% - 3px);
@@ -118,18 +119,18 @@
 }
 
 .task-item__icon_type_parent {
-    background-image: url(../../../public/assets/img/tasks/parent-icon-bg.png);
+    background-image: url(/assets/img/tasks/parent-icon-bg.png);
 }
 
 .task-item__icon_type_kid {
-    background-image: url(../../../public/assets/img/tasks/child-icon-bg.png);
+    background-image: url(/assets/img/tasks/child-icon-bg.png);
 }
 
 .task-item__image {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-image: url(../../../public/assets/img/tasks/child-icon-bg.png);
+    background-image: url(/assets/img/tasks/child-icon-bg.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -141,7 +142,7 @@
 }
 
 .task-item__image_type_parent {
-    background-image: url(../../../public/assets/img/tasks/parent-icon-bg.png);
+    background-image: url(/assets/img/tasks/parent-icon-bg.png);
 }
 
 .task-item__character {
@@ -722,7 +723,7 @@
     bottom: 28px;
     width: 90px;
     height: 40px;
-    background-image: url(../../../public/assets/img/map-car1.png);
+    background-image: url(/assets/img/map-car1.png);
     background-repeat: no-repeat;
     background-size: contain;
     animation: carDrive 35s linear infinite;
@@ -737,7 +738,7 @@
     bottom: -6px;
     width: 19px;
     height: 19px;
-    background-image: url(../../../public/assets/img/map-car-wheel1.png);
+    background-image: url(/assets/img/map-car-wheel1.png);
     background-size: contain;
     background-position: center;
     animation: wheelRotation 1s linear infinite;
@@ -750,7 +751,7 @@
     bottom: -6px;
     width: 19px;
     height: 19px;
-    background-image: url(../../../public/assets/img/map-car-wheel1.png);
+    background-image: url(/assets/img/map-car-wheel1.png);
     background-size: contain;
     background-position: center;
     animation: wheelRotation 1s linear infinite;
@@ -762,7 +763,7 @@
     bottom: 8px;
     width: 90px;
     height: 31px;
-    background-image: url(../../../public/assets/img/map-car2.png);
+    background-image: url(/assets/img/map-car2.png);
     background-repeat: no-repeat;
     background-size: contain;
     animation: carDrive 40s linear infinite;
@@ -777,7 +778,7 @@
     bottom: -4px;
     width: 16px;
     height: 16px;
-    background-image: url(../../../public/assets/img/map-car-wheel2.png);
+    background-image: url(/assets/img/map-car-wheel2.png);
     background-size: contain;
     background-position: center;
     animation: wheelRotation 1s linear infinite;
@@ -790,7 +791,7 @@
     bottom: -4px;
     width: 16px;
     height: 16px;
-    background-image: url(../../../public/assets/img/map-car-wheel2.png);
+    background-image: url(/assets/img/map-car-wheel2.png);
     background-size: contain;
     background-position: center;
     animation: wheelRotation 1s linear infinite;
@@ -832,4 +833,12 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+.map__fireworks{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 3;
 }

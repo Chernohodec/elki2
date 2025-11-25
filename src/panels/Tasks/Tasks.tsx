@@ -22,26 +22,22 @@ import { FC, useEffect, useState } from "react";
 // import taskPic4 from "../../assets/img/task-pic4.png";
 // import taskPic5 from "../../assets/img/task-pic5.png";
 // import taskPic6 from "../../assets/img/task-pic6.png";
-import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { useAppSelector } from "../../store";
-import {
-    selectFriends,
-    selectTasks,
-    selectBalls,
-} from "../../store/tasks.reducer";
-import css from "./Tasks.module.css";
 import { Button } from "../../components/Button/Button";
+import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
+import { InviteBanner } from "../../components/InviteBanner/InviteBanner";
 import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
-import { DEFAULT_VIEW_MODALS, DEFAULT_VIEW_PANELS } from "../../routes";
-import { InviteBanner } from "../../components/InviteBanner/InviteBanner";
+import { DEFAULT_VIEW_PANELS } from "../../routes";
+import { useAppSelector } from "../../store";
+import { selectBalls, selectTasks } from "../../store/tasks.reducer";
+import css from "./Tasks.module.css";
 
 export const Tasks: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
     const [params, setParams] = useSearchParams();
     const currentPathTab = params.get("tab");
     const tasks = useAppSelector(selectTasks);
-    const tasksDone = tasks.filter((task) => !task.checked).length === 0;
+    const tasksDone = tasks.filter((task) => !task.completed).length === 0;
     const images = [
         "assets/img/tasks/task1-icon.png",
         "assets/img/tasks/task2-icon.png",
@@ -51,7 +47,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
         "assets/img/tasks/task6-icon.png",
     ];
     const [currentTab, setCurrentTab] = useState("tasks");
-    const tickets = useAppSelector(selectBalls);
+    const balls = useAppSelector(selectBalls);
     const routes = [
         {
             id: 1,
@@ -78,12 +74,15 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
             route: DEFAULT_VIEW_PANELS.GAME6_START,
         },
     ];
-    const friends = useAppSelector(selectFriends);
+    const friends = useAppSelector(selectBalls).filter(
+        (ball) => ball.type === "INVITE"
+    );
+    const ballsToShow = balls.filter((ball) => ball.type === "QUEST");
     const { vk_user_id } = parseURLSearchParamsForGetLaunchParams(
         window.location.search
     );
 
-    console.log(tasks)
+    console.log(tasks);
 
     useEffect(() => {
         if (currentPathTab) {
@@ -139,7 +138,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                 title="Мои шары"
             />
             <Spacing size={20} />
-            <div className={css["big-counter"]}>{tickets.length}</div>
+            <div className={css["big-counter"]}>{balls.length}</div>
             <Spacing size={30} />
             <div className={css["tasks-panel__content"]}>
                 <Div>
@@ -152,12 +151,12 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                         <button
                             onClick={() =>
                                 routeNavigator.replace(
-                                    `/${DEFAULT_VIEW_PANELS.TASKS}?tab=tickets`
+                                    `/${DEFAULT_VIEW_PANELS.TASKS}?tab=balls`
                                 )
                             }
                             className={classNames(
                                 css["task-switcher__button"],
-                                currentTab === "tickets" &&
+                                currentTab === "balls" &&
                                     css["task-switcher__button_active"]
                             )}
                         >
@@ -198,7 +197,11 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                     шаров за друзей
                                 </Title>
                                 <Spacing size={5} />
-                                <Text align="center" color="gray">Друг в беде не бросит, шанс на приз умножит! Зовите в игру своих друзей, чтобы увеличить вероятность победы в розыгрыше. </Text>
+                                <Text align="center" color="gray">
+                                    Друг в беде не бросит, шанс на приз умножит!
+                                    Зовите в игру своих друзей, чтобы увеличить
+                                    вероятность победы в розыгрыше.{" "}
+                                </Text>
                                 <Spacing size={15} />
                                 <Button onClick={inviteFriend}>
                                     Пригласить
@@ -268,16 +271,14 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                         )
                     ) : (
                         <>
-                            {tickets.length > 0 ? (
+                            {ballsToShow.length > 0 ? (
                                 <>
-                                    <div className={css["tasks-tickets"]}>
-                                        {tickets.map((ticket) => {
+                                    <div className={css["tasks-balls"]}>
+                                        {ballsToShow.map((ball) => {
                                             return (
                                                 <div
-                                                    className={
-                                                        css["task-ticket"]
-                                                    }
-                                                    key={ticket.id}
+                                                    className={css["task-ball"]}
+                                                    key={ball.id}
                                                 >
                                                     <img
                                                         width={24}
@@ -291,7 +292,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                                         color="white"
                                                         className={
                                                             css[
-                                                                "task-ticket__text"
+                                                                "task-ball__text"
                                                             ]
                                                         }
                                                     >
@@ -311,11 +312,11 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                                             color="white"
                                                             className={
                                                                 css[
-                                                                    "task-ticket__title"
+                                                                    "task-ball__title"
                                                                 ]
                                                             }
                                                         >
-                                                            №{ticket.number}
+                                                            №{ball.id}
                                                         </Title>
                                                     </span>
                                                 </div>
@@ -335,20 +336,21 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                         src={"assets/img/friends-pic.png"}
                                         alt=""
                                     />
-                                    <Spacing size={20} />
-                                    <Title
-                                        align={"center"}
-                                        color={"black"}
-                                        size={"medium"}
-                                    >
-                                        Получайте больше шаров за друзей
-                                    </Title>
                                     <Spacing size={15} />
-                                    <Button
-                                        className={css["tasks-tickets__button"]}
-                                        color="transparent"
-                                        onClick={inviteFriend}
-                                    >
+                                    <Title align={"center"} color={"white"}>
+                                        Получайте больше шаров
+                                        <br />
+                                        за друзей
+                                    </Title>
+                                    <Spacing size={7} />
+                                    <Text align="center" color="gray">
+                                        Друг в беде не бросит, шанс на приз
+                                        умножит! Зовите в игру своих друзей,
+                                        чтобы увеличить вероятность победы в
+                                        розыгрыше.{" "}
+                                    </Text>
+                                    <Spacing size={25} />
+                                    <Button onClick={inviteFriend}>
                                         Пригласить
                                     </Button>
                                 </>

@@ -99,22 +99,22 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
         {
             id: 1,
             title: "Кто организатор акции?",
-            text: "Компания «НМГ Кинопрокат» (входит в холдинг «Национальная Медиа Группа»)",
+            text: "Организатор — ООО «НМГ Кинопрокат», ИНН: 9704180557",
         },
         {
             id: 2,
             title: "Какие сроки проведения акции?",
-            text: "Проходить уровни можно с 8 сентября по 30 октября. Итоги розыгрыша подведем 3 ноября.",
+            text: "Розыгрыш пройдёт с 24 ноября до 12 января, а имена победителей узнаем 16 января",
         },
         {
             id: 3,
             title: "Когда выйдет фильм?",
-            text: "Смотрите анимационное приключение «Финник 2» в кино с 23 октября.",
+            text: "Смотрите «Ёлки 12» в кино с 18 декабря!",
         },
         {
             id: 4,
-            title: "Как участвовать в розыгрыше?",
-            text: "Получайте билеты за прохождение новых уровней и приглашения друзей. Каждый билет увеличивает шансы на победу!",
+            title: "Кто может участвовать?",
+            text: "Участники — граждане РФ 14 лет и старше, зарегистрированные в соцсети «ВКонтакте»",
         },
     ];
 
@@ -124,7 +124,7 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                title="О розыгрыше"
+                title="Розыгрыш"
             />
             <Spacing size={240} />
             <div className={css["prizes-panel__content"]}>
@@ -132,6 +132,7 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                     <div className={css["prizes-panel__banner"]}>
                         <img
                             width={320}
+                            height={320}
                             src={"assets/img/onboarding-gifts.png"}
                             className={css["prizes-panel__banner-pic"]}
                             alt=""
@@ -158,23 +159,36 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                     <div className={css["prizes-info"]}>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>1</div>
-                            <Title size="small" color="white" className={css["prizes-info__text"]}>
-                                До 12 января выполняйте задания <br/>и накапливайте
-                                шары. Чем их больше, <br/>тем выше шансы выиграть
+                            <Title
+                                size="small"
+                                color="white"
+                                className={css["prizes-info__text"]}
+                            >
+                                До 12 января выполняйте задания и накапливайте
+                                шары. Чем их больше, тем выше шансы выиграть
                                 приз
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>2</div>
-                            <Title size="small" color="white" className={css["prizes-info__text"]}>
-                                Приглашайте друзей и получайте <br/>дополнительные
-                                шары, чтобы стать <br/>ещё ближе к победе
+                            <Title
+                                size="small"
+                                color="white"
+                                className={css["prizes-info__text"]}
+                            >
+                                Приглашайте друзей и получайте дополнительные
+                                шары, чтобы стать ещё ближе к победе
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
                             <div className={css["prizes-info__number"]}>3</div>
-                            <Title size="small" color="white" className={css["prizes-info__text"]}>
-                                16 января мы назовём имена <br/>15 победителей в сообществе <br/>«Ёлки 12» во «ВКонтакте»
+                            <Title
+                                size="small"
+                                color="white"
+                                className={css["prizes-info__text"]}
+                            >
+                                16 января мы назовём имена 15 победителей
+                                в сообществе «Ёлки 12» во «ВКонтакте»
                             </Title>
                         </div>
                     </div>
@@ -249,7 +263,11 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                         })}
                     </div>
                     <Spacing size={10} />
-                    <a className={css["prizes-panel__rules"]} href="">
+                    <a
+                        className={css["prizes-panel__rules"]}
+                        href="https://disk.yandex.ru/d/VNfEUfaxM0XhLA"
+                        target="_blank"
+                    >
                         <Text color="white" align="left">
                             Условия розыгрыша
                         </Text>
@@ -268,9 +286,15 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                         onClick={() => {}}
                     />
                     <Spacing size={15} />
-                    <Title color="red" align="center">«ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ</Title>
+                    <Title color="red" align="center">
+                        «ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ
+                    </Title>
                     <Spacing size={10} />
-                    <Text align="center">Главная новогодняя комедия страны возвращается на экраны! Пять новелл о настоящем чуде сделают праздник особенно тёплым.</Text>
+                    <Text align="center">
+                        Главная новогодняя комедия страны возвращается
+                        на экраны! Пять новелл о настоящем чуде сделают праздник
+                        особенно тёплым.
+                    </Text>
                     <Spacing size={15} />
                     <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
                         Купить билеты

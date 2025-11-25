@@ -33,8 +33,8 @@ export const Main: FC<NavIdProps> = ({ id }) => {
     const isDesktop = platform === "vkcom";
     const dispatch = useAppDispatch();
     const tasks = useAppSelector(selectTasks);
-    const checkedTasks = tasks.filter((task) => task.checked).length;
-    const tasksDone = tasks.filter((task) => !task.checked).length === 0;
+    const completedTasks = tasks.filter((task) => task.completed).length;
+    const tasksDone = tasks.filter((task) => !task.completed).length === 0;
     const { vk_user_id } = parseURLSearchParamsForGetLaunchParams(
         window.location.search
     );
@@ -96,7 +96,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                 <div className={css["main-panel__counter"]}>
                     <Icon16CheckOutline width={20} height={20} fill="#ffffff" />
                     <Title color="white" size="small">
-                        {checkedTasks}/6
+                        {completedTasks}/6
                     </Title>
                 </div>
                 <Spacing size={20} />
@@ -163,7 +163,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                     <img
                                                         width={85}
                                                         src={
-                                                            task.checked
+                                                            task.completed
                                                                 ? `assets/img/tasks/task-done-pic.png`
                                                                 : `assets/img/tasks/task${task.id}-icon.png`
                                                         }
@@ -219,7 +219,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                     {task.name}
                                                 </Title>
                                             </div>
-                                            {task.checked ? (
+                                            {task.completed ? (
                                                 <div
                                                     className={
                                                         css["tasks-item__done"]
@@ -315,7 +315,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                 <Spacing size={30} />
                 <Title color="red" align="center">«ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ</Title>
                 <Spacing size={10} />
-                <Text align="center">Главная новогодняя комедия страны возвращается на экраны! Пять новелл о настоящем чуде сделают праздник особенно тёплым.</Text>
+                <Text align="center">Главная новогодняя комедия страны возвращается на экраны! Пять новелл о настоящем чуде сделают праздник особенно тёплым.</Text>
                 <Spacing size={30} />
                 <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
                     Купить билеты

@@ -32,6 +32,7 @@ import { Tasks } from "./panels/Tasks/Tasks";
 import {
     DEFAULT_VIEW,
     DEFAULT_VIEW_PANELS,
+    LOADING_VIEW,
     ONBOADING_VIEW,
     ONBOARDING_VIEW_PANELS,
 } from "./routes";
@@ -41,7 +42,8 @@ import {
     selectOnboardingComplete,
 } from "./store/main.reducer";
 import { selectTasks, setBalls, setTasks } from "./store/tasks.reducer";
-import Snowfall from "react-snowfall";
+import { preloadImages } from "./helpers/preloadImages";
+import { useEffect } from "react";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -73,92 +75,108 @@ export const App = () => {
 
     const updateTasks = async () => {
         const userUpdated: any = await getUser();
-        console.log(userUpdated);
         dispatch(setBalls(userUpdated.tickets));
-        dispatch(
-            setTasks(
-                userUpdated.quests.sort((a: any, b: any) => a.order - b.order)
-            )
-        );
+        dispatch(setTasks(userUpdated.quests));
     };
+
+    useEffect(() => {
+        const images = [
+            "/assets/img/prizes/prize6.png",
+            "/assets/img/ball-counter-bg.png",
+            "/assets/img/big-counter-bg.png",
+            "/assets/img/friends-pic.png",
+            "/assets/img/kid-icon.png",
+            "/assets/img/loading-bg-mobile.jpg",
+            "/assets/img/loading-bg.jpg",
+            "/assets/img/loading-logo.png",
+            "/assets/img/logo.png",
+            "/assets/img/main-bg.jpg",
+            "/assets/img/map-bg.jpg",
+            "/assets/img/map-car-wheel1.png",
+            "/assets/img/map-car-wheel2.png",
+            "/assets/img/map-car1.png",
+            "/assets/img/map-car2.png",
+            "/assets/img/map-frame.png",
+            "/assets/img/movie-pic.jpg",
+            "/assets/img/onboarding-bells.png",
+            "/assets/img/onboarding-bg.png",
+            "/assets/img/onboarding-gifts.png",
+            "/assets/img/parent-icon.png",
+            "/assets/img/prize-bg.png",
+            "/assets/img/prize1.png",
+            "/assets/img/progressbar-bg.jpg",
+        ];
+
+        preloadImages(images);
+    }, []);
 
     return (
         <>
             <SplitLayout>
-                {!appIsLoaded ? (
-                    <Loading />
-                ) : (
-                    <SplitCol>
-                        <Root activeView={activeView}>
-                            <View
-                                activePanel={activePanel}
-                                nav={ONBOADING_VIEW}
-                                onSwipeBackStart={() => "prevent"}
-                            >
-                                <OnboardingStart
-                                    nav={ONBOARDING_VIEW_PANELS.START}
-                                />
-                                <OnboardingNotifications
-                                    nav={ONBOARDING_VIEW_PANELS.NOTIFICATIONS}
-                                />
-                            </View>
-                            <View
-                                activePanel={activePanel}
-                                nav={DEFAULT_VIEW}
-                                onSwipeBackStart={() => "prevent"}
-                            >
-                                <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
-                                <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} />
-                                <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
-                                <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
-                                <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
+                <SplitCol>
+                    <Root activeView={appIsLoaded ? activeView : LOADING_VIEW}>
+                        <View
+                            activePanel={ONBOARDING_VIEW_PANELS.LOADING}
+                            nav={LOADING_VIEW}
+                        >
+                            <Loading nav={ONBOARDING_VIEW_PANELS.LOADING} />
+                        </View>
+                        <View
+                            activePanel={activePanel}
+                            nav={ONBOADING_VIEW}
+                            onSwipeBackStart={() => "prevent"}
+                        >
+                            <OnboardingStart
+                                nav={ONBOARDING_VIEW_PANELS.START}
+                            />
+                            <OnboardingNotifications
+                                nav={ONBOARDING_VIEW_PANELS.NOTIFICATIONS}
+                            />
+                        </View>
+                        <View
+                            activePanel={activePanel}
+                            nav={DEFAULT_VIEW}
+                            onSwipeBackStart={() => "prevent"}
+                        >
+                            <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
+                            <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} />
+                            <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
+                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
+                            <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
 
-                                <Game1Start
-                                    nav={DEFAULT_VIEW_PANELS.GAME1_START}
-                                />
-                                <Game1
-                                    updateTasks={updateTasks}
-                                    nav={DEFAULT_VIEW_PANELS.GAME1}
-                                />
-                                <Game2Start
-                                    nav={DEFAULT_VIEW_PANELS.GAME2_START}
-                                />
-                                <Game2
-                                    updateTasks={updateTasks}
-                                    nav={DEFAULT_VIEW_PANELS.GAME2}
-                                />
-                                <Game3Start
-                                    nav={DEFAULT_VIEW_PANELS.GAME3_START}
-                                />
-                                <Game3
-                                    updateTasks={updateTasks}
-                                    nav={DEFAULT_VIEW_PANELS.GAME3}
-                                />
-                                <Game4Start
-                                    nav={DEFAULT_VIEW_PANELS.GAME4_START}
-                                />
-                                <Game4
-                                    updateTasks={updateTasks}
-                                    nav={DEFAULT_VIEW_PANELS.GAME4}
-                                />
-                                <Game5Start
-                                    nav={DEFAULT_VIEW_PANELS.GAME5_START}
-                                />
-                                <Game5
-                                    updateTasks={updateTasks}
-                                    nav={DEFAULT_VIEW_PANELS.GAME5}
-                                />
-                                <Game6Start
-                                    nav={DEFAULT_VIEW_PANELS.GAME6_START}
-                                />
-                                <Game6
-                                    updateTasks={updateTasks}
-                                    nav={DEFAULT_VIEW_PANELS.GAME6}
-                                />
-                            </View>
-                        </Root>
-                    </SplitCol>
-                )}
+                            <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
+                            <Game1
+                                updateTasks={updateTasks}
+                                nav={DEFAULT_VIEW_PANELS.GAME1}
+                            />
+                            <Game2Start nav={DEFAULT_VIEW_PANELS.GAME2_START} />
+                            <Game2
+                                updateTasks={updateTasks}
+                                nav={DEFAULT_VIEW_PANELS.GAME2}
+                            />
+                            <Game3Start nav={DEFAULT_VIEW_PANELS.GAME3_START} />
+                            <Game3
+                                updateTasks={updateTasks}
+                                nav={DEFAULT_VIEW_PANELS.GAME3}
+                            />
+                            <Game4Start nav={DEFAULT_VIEW_PANELS.GAME4_START} />
+                            <Game4
+                                updateTasks={updateTasks}
+                                nav={DEFAULT_VIEW_PANELS.GAME4}
+                            />
+                            <Game5Start nav={DEFAULT_VIEW_PANELS.GAME5_START} />
+                            <Game5
+                                updateTasks={updateTasks}
+                                nav={DEFAULT_VIEW_PANELS.GAME5}
+                            />
+                            <Game6Start nav={DEFAULT_VIEW_PANELS.GAME6_START} />
+                            <Game6
+                                updateTasks={updateTasks}
+                                nav={DEFAULT_VIEW_PANELS.GAME6}
+                            />
+                        </View>
+                    </Root>
+                </SplitCol>
                 {routerPopout}
                 {appIsLoaded &&
                     onboardingCompleted &&

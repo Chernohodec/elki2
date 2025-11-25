@@ -7,11 +7,7 @@ import {
     setNotificationIsAllowed,
     setOnboardingComplete,
 } from "../store/main.reducer";
-import {
-    setBalls,
-    setFriends,
-    setTasks
-} from "../store/tasks.reducer";
+import { setBalls, setTasks } from "../store/tasks.reducer";
 
 export const useInit = () => {
     const [isLoading, setLoading] = useState(false);
@@ -25,12 +21,15 @@ export const useInit = () => {
 
         try {
             const userInfo = await getUser(referalID);
-            console.log(userInfo);
+            console.log(userInfo)
+            const stateTasks = userInfo.data.quests
             dispatch(
-                setTasks(userInfo.data.quests.sort((a, b) => a.order - b.order))
+                setTasks(stateTasks)
             );
             dispatch(setBalls(userInfo.data.tickets));
-            dispatch(setNotificationIsAllowed(userInfo.data.is_notifications_allowed));
+            dispatch(
+                setNotificationIsAllowed(userInfo.data.is_notifications_allowed)
+            );
             dispatch(setOnboardingComplete(userInfo.data.is_onboarded));
             setLoading(false);
         } catch (e) {

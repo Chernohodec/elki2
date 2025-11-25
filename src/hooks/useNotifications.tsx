@@ -20,11 +20,11 @@ export const useNotifications = () => {
 
     const completeOnboarding = () => {
         postUser({
-            onboardingIsCompleted: true,
+            is_onboarded: true,
         });
         dispatch(setOnboardingComplete(true));
         routeNavigator.push(`/`, { keepSearchParams: true });
-        sendBridgeTrack('registration')
+        sendBridgeTrack("registration");
     };
 
     const askAllowNotifications = async (menu?: boolean) => {
@@ -34,16 +34,16 @@ export const useNotifications = () => {
                 if (data.result) {
                     // Разрешение на отправку уведомлений мини-приложением или игрой получено
                     dispatch(setNotificationIsAllowed(true));
-                    postUser({ notificationIsAllowed: true });
+                    postUser({ is_notifications_allowed: true });
                 } else {
                     // Ошибка
                     dispatch(setNotificationIsAllowed(false));
-                    postUser({ notificationIsAllowed: false });
+                    postUser({ is_notifications_allowed: false });
                 }
             })
             .catch((error) => {
                 dispatch(setNotificationIsAllowed(false));
-                postUser({ notificationIsAllowed: false });
+                postUser({ is_notifications_allowed: false });
             });
         if (currentPanel === ONBOARDING_VIEW_PANELS.NOTIFICATIONS) {
             completeOnboarding();
@@ -54,7 +54,7 @@ export const useNotifications = () => {
         bridge.send("VKWebAppDenyNotifications").then((data) => {
             if (data.result) {
                 dispatch(setNotificationIsAllowed(false));
-                postUser({ notificationIsAllowed: false });
+                postUser({ is_notifications_allowed: false });
             }
         });
     };

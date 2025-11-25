@@ -18,8 +18,10 @@ import { Title } from "../../components/Title/Title";
 import TreeProgressBar from "../../components/TreeProgressBar/TreeProgressBar";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
+import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game3.module.css";
+import { checkQuest } from "../../api/user/checkQuest";
+import { motion } from "framer-motion";
 
 // Интерфейс для снежинки
 interface Snowflake {
@@ -52,13 +54,16 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const snowflakeIdRef = useRef(0);
 
     useEffect(() => {
-        if (!currentTask?.active) {
+        if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
     }, []);
 
     const completeTask = () => {
-        dispatch(setTaskChecked(3));
+        checkQuest(3).then(() => {
+            updateTasks();
+        });
+        dispatch(setTaskCompleted(3));
         setGameComplete(true);
         setShowConfetti(true);
     };
@@ -74,7 +79,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     // Функция для постоянного уменьшения процентов (2 раза в секунду)
     const startDecay = () => {
         stopDecay(); // Останавливаем предыдущий интервал
-        
+
         const decayPerTick = 2; // На сколько процентов уменьшается за тик
         const tickInterval = 200; // Интервал в миллисекундах (2 раза в секунду = 500ms)
 
@@ -83,14 +88,14 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                 return;
             }
 
-            setPercents(prev => {
+            setPercents((prev) => {
                 let newValue = prev - decayPerTick;
-                
+
                 // Не даем уйти ниже 0%
                 if (newValue < 0) {
                     newValue = 0;
                 }
-                
+
                 return Math.max(0, newValue);
             });
         }, tickInterval);
@@ -231,100 +236,115 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                {showConfetti && (
-                    <Confetti
-                        recycle={false}
-                        numberOfPieces={200}
-                        gravity={0.6}
-                        tweenDuration={200}
-                        className={css["game-start-panel__confetti"]}
-                    />
-                )}
-                {!gameComplete ? (
-                    <div className={css["hit-tree-game"]} onClick={()=>!gameActive && startGame()}>
-                        {/* Контейнер для снежинок */}
-                        <div className={css["snow-container"]}>
-                            {snowflakes.map((snowflake) => (
-                                <div
-                                    key={snowflake.id}
-                                    className={css["snowflake"]}
-                                    style={{
-                                        left: `${snowflake.left}%`,
-                                        width: `${snowflake.size}px`,
-                                        height: `${snowflake.size}px`,
-                                        animationDuration: `${snowflake.duration}s`,
-                                        opacity: snowflake.opacity,
-                                    }}
-                                />
-                            ))}
-                        </div>
-
-                        <div className={css["game-area"]}>
-                            <div className={css["game-area__svg-wrapper"]}>
-                                <TreeProgressBar
-                                    percents={percents}
-                                    className={css["game-area__svg"]}
-                                />
-                                {/* Отладочная информация */}
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    left: '10px',
-                                    background: 'rgba(0,0,0,0.7)',
-                                    color: 'white',
-                                    padding: '5px',
-                                    borderRadius: '5px',
-                                    fontSize: '12px'
-                                }}>
-                                    {Math.round(percents)}%
-                                </div>
-                            </div>
-                            <div
-                                className={css["game-area__tree"]}
-                                onClick={handleTreeTap}
-                                // style={{
-                                //     cursor: gameActive ? "pointer" : "default",
-                                //     transform: isAnimating
-                                //         ? "translateX: 20px"
-                                //         : "translateX: 0",
-                                //     transition: "transform 0.1s ease",
-                                // }}
-                            >
-                                {!onboardingDone && (
-                                    <img
-                                        src="assets/img/tasks/task2/touch-icon.svg"
-                                        className={css["game-area__pointer"]}
+                <motion.div
+                    key={[showConfetti, gameComplete]}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {showConfetti && (
+                        <Confetti
+                            recycle={false}
+                            numberOfPieces={200}
+                            gravity={0.6}
+                            tweenDuration={200}
+                            className={css["game-start-panel__confetti"]}
+                        />
+                    )}
+                    {!gameComplete ? (
+                        <div
+                            className={css["hit-tree-game"]}
+                            onClick={() => !gameActive && startGame()}
+                        >
+                            {/* Контейнер для снежинок */}
+                            <div className={css["snow-container"]}>
+                                {snowflakes.map((snowflake) => (
+                                    <div
+                                        key={snowflake.id}
+                                        className={css["snowflake"]}
+                                        style={{
+                                            left: `${snowflake.left}%`,
+                                            width: `${snowflake.size}px`,
+                                            height: `${snowflake.size}px`,
+                                            animationDuration: `${snowflake.duration}s`,
+                                            opacity: snowflake.opacity,
+                                        }}
                                     />
-                                )}
+                                ))}
                             </div>
-                        </div>
 
-                        {/* Онбординг */}
-                        {!onboardingDone && (
-                            <div className={css["onboarding-wrapper"]}>
-                                <div className={css["onboarding"]}>
-                                    <Title align="center">
-                                        Тапайте по ели
-                                        <br />и заполняйте шкалу!
-                                    </Title>
-                                    <Spacing size={20} />
-                                    <Button color="red" onClick={startGame}>
-                                        Начать игру
-                                    </Button>
+                            <div className={css["game-area"]}>
+                                <div className={css["game-area__svg-wrapper"]}>
+                                    <TreeProgressBar
+                                        percents={percents}
+                                        className={css["game-area__svg"]}
+                                    />
+                                    {/* Отладочная информация */}
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "10px",
+                                            left: "10px",
+                                            background: "rgba(0,0,0,0.7)",
+                                            color: "white",
+                                            padding: "5px",
+                                            borderRadius: "5px",
+                                            fontSize: "12px",
+                                        }}
+                                    >
+                                        {Math.round(percents)}%
+                                    </div>
+                                </div>
+                                <div
+                                    className={css["game-area__tree"]}
+                                    onClick={handleTreeTap}
+                                    // style={{
+                                    //     cursor: gameActive ? "pointer" : "default",
+                                    //     transform: isAnimating
+                                    //         ? "translateX: 20px"
+                                    //         : "translateX: 0",
+                                    //     transition: "transform 0.1s ease",
+                                    // }}
+                                >
+                                    {!onboardingDone && (
+                                        <img
+                                            src="assets/img/tasks/task2/touch-icon.svg"
+                                            className={
+                                                css["game-area__pointer"]
+                                            }
+                                        />
+                                    )}
                                 </div>
                             </div>
-                        )}
-                    </div>
-                ) : (
-                    <GameDone
-                        pic="assets/img/tasks/task3/done.png"
-                        text="Фух, успели! Отпускаем Виталика домой украшать красавицу-ёлку, а сами готовимся к новому приключению."
-                    />
-                )}
+
+                            {/* Онбординг */}
+                            {!onboardingDone && (
+                                <div className={css["onboarding-wrapper"]}>
+                                    <div className={css["onboarding"]}>
+                                        <Title align="center">
+                                            Тапайте по ели
+                                            <br />и заполняйте шкалу!
+                                        </Title>
+                                        <Spacing size={20} />
+                                        <Button color="red" onClick={startGame}>
+                                            Начать игру
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <GameDone
+                            pic="assets/img/tasks/task3/done.png"
+                            text="Фух, успели! Отпускаем Виталика домой украшать красавицу-ёлку, а сами готовимся к новому приключению."
+                        />
+                    )}
+                </motion.div>
             </div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                         <Button
                             color="yellow"
                             onClick={() => routeNavigator.replace("/")}

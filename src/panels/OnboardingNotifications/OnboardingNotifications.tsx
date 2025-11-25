@@ -1,21 +1,20 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
-    Div,
-    FixedLayout,
     NavIdProps,
     Panel,
     Spacing,
     classNames,
-    usePlatform,
+    usePlatform
 } from "@vkontakte/vkui";
 import { FC } from "react";
 import { postUser } from "../../api/user/postUser";
 
-import { Text, TextColors } from "../../components/Text/Text";
-import { Title, TitleAlign, TitleColors } from "../../components/Title/Title";
+import { Text } from "../../components/Text/Text";
+import { Title, TitleAlign } from "../../components/Title/Title";
 
-import onboardingPic2 from "../../assets/img/onboarding-pic2.png";
 import { Button } from "../../components/Button/Button";
+import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
+import { sendBridgeTrack } from "../../helpers/sendBridgeTrack";
 import { useNotifications } from "../../hooks/useNotifications";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
@@ -23,8 +22,6 @@ import {
     setOnboardingComplete,
 } from "../../store/main.reducer";
 import css from "./OnboardingNotifications.module.css";
-import { sendBridgeTrack } from "../../helpers/sendBridgeTrack";
-import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 
 export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -71,7 +68,7 @@ export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
                             color={"transparent"}
                             onClick={() => {
                                 postUser({
-                                    onboardingIsCompleted: true,
+                                    is_onboarded: true,
                                 });
                                 dispatch(setOnboardingComplete(true));
                                 routeNavigator.push(`/`);

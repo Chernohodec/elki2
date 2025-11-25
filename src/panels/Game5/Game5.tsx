@@ -11,20 +11,23 @@ import {
 import { FC, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "swiper/css";
-import item1Image from "../../../public/assets/img/tasks/task5/item1.png";
-import item2Image from "../../../public/assets/img/tasks/task5/item2.png";
-import item3Image from "../../../public/assets/img/tasks/task5/item3.png";
-import item4Image from "../../../public/assets/img/tasks/task5/item4.png";
-import item5Image from "../../../public/assets/img/tasks/task5/item5.png";
-import item6Image from "../../../public/assets/img/tasks/task5/item6.png";
+import item1Image from "/assets/img/tasks/task5/item1.png";
+import item2Image from "/assets/img/tasks/task5/item2.png";
+import item3Image from "/assets/img/tasks/task5/item3.png";
+import item4Image from "/assets/img/tasks/task5/item4.png";
+import item5Image from "/assets/img/tasks/task5/item5.png";
+import item6Image from "/assets/img/tasks/task5/item6.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { GameDone } from "../../components/GameDone/GameDone";
 import { preloadImages } from "../../helpers/preloadImages";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
+import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game5.module.css";
+import { checkQuest } from "../../api/user/checkQuest";
+import { motion } from "framer-motion";
+import { Title } from "../../components/Title/Title";
 
 export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -36,6 +39,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [counters, setCounters] = useState([0, 0, 0, 0]);
     const [gameComplete, setGameComplete] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [onboardingDone, setOnboardingDone] = useState(false);
     const [touchStartPos, setTouchStartPos] = useState<{
         x: number;
         y: number;
@@ -79,10 +83,10 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [gems, setGems] = useState<number[][]>([]);
 
     const completeTask = () => {
-        // checkQuest(5).then(() => {
-        //     updateTasks();
-        // });
-        dispatch(setTaskChecked(5));
+        checkQuest(5).then(() => {
+            updateTasks();
+        });
+        dispatch(setTaskCompleted(5));
         setGameComplete(true);
         setShowConfetti(true);
     };
@@ -723,7 +727,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     }, []);
 
     useEffect(() => {
-        if (currentTask?.checked || !currentTask?.active) {
+        if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
     }, []);
@@ -743,7 +747,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                 )}
             >
                 {showConfetti && (
-                   <Confetti
+                    <Confetti
                         recycle={false}
                         numberOfPieces={200}
                         gravity={0.6}
@@ -791,54 +795,101 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                             ))}
                         </div>
                         <Spacing size={15} />
+
                         <div
                             className={css["game-field"]}
                             data-vkui-swipe-back={false}
                         >
-                            {gems.map((row, rowIndex) => (
-                                <div key={rowIndex} className={css["game-row"]}>
-                                    {row.map((gem, colIndex) => (
-                                        <div
-                                            key={`${rowIndex}-${colIndex}`}
-                                            id={`${config.gemIdPrefix}-${rowIndex}-${colIndex}`}
-                                            className={css["game-gem"]}
-                                            onTouchStart={(e) =>
-                                                handleTouchStart(
-                                                    e,
-                                                    rowIndex,
-                                                    colIndex
-                                                )
-                                            }
-                                            onTouchMove={handleTouchMove}
-                                            onTouchEnd={handleTouchEnd}
-                                            onMouseDown={(e) =>
-                                                handleMouseDown(
-                                                    e,
-                                                    rowIndex,
-                                                    colIndex
-                                                )
-                                            }
-                                            onMouseMove={handleMouseMove}
-                                            onMouseUp={handleMouseUp}
-                                            style={{
-                                                backgroundImage:
-                                                    gem !== -1
-                                                        ? `url(${config.images[gem]})`
-                                                        : "none",
-                                                width: config.gemSize,
-                                                height: config.gemSize,
-                                            }}
+                            {!onboardingDone ? (
+                                <div className={css["onboarding"]}>
+                                    <div className={css["onboarding__items"]}>
+                                        <img
+                                            width={70}
+                                            height={70}
+                                            src={item1Image}
+                                            alt=""
                                         />
-                                    ))}
+                                        <img
+                                            width={70}
+                                            height={70}
+                                            src={item1Image}
+                                            alt=""
+                                        />
+                                        <img
+                                            width={70}
+                                            height={70}
+                                            src={item2Image}
+                                            alt=""
+                                        />
+                                        <img
+                                            width={70}
+                                            height={70}
+                                            src={item1Image}
+                                            alt=""
+                                        />
+                                    </div>
+                                    <Spacing size={20} />
+                                    <Title align="center" color="yellow" className={css['onboarding__title']}>
+                                        ВЫСТРАИВАЙТЕ ОДИНАКОВЫЕ ЭЛЕМЕНТЫ В РЯД,
+                                        ЧТОБЫ ПРИГОТОВИТЬ БЛЮДО
+                                    </Title>
+                                    <Button
+                                        style={{marginTop: 'auto'}}
+                                        color="yellow"
+                                        onClick={() => setOnboardingDone(true)}
+                                    >
+                                        Начать
+                                    </Button>
                                 </div>
-                            ))}
+                            ) : (
+                                gems.map((row, rowIndex) => (
+                                    <div
+                                        key={rowIndex}
+                                        className={css["game-row"]}
+                                    >
+                                        {row.map((gem, colIndex) => (
+                                            <div
+                                                key={`${rowIndex}-${colIndex}`}
+                                                id={`${config.gemIdPrefix}-${rowIndex}-${colIndex}`}
+                                                className={css["game-gem"]}
+                                                onTouchStart={(e) =>
+                                                    handleTouchStart(
+                                                        e,
+                                                        rowIndex,
+                                                        colIndex
+                                                    )
+                                                }
+                                                onTouchMove={handleTouchMove}
+                                                onTouchEnd={handleTouchEnd}
+                                                onMouseDown={(e) =>
+                                                    handleMouseDown(
+                                                        e,
+                                                        rowIndex,
+                                                        colIndex
+                                                    )
+                                                }
+                                                onMouseMove={handleMouseMove}
+                                                onMouseUp={handleMouseUp}
+                                                style={{
+                                                    backgroundImage:
+                                                        gem !== -1
+                                                            ? `url(${config.images[gem]})`
+                                                            : "none",
+                                                    width: config.gemSize,
+                                                    height: config.gemSize,
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </>
                 )}
             </Div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                         <Button
                             color="yellow"
                             onClick={() => routeNavigator.replace("/")}

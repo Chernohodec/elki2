@@ -15,8 +15,10 @@ import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPane
 import { GameDone } from "../../components/GameDone/GameDone";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectTasks, setTaskChecked } from "../../store/tasks.reducer";
+import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game6.module.css";
+import { checkQuest } from "../../api/user/checkQuest";
+import { motion } from "framer-motion";
 
 export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -30,16 +32,16 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
     );
 
     useEffect(() => {
-        if (!currentTask?.active) {
+        if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
     }, []);
 
     const completeTask = () => {
-        // checkQuest(6).then(() => {
-        //     updateTasks();
-        // });
-        dispatch(setTaskChecked(6));
+        checkQuest(6).then(() => {
+            updateTasks();
+        });
+        dispatch(setTaskCompleted(6));
         setGameComplete(true);
         setShowConfetti(true);
     };
@@ -141,7 +143,7 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
                 )}
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
                     {!gameComplete ? (
                         <Button
                             disabled={foundItems.length !== 5}

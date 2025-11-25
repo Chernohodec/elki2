@@ -12,6 +12,7 @@
     "deploy": "vite build && vk-miniapps-deploy"
   },
   "dependencies": {
+    "@fireworks-js/react": "^2.10.8",
     "@reduxjs/toolkit": "^2.8.2",
     "@vkontakte/icons": "^3.1.1",
     "@vkontakte/vk-bridge": "^2.15.7",
@@ -19,9 +20,11 @@
     "@vkontakte/vk-mini-apps-router": "^1.8.0",
     "@vkontakte/vkui": "^7.0.0",
     "axios": "^1.11.0",
+    "framer-motion": "^12.23.24",
     "react": "^18.2.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^18.2.0",
+    "react-particles": "^2.12.2",
     "react-redux": "^9.2.0",
     "react-snowfall": "^2.3.0",
     "simplebar-react": "^3.3.2",

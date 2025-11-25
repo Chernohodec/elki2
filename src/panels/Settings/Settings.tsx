@@ -15,9 +15,7 @@ import {
 } from "@vkontakte/vkui";
 import { FC } from "react";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-
 import { useNotifications } from "../../hooks/useNotifications";
-
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 import { useAppSelector } from "../../store";
 import { selectNotificationIsAllowed } from "../../store/main.reducer";
@@ -55,7 +53,12 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
                                 }}
                             />
                         }
-                        subtitle={<span style={{color: '#ffffffaa'}}>Пришлём уведомление, <br/>когда откроется новое задание</span>}
+                        subtitle={
+                            <span style={{ color: "#ffffffaa" }}>
+                                Пришлём уведомление, <br />
+                                когда откроется новое задание
+                            </span>
+                        }
                         before={
                             <Icon24NotificationOutline
                                 fill="#FFC30B"
@@ -64,16 +67,16 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
                             />
                         }
                     >
-                        <span style={{color: '#fff'}}>Уведомления</span>
+                        <span style={{ color: "#fff" }}>Уведомления</span>
                     </SimpleCell>
                     <Spacing size={10} />
                     <SimpleCell
                         before={<Icon28DocumentTextOutline fill="#FFC30B" />}
                         after={<Icon24ChevronCompactRight fill="#FFC30B" />}
-                        href="https://disk.yandex.ru/i/uL5nT6gWIG7_3w"
+                        href="https://disk.yandex.ru/d/VNfEUfaxM0XhLA"
                         target="_blank"
                     >
-                        <span style={{color: '#fff'}}>Правила сервиса</span>
+                        <span style={{ color: "#fff" }}>Правила сервиса</span>
                     </SimpleCell>
                     <Spacing size={30} />
                     <VkVideoBanner
@@ -81,7 +84,12 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
                         onClick={() => {}}
                     />
                     <Spacing size={20} />
-                    <Button color="yellow" href="https://www.afisha.ru/movie/finnik-2-306500/">Купить билеты</Button>
+                    <Button
+                        color="yellow"
+                        href="https://www.afisha.ru/movie/finnik-2-306500/"
+                    >
+                        Купить билеты
+                    </Button>
                 </Div>
             </div>
         </Panel>

@@ -11,6 +11,7 @@ import css from "./About.module.css";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectHeroes } from "../../store/main.reducer";
+import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 
 export const About: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -31,15 +32,16 @@ export const About: FC<NavIdProps> = ({ id }) => {
                 }}
                 title="О фильме"
             />
-            <a
+            {/* <a
                 href="https://vk.com/video-210460227_456239471"
                 target="_blank"
-                className={css["about-panel-banner"]}
+                
             >
                 <img width={312} src="assets/img/movie-pic.jpg" alt="" />
-            </a>
-            <Spacing size={25} />
+            </a> */}
             <div className={css["about-panel-description"]}>
+                <VkVideoBanner />
+                <Spacing size={25} />
                 <Title color="yellow" align="center">
                     смотрите Ёлки 12
                     <br />
@@ -50,7 +52,14 @@ export const About: FC<NavIdProps> = ({ id }) => {
                     align="center"
                     color="white"
                     className={css["about-panel-description__text"]}
-                >Главная новогодняя комедия страны снова на экранах! За хорошее настроение отвечают пять новелл, полных тепла, доброго юмора и атмосферы всеобщего праздника. У руля в этом году — Жора Крыжовников, в ролях: Дмитрий Нагиев, Рузиль Минекаев, Дмитрий Журавлёв, Андрей Рожков, Ольга Картункова, Тина Стойилкович и др. </Text>
+                >
+                    Главная новогодняя комедия страны снова на экранах! За
+                    хорошее настроение отвечают пять новелл, полных тепла,
+                    доброго юмора и атмосферы всеобщего праздника. У руля в этом
+                    году — Жора Крыжовников, в ролях: Дмитрий Нагиев, Рузиль
+                    Минекаев, Дмитрий Журавлёв, Андрей Рожков, Ольга Картункова,
+                    Тина Стойилкович и др.{" "}
+                </Text>
                 <Spacing size={25} />
                 <Button color="yellow">Купить билеты</Button>
             </div>
@@ -62,11 +71,7 @@ export const About: FC<NavIdProps> = ({ id }) => {
                 </Title>
                 <Spacing size={20} />
                 <div className={css["chars-slider"]}>
-                    <Swiper
-                        spaceBetween={15}
-                        slidesPerView={"auto"}
-                        loop={true}
-                    >
+                    <Swiper spaceBetween={15} slidesPerView={"auto"}>
                         {heroes.map((hero) => {
                             return (
                                 <SwiperSlide key={hero.id}>

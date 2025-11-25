@@ -9,7 +9,7 @@
     top: 0;
     width: 100%;
     height: 100dvh;
-    background-image: url(../../../public/assets/img/main-bg.jpg);
+    background-image: url(/assets/img/main-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -103,7 +103,7 @@
 
 .about-panel-gallery {
     background-size: cover;
-    background-image: url(../../../public/assets/img/main-bg.jpg);
+    background-image: url(/assets/img/main-bg.jpg);
     border-radius: 30px 30px 0 0;
     padding-top: 35px;
     margin-top: -40px;

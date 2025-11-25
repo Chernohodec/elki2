@@ -29,8 +29,8 @@ export const AppConfig = () => {
     return (
         <ConfigProvider
             colorScheme={"light"}
-            platform="android"
-            // platform={vk_platform === "desktop_web" ? "vkcom" : undefined}
+            // platform="android"
+            platform={vk_platform === "desktop_web" ? "vkcom" : undefined}
             isWebView={vkBridge.isWebView()}
             hasCustomPanelHeaderAfter={false}
         >

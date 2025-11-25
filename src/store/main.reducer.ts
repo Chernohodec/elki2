@@ -17,9 +17,9 @@ export interface Main {
 }
 
 const initialState: Main = {
-    appIsLoaded: false,
-    onboardingComplete: false,
-    notificationIsAllowed: false,
+    appIsLoaded: true,
+    onboardingComplete: true,
+    notificationIsAllowed: true,
     heroes: [
         {
             id: 1,

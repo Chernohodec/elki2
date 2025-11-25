@@ -9,7 +9,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    background-image: url(../../../public/assets/img/main-bg.jpg);
+    background-image: url(/assets/img/main-bg.jpg);
     background-size: cover;
     background-position: center 0, center 100%;
     background-repeat: no-repeat;
@@ -33,7 +33,7 @@
     padding: 4px;
     height: 104px;
     border-radius: 52px;
-    background-image: url(../../../public/assets/img/progressbar-bg.jpg);
+    background-image: url(/assets/img/progressbar-bg.jpg);
     background-size: contain;
     box-shadow: 0px 4px 75.2px 0px #00000040;
 }
@@ -53,7 +53,7 @@
     width: 75px;
     height: 75px;
     border-radius: 50%;
-    background-image: url(../../../public/assets/img/tasks/child-icon-bg.png);
+    background-image: url(/assets/img/tasks/child-icon-bg.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -71,7 +71,7 @@
 }
 
 .tasks-item__image_type_parent {
-    background-image: url(../../../public/assets/img/tasks/parent-icon-bg.png);
+    background-image: url(/assets/img/tasks/parent-icon-bg.png);
 }
 
 .tasks-item__char {
