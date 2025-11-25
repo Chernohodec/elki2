@@ -165,3 +165,11 @@
         opacity: 0;
     }
 }
+
+.motion-wrapper{
+    min-height: calc(100dvh - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 100px;
+}

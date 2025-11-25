@@ -130,15 +130,17 @@
     padding: 30px;
 }
 
-
 .tasks-item__closed{
-    height: 52px;
-    width: 180px;
+    min-height: 52px;
+    padding: 0 15px;
+    /* width: 180px; */
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #FCF0D1;
     border-radius: 26px;
+    width: 100%;
+    max-width: 180px;
 }
 
 .tasks-item__done {

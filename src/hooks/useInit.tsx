@@ -6,6 +6,7 @@ import { useAppDispatch } from "../store";
 import {
     setNotificationIsAllowed,
     setOnboardingComplete,
+    setUserCode,
 } from "../store/main.reducer";
 import { setBalls, setTasks } from "../store/tasks.reducer";
 
@@ -21,11 +22,10 @@ export const useInit = () => {
 
         try {
             const userInfo = await getUser(referalID);
-            console.log(userInfo)
-            const stateTasks = userInfo.data.quests
-            dispatch(
-                setTasks(stateTasks)
-            );
+            console.log(userInfo);
+            const stateTasks = userInfo.data.quests;
+            dispatch(setTasks(stateTasks));
+            dispatch(setUserCode(userInfo.data.code));
             dispatch(setBalls(userInfo.data.tickets));
             dispatch(
                 setNotificationIsAllowed(userInfo.data.is_notifications_allowed)

@@ -24,6 +24,7 @@ import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game4.module.css";
 import { checkQuest } from "../../api/user/checkQuest";
 import { motion } from "framer-motion";
+import { postToStory } from "../../helpers/postToStory";
 
 export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -43,8 +44,13 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
         }
     }, []);
 
-    const shareToStory = () => {
-        completeTask();
+    const shareToStory = async () => {
+        try {
+            await postToStory(
+                `assets/img/tasks/task4/story-pic${currentSlide + 1}.jpg`
+            );
+            completeTask();
+        } catch (e) {}
     };
 
     const completeTask = () => {
@@ -104,6 +110,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
+                    className={css["motion-wrapper"]}
                 >
                     {showConfetti && (
                         <Confetti
@@ -171,10 +178,11 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 <Spacing size={25} />
                                 <img
                                     width={150}
-                                    // height={240}
+                                    height={266}
                                     src={`assets/img/tasks/task4/story-pic${
                                         currentSlide + 1
                                     }.jpg`}
+                                    className={css["advice-block__pic"]}
                                     alt=""
                                 />
                                 <Spacing size={20} />
@@ -197,8 +205,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
             <FixedLayout vertical="bottom">
                 <Div
                     style={{
-                        paddingLeft: 22,
-                        paddingRight: 22,
+                        padding: 22,
                         margin: "auto",
                     }}
                 >

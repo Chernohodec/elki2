@@ -4,7 +4,7 @@ import {
     Panel,
     Spacing,
     classNames,
-    usePlatform
+    usePlatform,
 } from "@vkontakte/vkui";
 import { FC } from "react";
 import { postUser } from "../../api/user/postUser";
@@ -22,6 +22,7 @@ import {
     setOnboardingComplete,
 } from "../../store/main.reducer";
 import css from "./OnboardingNotifications.module.css";
+import Snowfall from "react-snowfall";
 
 export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
@@ -35,6 +36,16 @@ export const OnboardingNotifications: FC<NavIdProps> = ({ id }) => {
         <Panel id={id} disableBackground>
             <CustomPanelHeader />
             <div className={classNames(css["onboarding-page"])}>
+                <div className={css["onboarding-page__snow"]}>
+                    <Snowfall
+                        color="#fff"
+                        // Applied to the canvas element.
+                        style={{ background: "transparent" }}
+                        radius={[0.8, 1]}
+                        // Controls the number of snowflakes that are created (defaults to 150).
+                        snowflakeCount={900}
+                    />
+                </div>
                 <div className={css["onboarding-content-wrapper"]}>
                     <div className={css["onboarding-content"]}>
                         <Title

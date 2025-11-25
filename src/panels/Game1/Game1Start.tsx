@@ -43,7 +43,7 @@ export const Game1Start: FC<NavIdProps> = ({ id }) => {
                         alt=""
                     />
                 </div>
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div style={{padding: 22, margin: 'auto'}}>
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
                         Помоги ване
@@ -57,7 +57,7 @@ export const Game1Start: FC<NavIdProps> = ({ id }) => {
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{padding: 22}}>
                     <Button
                         color="yellow"
                         onClick={() =>

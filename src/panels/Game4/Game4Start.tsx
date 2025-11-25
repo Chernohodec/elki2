@@ -35,25 +35,32 @@ export const Game4Start: FC<NavIdProps> = ({ id }) => {
                     css[`game-start-panel__content_${platform}`]
                 )}
             >
-                <div className={css["game-start-panel__img-wrapper"]}>
-                    <img
-                        className={css["game-start-panel__img"]}
-                        width={145}
-                        src={"assets/img/tasks/task4/character-pic.png"}
-                        alt=""
-                    />
-                </div>
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div style={{ padding: 22, margin: "auto" }}>
+                    <div className={css["game-start-panel__img-wrapper"]}>
+                        <img
+                            className={css["game-start-panel__img"]}
+                            width={145}
+                            src={"assets/img/tasks/task4/character-pic.png"}
+                            alt=""
+                        />
+                    </div>
                     <Spacing size={35} />
-                    <Title align="center" color="yellow">ЗИНЕ ЕСТЬ ЧЕМ ПОДЕЛИТЬСЯ</Title>
+                    <Title align="center" color="yellow">
+                        ЗИНЕ ЕСТЬ ЧЕМ ПОДЕЛИТЬСЯ
+                    </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">Жить одной в лесу скучно, а выговориться так хочется! Повезло вам повстречать Зину — она всегда даст совет и поможет делом. Выберите лучшую рекомендацию и поделитесь ею в истории.</Text>
+                    <Text align="center" color="white">
+                        Жить одной в лесу скучно, а выговориться так хочется!
+                        Повезло вам повстречать Зину — она всегда даст совет и
+                        поможет делом. Выберите лучшую рекомендацию и поделитесь
+                        ею в истории.
+                    </Text>
 
                     <Spacing size={90} />
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ padding: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

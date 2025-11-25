@@ -1,11 +1,12 @@
 import { parseURLSearchParamsForGetLaunchParams } from "@vkontakte/vk-bridge";
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import { classNames, Spacing } from "@vkontakte/vkui";
+import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { Button } from "../Button/Button";
 import { Title } from "../Title/Title";
 import css from "./InviteBanner.module.css";
 
-export const InviteBanner = ({ inviteFriend }) => {
+export const InviteBanner = ({}) => {
     const { vk_user_id } = parseURLSearchParamsForGetLaunchParams(
         window.location.search
     );
@@ -26,7 +27,9 @@ export const InviteBanner = ({ inviteFriend }) => {
                 size="small"
                 color="yellow"
                 className={css["invite-banner__button"]}
-                onClick={inviteFriend}
+                onClick={() =>
+                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.SHARE_MODAL)
+                }
             >
                 Пригласить
             </Button>

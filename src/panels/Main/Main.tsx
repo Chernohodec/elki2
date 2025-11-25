@@ -1,84 +1,34 @@
-import { Icon16CheckOutline, Icon16Done } from "@vkontakte/icons";
-import bridge, {
-    parseURLSearchParamsForGetLaunchParams,
-} from "@vkontakte/vk-bridge";
+import { Icon16CheckOutline } from "@vkontakte/icons";
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
-    Avatar,
     Div,
     NavIdProps,
     Panel,
-    Snackbar,
     Spacing,
     classNames,
     usePlatform,
 } from "@vkontakte/vkui";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Map } from "../../components/Map/Map";
 import { Text } from "../../components/Text/Text";
+import Timer from "../../components/Timer/Timer";
 import { Title } from "../../components/Title/Title";
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
+import { checkTimeIsAllowed } from "../../helpers/checkTimeIsAllowed";
+import { DEFAULT_VIEW_MODALS, DEFAULT_VIEW_PANELS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Main.module.css";
-import { checkTimeIsAllowed } from "../../helpers/checkTimeIsAllowed";
-import { DEFAULT_VIEW_MODALS, DEFAULT_VIEW_PANELS } from "../../routes";
-import Timer from "../../components/Timer/Timer";
 
 export const Main: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
     const platform = usePlatform();
-    const isDesktop = platform === "vkcom";
     const dispatch = useAppDispatch();
     const tasks = useAppSelector(selectTasks);
     const completedTasks = tasks.filter((task) => task.completed).length;
     const tasksDone = tasks.filter((task) => !task.completed).length === 0;
-    const { vk_user_id } = parseURLSearchParamsForGetLaunchParams(
-        window.location.search
-    );
-
-    const inviteFriend = async () => {
-        bridge
-            .send("VKWebAppShare", {
-                link: `https://vk.com/app54237274#/?referal_id=${vk_user_id}`,
-                text: "Я помогаю Финнику добраться до волшебного посоха и участвую в розыгрыше призов. Присоединяйся!",
-            })
-            .then((data) => {
-                if (data.success) {
-                    routeNavigator.showPopout(
-                        <Snackbar
-                            onClose={() => routeNavigator.hidePopout()}
-                            before={
-                                <Avatar
-                                    size={24}
-                                    style={{
-                                        background:
-                                            "var(--vkui--color_background_accent)",
-                                    }}
-                                >
-                                    <Icon16Done
-                                        fill="#fff"
-                                        width={14}
-                                        height={14}
-                                    />
-                                </Avatar>
-                            }
-                        >
-                            Приглашение отправлено!
-                        </Snackbar>
-                    );
-
-                    // Этим выбранным пользователям
-                    // не удалось отправить приглашения
-                    console.log("Приглашения не отправлены", data.notSentIds);
-                }
-            })
-            .catch((error) => {
-                console.log(error); // Ошибка
-            });
-    };
 
     return (
         <Panel
@@ -134,10 +84,14 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                 ) : (
                     <>
                         <div className={css["tasks-list"]}>
-                            {tasks.map((task) => {
+                            {tasks.map((task, index) => {
                                 const taskIsOpen = checkTimeIsAllowed(
                                     task.activation_time
                                 );
+                                const previousTaskCompleted =
+                                    index === 0
+                                        ? true
+                                        : tasks[index - 1].completed;
 
                                 return (
                                     <div
@@ -149,28 +103,29 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                 css["tasks-item__content"]
                                             }
                                         >
-                                            {taskIsOpen && (
-                                                <div
-                                                    className={classNames(
-                                                        css[
-                                                            "tasks-item__image"
-                                                        ],
-                                                        css[
-                                                            `tasks-item__image_type_${task.type}`
-                                                        ]
-                                                    )}
-                                                >
-                                                    <img
-                                                        width={85}
-                                                        src={
-                                                            task.completed
-                                                                ? `assets/img/tasks/task-done-pic.png`
-                                                                : `assets/img/tasks/task${task.id}-icon.png`
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                            )}
+                                            {taskIsOpen &&
+                                                previousTaskCompleted && (
+                                                    <div
+                                                        className={classNames(
+                                                            css[
+                                                                "tasks-item__image"
+                                                            ],
+                                                            css[
+                                                                `tasks-item__image_type_${task.type}`
+                                                            ]
+                                                        )}
+                                                    >
+                                                        <img
+                                                            width={85}
+                                                            src={
+                                                                task.completed
+                                                                    ? `assets/img/tasks/task-done-pic.png`
+                                                                    : `assets/img/tasks/task${task.id}-icon.png`
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                )}
 
                                             <div
                                                 className={
@@ -216,7 +171,11 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                     color="black"
                                                     size="small"
                                                 >
-                                                    {task.name}
+                                                    <span
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: task.name,
+                                                        }}
+                                                    ></span>
                                                 </Title>
                                             </div>
                                             {task.completed ? (
@@ -228,32 +187,59 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                     Выполнено
                                                 </div>
                                             ) : taskIsOpen ? (
-                                                <Button
-                                                    className={
-                                                        css[
-                                                            "tasks-item__button"
-                                                        ]
-                                                    }
-                                                    color={
-                                                        task.type === "kid"
-                                                            ? "yellow"
-                                                            : "red"
-                                                    }
-                                                    size="small"
-                                                    onClick={() =>
-                                                        routeNavigator.showModal(
-                                                            DEFAULT_VIEW_MODALS.TASK_MODAL,
-                                                            {
-                                                                state: {
-                                                                    action: "taskID",
-                                                                    value: task.id,
-                                                                },
-                                                            }
-                                                        )
-                                                    }
-                                                >
-                                                    Выполнить
-                                                </Button>
+                                                !previousTaskCompleted ? (
+                                                    <div
+                                                        className={
+                                                            css[
+                                                                "tasks-item__closed"
+                                                            ]
+                                                        }
+                                                    >
+                                                        <Title
+                                                            size="xs"
+                                                            color="red-black"
+                                                            align="center"
+                                                        >
+                                                            <span
+                                                                style={{
+                                                                    opacity: 0.6,
+                                                                }}
+                                                            >
+                                                                Выполните
+                                                                предыдущее
+                                                                <br />
+                                                                задание
+                                                            </span>
+                                                        </Title>
+                                                    </div>
+                                                ) : (
+                                                    <Button
+                                                        className={
+                                                            css[
+                                                                "tasks-item__button"
+                                                            ]
+                                                        }
+                                                        color={
+                                                            task.type === "kid"
+                                                                ? "yellow"
+                                                                : "red"
+                                                        }
+                                                        size="small"
+                                                        onClick={() =>
+                                                            routeNavigator.showModal(
+                                                                DEFAULT_VIEW_MODALS.TASK_MODAL,
+                                                                {
+                                                                    state: {
+                                                                        action: "taskID",
+                                                                        value: task.id,
+                                                                    },
+                                                                }
+                                                            )
+                                                        }
+                                                    >
+                                                        Выполнить
+                                                    </Button>
+                                                )
                                             ) : (
                                                 <div
                                                     className={
@@ -313,17 +299,23 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                     onClick={() => {}}
                 />
                 <Spacing size={30} />
-                <Title color="red" align="center">«ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ</Title>
+                <Title color="red" align="center">
+                    «ЁЛКИ 12» В КИНО С 18 ДЕКАБРЯ
+                </Title>
                 <Spacing size={10} />
-                <Text align="center">Главная новогодняя комедия страны возвращается на экраны! Пять новелл о настоящем чуде сделают праздник особенно тёплым.</Text>
+                <Text align="center">
+                    Главная новогодняя комедия страны возвращается на экраны!
+                    Пять новелл о настоящем чуде сделают праздник особенно
+                    тёплым.
+                </Text>
                 <Spacing size={30} />
-                <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
+                <Button href="https://www.afisha.ru/movie/elki-12-1001086/">
                     Купить билеты
                 </Button>
                 <Spacing size={10} />
                 <Button
                     color="transparent"
-                    href="https://www.afisha.ru/movie/finnik-2-306500/"
+                    href="https://www.afisha.ru/movie/elki-12-1001086/"
                 >
                     Подробнее о фильме
                 </Button>

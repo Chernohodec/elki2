@@ -1,20 +1,10 @@
-import {
-    classNames,
-    Div,
-    FixedLayout,
-    PopoutWrapper,
-    Spacing,
-} from "@vkontakte/vkui";
-import { Button } from "../Button/Button";
+import { classNames, Div, Spacing } from "@vkontakte/vkui";
+import { Text } from "../Text/Text";
 import { Title } from "../Title/Title";
 import css from "./GameFailed.module.css";
 import failImage from "/assets/img/tasks/task-fail-modal-pic.png";
-import { Text } from "../Text/Text";
 
-export const GameFailed = ({
-    reloadHandler,
-    backHandler,
-}: {
+export const GameFailed = ({}: {
     reloadHandler: () => void;
     backHandler: () => void;
 }) => {

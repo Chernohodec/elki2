@@ -52,7 +52,7 @@ const FaqItem = ({
     );
 };
 
-export const Prize: FC<NavIdProps> = ({ id }) => {
+export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
 
     const swiperRef = useRef();
@@ -121,9 +121,7 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
     return (
         <Panel id={id} disableBackground className={css["prizes-panel"]}>
             <CustomPanelHeader
-                onBackClick={() => {
-                    routeNavigator.back();
-                }}
+                onBackClick={onBackClick}
                 title="Розыгрыш"
             />
             <Spacing size={240} />
@@ -147,12 +145,10 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                         </Title>
                         <Spacing size={10} />
                         <Text align="center" color="gray">
-                            У Вани из Кирова есть заветное желание, которое
+                            У Вани из Кирова есть заветное желание, которое
                             может исполнить только Дед Мороз. Помогите мальчику
-                            добраться до дома волшебника в Великом Устюге, а
-                            родителям — догнать своего сына. В дороге вас ждут
-                            увлекательные приключения, знакомство с новыми
-                            героями и, наконец, розыгрыш классных призов!
+                            добраться до дома волшебника в Великом Устюге, а родителям — догнать своего сына. В дороге вас ждут увлекательные приключения, знакомство с новыми
+                            героями и, наконец, розыгрыш классных призов!
                         </Text>
                     </div>
                     <Spacing size={25} />
@@ -165,8 +161,7 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                                 className={css["prizes-info__text"]}
                             >
                                 До 12 января выполняйте задания и накапливайте
-                                шары. Чем их больше, тем выше шансы выиграть
-                                приз
+                                шары. Чем их больше, тем выше шансы выиграть приз
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
@@ -296,13 +291,13 @@ export const Prize: FC<NavIdProps> = ({ id }) => {
                         особенно тёплым.
                     </Text>
                     <Spacing size={15} />
-                    <Button href="https://www.afisha.ru/movie/finnik-2-306500/">
+                    <Button href="https://www.afisha.ru/movie/elki-12-1001086/">
                         Купить билеты
                     </Button>
                     <Spacing size={10} />
                     <Button
                         color="transparent"
-                        href="https://www.afisha.ru/movie/finnik-2-306500/"
+                        href="https://www.afisha.ru/movie/elki-12-1001086/"
                     >
                         Подробнее о фильме
                     </Button>

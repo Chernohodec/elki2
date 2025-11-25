@@ -746,150 +746,174 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                {showConfetti && (
-                    <Confetti
-                        recycle={false}
-                        numberOfPieces={200}
-                        gravity={0.6}
-                        tweenDuration={200}
-                        className={css["game-start-panel__confetti"]}
-                    />
-                )}
-                {gameComplete ? (
-                    <GameDone
-                        pic="assets/img/tasks/task5/done.png"
-                        text="Отличная работа! Вы спасли Дамира от нагоняя начальника и приблизили родителей Вани к цели. Набирайтесь сил перед новыми авантюрами."
-                    />
-                ) : (
-                    <>
-                        <div className={css["game-header"]}>
-                            {counters.map((counter, index) => (
-                                <div
-                                    key={index}
-                                    className={css["game-header__item"]}
-                                >
-                                    <img
-                                        src={
-                                            [
-                                                item1Image,
-                                                item2Image,
-                                                item3Image,
-                                                item4Image,
-                                            ][index]
-                                        }
-                                        alt={`Item ${index + 1}`}
-                                        width={66}
-                                        height={66}
-                                        className={
-                                            css["game-header__item-image"]
-                                        }
-                                    />
-                                    <span
-                                        className={
-                                            css["game-header__item-counter"]
-                                        }
-                                    >
-                                        {counter > 2 ? 3 : counter}/3
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                        <Spacing size={15} />
-
-                        <div
-                            className={css["game-field"]}
-                            data-vkui-swipe-back={false}
-                        >
-                            {!onboardingDone ? (
-                                <div className={css["onboarding"]}>
-                                    <div className={css["onboarding__items"]}>
-                                        <img
-                                            width={70}
-                                            height={70}
-                                            src={item1Image}
-                                            alt=""
-                                        />
-                                        <img
-                                            width={70}
-                                            height={70}
-                                            src={item1Image}
-                                            alt=""
-                                        />
-                                        <img
-                                            width={70}
-                                            height={70}
-                                            src={item2Image}
-                                            alt=""
-                                        />
-                                        <img
-                                            width={70}
-                                            height={70}
-                                            src={item1Image}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <Spacing size={20} />
-                                    <Title align="center" color="yellow" className={css['onboarding__title']}>
-                                        ВЫСТРАИВАЙТЕ ОДИНАКОВЫЕ ЭЛЕМЕНТЫ В РЯД,
-                                        ЧТОБЫ ПРИГОТОВИТЬ БЛЮДО
-                                    </Title>
-                                    <Button
-                                        style={{marginTop: 'auto'}}
-                                        color="yellow"
-                                        onClick={() => setOnboardingDone(true)}
-                                    >
-                                        Начать
-                                    </Button>
-                                </div>
-                            ) : (
-                                gems.map((row, rowIndex) => (
+                <motion.div
+                    key={[showConfetti, gameComplete]}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className={css["motion-wrapper"]}
+                >
+                    {showConfetti && (
+                        <Confetti
+                            recycle={false}
+                            numberOfPieces={200}
+                            gravity={0.6}
+                            tweenDuration={200}
+                            className={css["game-start-panel__confetti"]}
+                        />
+                    )}
+                    {gameComplete ? (
+                        <GameDone
+                            pic="assets/img/tasks/task5/done.png"
+                            text="Отличная работа! Вы спасли Дамира от нагоняя начальника и приблизили родителей Вани к цели. Набирайтесь сил перед новыми авантюрами."
+                        />
+                    ) : (
+                        <>
+                            <div className={css["game-header"]}>
+                                {counters.map((counter, index) => (
                                     <div
-                                        key={rowIndex}
-                                        className={css["game-row"]}
+                                        key={index}
+                                        className={classNames(
+                                            css["game-header__item"],
+                                            counter === 3 && css["game-header__item_done"]
+                                        )}
                                     >
-                                        {row.map((gem, colIndex) => (
-                                            <div
-                                                key={`${rowIndex}-${colIndex}`}
-                                                id={`${config.gemIdPrefix}-${rowIndex}-${colIndex}`}
-                                                className={css["game-gem"]}
-                                                onTouchStart={(e) =>
-                                                    handleTouchStart(
-                                                        e,
-                                                        rowIndex,
-                                                        colIndex
-                                                    )
-                                                }
-                                                onTouchMove={handleTouchMove}
-                                                onTouchEnd={handleTouchEnd}
-                                                onMouseDown={(e) =>
-                                                    handleMouseDown(
-                                                        e,
-                                                        rowIndex,
-                                                        colIndex
-                                                    )
-                                                }
-                                                onMouseMove={handleMouseMove}
-                                                onMouseUp={handleMouseUp}
-                                                style={{
-                                                    backgroundImage:
-                                                        gem !== -1
-                                                            ? `url(${config.images[gem]})`
-                                                            : "none",
-                                                    width: config.gemSize,
-                                                    height: config.gemSize,
-                                                }}
-                                            />
-                                        ))}
+                                        <img
+                                            src={
+                                                [
+                                                    item1Image,
+                                                    item2Image,
+                                                    item3Image,
+                                                    item4Image,
+                                                ][index]
+                                            }
+                                            alt={`Item ${index + 1}`}
+                                            width={66}
+                                            height={66}
+                                            className={
+                                                css["game-header__item-image"]
+                                            }
+                                        />
+                                        <span
+                                            className={
+                                                css["game-header__item-counter"]
+                                            }
+                                        >
+                                            {counter > 2 ? 3 : counter}/3
+                                        </span>
                                     </div>
-                                ))
-                            )}
-                        </div>
-                    </>
-                )}
+                                ))}
+                            </div>
+                            <Spacing size={15} />
+
+                            <div
+                                className={css["game-field"]}
+                                data-vkui-swipe-back={false}
+                            >
+                                {!onboardingDone ? (
+                                    <div className={css["onboarding"]}>
+                                        <div
+                                            className={css["onboarding__items"]}
+                                        >
+                                            <img
+                                                width={70}
+                                                height={70}
+                                                src={item1Image}
+                                                alt=""
+                                            />
+                                            <img
+                                                width={70}
+                                                height={70}
+                                                src={item1Image}
+                                                alt=""
+                                            />
+                                            <img
+                                                width={70}
+                                                height={70}
+                                                src={item2Image}
+                                                alt=""
+                                            />
+                                            <img
+                                                width={70}
+                                                height={70}
+                                                src={item1Image}
+                                                alt=""
+                                            />
+                                        </div>
+                                        <Spacing size={20} />
+                                        <Title
+                                            align="center"
+                                            color="yellow"
+                                            className={css["onboarding__title"]}
+                                        >
+                                            ВЫСТРАИВАЙТЕ ОДИНАКОВЫЕ ЭЛЕМЕНТЫ
+                                            В РЯД, ЧТОБЫ ПРИГОТОВИТЬ БЛЮДО
+                                        </Title>
+                                        <Button
+                                            style={{ marginTop: "auto" }}
+                                            color="yellow"
+                                            onClick={() =>
+                                                setOnboardingDone(true)
+                                            }
+                                        >
+                                            Начать
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    gems.map((row, rowIndex) => (
+                                        <div
+                                            key={rowIndex}
+                                            className={css["game-row"]}
+                                        >
+                                            {row.map((gem, colIndex) => (
+                                                <div
+                                                    key={`${rowIndex}-${colIndex}`}
+                                                    id={`${config.gemIdPrefix}-${rowIndex}-${colIndex}`}
+                                                    className={css["game-gem"]}
+                                                    onTouchStart={(e) =>
+                                                        handleTouchStart(
+                                                            e,
+                                                            rowIndex,
+                                                            colIndex
+                                                        )
+                                                    }
+                                                    onTouchMove={
+                                                        handleTouchMove
+                                                    }
+                                                    onTouchEnd={handleTouchEnd}
+                                                    onMouseDown={(e) =>
+                                                        handleMouseDown(
+                                                            e,
+                                                            rowIndex,
+                                                            colIndex
+                                                        )
+                                                    }
+                                                    onMouseMove={
+                                                        handleMouseMove
+                                                    }
+                                                    onMouseUp={handleMouseUp}
+                                                    style={{
+                                                        backgroundImage:
+                                                            gem !== -1
+                                                                ? `url(${config.images[gem]})`
+                                                                : "none",
+                                                        width: config.gemSize,
+                                                        height: config.gemSize,
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </>
+                    )}
+                </motion.div>
             </Div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                    <Div style={{ padding: 22 }}>
                         <Button
                             color="yellow"
                             onClick={() => routeNavigator.replace("/")}

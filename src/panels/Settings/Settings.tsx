@@ -22,7 +22,7 @@ import { selectNotificationIsAllowed } from "../../store/main.reducer";
 import css from "./Settings.module.css";
 import { Button } from "../../components/Button/Button";
 
-export const Settings: FC<NavIdProps> = ({ id }) => {
+export const Settings: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
     const { askAllowNotifications, askDenyNotifications } = useNotifications();
     const notificationIsAllowed = useAppSelector(selectNotificationIsAllowed);
@@ -32,9 +32,7 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
     return (
         <Panel id={id} disableBackground className={css["settings-panel"]}>
             <CustomPanelHeader
-                onBackClick={() => {
-                    routeNavigator.back();
-                }}
+                onBackClick={onBackClick}
                 title="Настройки"
             />
             <div className={css["settings-panel__content"]}>
@@ -86,7 +84,7 @@ export const Settings: FC<NavIdProps> = ({ id }) => {
                     <Spacing size={20} />
                     <Button
                         color="yellow"
-                        href="https://www.afisha.ru/movie/finnik-2-306500/"
+                        href="https://www.afisha.ru/movie/elki-12-1001086/"
                     >
                         Купить билеты
                     </Button>

@@ -28,8 +28,6 @@ export const CustomPanelHeader = ({
     settings,
     ...props
 }: CustomPanelHeader) => {
-    const platform = usePlatform();
-    const isDesktop = platform === "vkcom";
     const tasks = useAppSelector(selectTasks);
     const routeNavigator = useRouteNavigator();
     const taskPages = [
@@ -73,7 +71,7 @@ export const CustomPanelHeader = ({
                         className={css["task-counter"]}
                         onClick={() =>
                             routeNavigator.push(
-                                `/${DEFAULT_VIEW_PANELS.TASKS}?tab=tickets`
+                                `/${DEFAULT_VIEW_PANELS.TASKS}?tab=balls`
                             )
                         }
                     >

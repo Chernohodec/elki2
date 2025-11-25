@@ -13,7 +13,7 @@ import { useAppSelector } from "../../store";
 import { selectHeroes } from "../../store/main.reducer";
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 
-export const About: FC<NavIdProps> = ({ id }) => {
+export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
     const swiperRef = useRef(null);
     const heroes = useAppSelector(selectHeroes);
@@ -27,9 +27,7 @@ export const About: FC<NavIdProps> = ({ id }) => {
     return (
         <Panel id={id} disableBackground className={css["about-panel"]}>
             <CustomPanelHeader
-                onBackClick={() => {
-                    routeNavigator.back();
-                }}
+                onBackClick={onBackClick}
                 title="О фильме"
             />
             {/* <a

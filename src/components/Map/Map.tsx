@@ -10,7 +10,6 @@ import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import { Button } from "../Button/Button";
 import { Title } from "../Title/Title";
-import { Fireworks } from "@fireworks-js/react";
 import css from "./Map.module.css";
 
 export type Map = {
@@ -28,18 +27,56 @@ export const Map = ({ ...props }: Map) => {
     const isDragging = useRef(false);
     const startX = useRef(0);
     const scrollLeft = useRef(0);
+    console.log(tasks);
+
+    const findFirstActiveUncompletedTask = () => {
+        return tasks.findIndex((task) => task.is_active && !task.completed);
+    };
+
+    const scrollToTask = (taskIndex: number) => {
+        const scrollableNode = scrollableNodeRef.current;
+        if (!scrollableNode || taskIndex < 0) return;
+
+        // Ждем следующего тика для гарантии, что DOM обновлен
+        setTimeout(() => {
+            const taskElements =
+                scrollableNode.querySelectorAll("[data-task-id]");
+            if (taskElements.length > taskIndex) {
+                const taskElement = taskElements[taskIndex];
+                const containerRect = scrollableNode.getBoundingClientRect();
+                const taskRect = taskElement.getBoundingClientRect();
+
+                // Вычисляем позицию для центрирования задачи
+                const scrollPosition =
+                    taskRect.left -
+                    containerRect.left +
+                    scrollableNode.scrollLeft -
+                    containerRect.width / 2 +
+                    taskRect.width / 2;
+
+                scrollableNode.scrollTo({
+                    left: scrollPosition,
+                    behavior: "smooth",
+                });
+            }
+        }, 100);
+    };
 
     useEffect(() => {
         const scrollableNode = scrollableNodeRef.current;
-
         if (!scrollableNode) return;
+
+        // Прокручиваем к первой активной незавершенной задаче после монтирования
+        const targetTaskIndex = findFirstActiveUncompletedTask();
+        if (targetTaskIndex >= 0) {
+            scrollToTask(targetTaskIndex);
+        }
 
         const handleMouseDown = (e: MouseEvent) => {
             isDragging.current = true;
             startX.current = e.pageX - scrollableNode.offsetLeft;
             scrollLeft.current = scrollableNode.scrollLeft;
 
-            // Добавляем класс для изменения курсора
             scrollableNode.style.cursor = "grabbing";
             scrollableNode.style.userSelect = "none";
         };
@@ -60,27 +97,23 @@ export const Map = ({ ...props }: Map) => {
             e.preventDefault();
 
             const x = e.pageX - scrollableNode.offsetLeft;
-            const walk = (x - startX.current) * 2; // Множитель для скорости скролла
+            const walk = (x - startX.current) * 2;
             scrollableNode.scrollLeft = scrollLeft.current - walk;
         };
 
-        // Добавляем обработчики событий
         scrollableNode.addEventListener("mousedown", handleMouseDown);
         scrollableNode.addEventListener("mouseleave", handleMouseLeave);
         scrollableNode.addEventListener("mouseup", handleMouseUp);
         scrollableNode.addEventListener("mousemove", handleMouseMove);
-
-        // Устанавливаем начальный курсор
         scrollableNode.style.cursor = "grab";
 
         return () => {
-            // Очистка обработчиков при размонтировании
             scrollableNode.removeEventListener("mousedown", handleMouseDown);
             scrollableNode.removeEventListener("mouseleave", handleMouseLeave);
             scrollableNode.removeEventListener("mouseup", handleMouseUp);
             scrollableNode.removeEventListener("mousemove", handleMouseMove);
         };
-    }, []);
+    }, [tasks]); // Добавляем tasks в зависимости
 
     return (
         <div className={classNames(css["map"], props.className)}>
@@ -95,38 +128,10 @@ export const Map = ({ ...props }: Map) => {
                 style={{ height: "525px" }}
             >
                 <div className={classNames(css["map__image"])}>
-                    <div className={css["map__fireworks"]}>
-                        <Fireworks
-                            options={{
-                                hue: { min: 40, max: 40 },
-                                acceleration: 1, // Медленное ускорение для плавности
-                                brightness: { min: 40, max: 70 }, // Приглушенная яркость
-                                decay: { min: 0.02, max: 0.04 }, // Медленное затухание
-                                delay: { min: 15, max: 25 }, // Редкие запуски
-                                rocketsPoint: {
-                                    min: 40,
-                                    max: 60,
-                                }, // Высота взрыва (ниже = дальше)
-                                lineWidth: {
-                                    explosion: { min: 0.5, max: 1.5 },
-                                    trace: { min: 0.3, max: 1 },
-                                }, // Тонкие линии
-                                lineStyle: "round",
-                                explosion: 6, // Меньше частиц при взрыве
-                                intensity: 20, // Низкая интенсивность
-                                flickering: 20, // Слабый эффект мерцания
-                                opacity: 0.4, // Полупрозрачность для далекого вида
-                                traceLength: 2, // Короткие следы
-                                traceSpeed: 6, // Медленная скорость
-                                particles: 25, // Мало частиц
-                            }}
-                        />
-                    </div>
                     <div className={css["lights"]}>
                         {[...Array(60)].map((item, index) => {
                             return (
                                 <div
-                                    key={index}
                                     className={classNames(
                                         css["lights__light"],
                                         css[`lights__light_order_${index + 1}`]
@@ -174,9 +179,13 @@ export const Map = ({ ...props }: Map) => {
                     </div>
                     <div className={classNames(css["tasks"])}>
                         {tasks.map((task, index) => {
-                            const taskIsOpen = checkTimeIsAllowed(
-                                task.activation_time
-                            );
+                            const previousTaskCompleted =
+                                index === 0 ? true : tasks[index - 1].completed;
+
+                            const taskIsOpen =
+                                checkTimeIsAllowed(task.activation_time) &&
+                                previousTaskCompleted;
+
                             return (
                                 <div
                                     className={classNames(
@@ -184,6 +193,7 @@ export const Map = ({ ...props }: Map) => {
                                         css[`task-item_order_${index + 1}`]
                                     )}
                                     key={task.id}
+                                    data-task-id={task.id}
                                 >
                                     {taskIsOpen && (
                                         <div
@@ -213,7 +223,11 @@ export const Map = ({ ...props }: Map) => {
                                                     css["task-item__title"]
                                                 }
                                             >
-                                                {task.name}
+                                                <span
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: task.name,
+                                                    }}
+                                                ></span>
                                             </Title>
                                             <Spacing size={10} />
                                             {task.completed ? (

@@ -9,7 +9,7 @@ export const getUser = (referalID?: string) =>{
         "get",
         `user/`,
         {},
-        // {referal: referalID, vk_id: vk_user_id}
-        {referal: referalID, vk_id: 73354123}
+        {referal: referalID, vk_id: vk_user_id}
+        // {referal: referalID, vk_id: 73354123}
     );
 }

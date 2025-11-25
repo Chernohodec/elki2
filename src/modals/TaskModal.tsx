@@ -26,7 +26,7 @@ const TaskModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
     const currentTask = tasks.find((task) => task.id === params?.value);
 
     return (
-        <ModalCard  className={css["modal"]} {...props} onClose={props.onClose}>
+        <ModalCard className={css["modal"]} {...props} onClose={props.onClose}>
             {currentTask && (
                 <div className={css["modal__content"]}>
                     <div className={css["modal__image-wrapper"]}>
@@ -64,13 +64,31 @@ const TaskModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
                         </div>
                     </div>
                     <Spacing size={35} />
-                    <Title align="center">{currentTask?.name}</Title>
+                    <Title align="center">
+                        <span
+                            dangerouslySetInnerHTML={{
+                                __html: currentTask?.name,
+                            }}
+                        ></span>
+                    </Title>
                     <Spacing size={5} />
-                    <Text align="center">{currentTask?.text}</Text>
+                    <Text align="center">
+                        <span
+                            dangerouslySetInnerHTML={{
+                                __html: currentTask?.name,
+                            }}
+                        >
+                            currentTask?.text
+                        </span>
+                    </Text>
                     <Spacing size={35} />
                     <Button
                         onClick={() =>
-                            routeNavigator.push(`/game${currentTask?.id}_start`)
+                            routeNavigator.push(
+                                currentTask.id === 1
+                                    ? `/game${currentTask?.id}`
+                                    : `/game${currentTask?.id}_start`
+                            )
                         }
                     >
                         Продолжить

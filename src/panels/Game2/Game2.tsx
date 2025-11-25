@@ -8,20 +8,20 @@ import {
     Spacing,
     usePlatform,
 } from "@vkontakte/vkui";
+import { motion } from "framer-motion";
 import { FC, useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
 import "swiper/css";
+import { checkQuest } from "../../api/user/checkQuest";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { GameDone } from "../../components/GameDone/GameDone";
+import { GameFailed } from "../../components/GameFailed/GameFailed";
 import { Title } from "../../components/Title/Title";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
-import { checkQuest } from "../../api/user/checkQuest";
-import { GameFailed } from "../../components/GameFailed/GameFailed";
-import { motion } from "framer-motion";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -37,7 +37,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [gameOver, setGameOver] = useState(false);
     const [activeHole, setActiveHole] = useState<number | null>(null);
     const [activeAnimalType, setActiveAnimalType] = useState<
-        "pig" | "horse" | "deer" | "cat"
+        "pig" | "horse" | "deer" | "cat" | "dog"
     >("pig"); // Тип активного животного
     const [gameActive, setGameActive] = useState(false);
     const [gameComplete, setGameComplete] = useState(false);
@@ -105,16 +105,18 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         gameIntervalRef.current = setInterval(() => {
             const randomHole = Math.floor(Math.random() * 6);
 
-            // Случайно выбираем тип животного (70% свинья, 30% другие животные)
+            // Случайно выбираем тип животного (50% свинья, 50% другие животные)
             const animalRandom = Math.random();
-            let animalType: "pig" | "horse" | "deer" | "cat" = "pig";
+            let animalType: "pig" | "horse" | "deer" | "dog" | "cat" = "pig";
 
-            if (animalRandom < 0.7) {
+            if (animalRandom < 0.4) {
                 animalType = "pig";
-            } else if (animalRandom < 0.8) {
+            } else if (animalRandom < 0.55) {
                 animalType = "horse";
-            } else if (animalRandom < 0.9) {
+            } else if (animalRandom < 0.7) {
                 animalType = "deer";
+            } else if (animalRandom < 0.85) {
+                animalType = "dog";
             } else {
                 animalType = "cat";
             }
@@ -207,6 +209,8 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                 return css["deer"];
             case "cat":
                 return css["cat"];
+            case "dog":
+                return css["dog"];
             default:
                 return css["pig"];
         }
@@ -266,6 +270,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
+                    className={css["motion-wrapper"]}
                 >
                     {showConfetti && (
                         <Confetti
@@ -286,7 +291,10 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                             }
                         />
                     ) : !gameComplete ? (
-                        <div className={css["hit-pig-game"]}>
+                        <div
+                            className={css["hit-pig-game"]}
+                            onClick={() => !onboardingDone && startGame()}
+                        >
                             <div className={css["hit-pig-game__header"]}>
                                 <div className={css["hit-pig-counter"]}>
                                     <Title color="yellow">{score}/10</Title>
@@ -418,7 +426,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             </div>
             {gameOver && (
                 <FixedLayout vertical="bottom">
-                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                    <Div style={{ padding: 22 }}>
                         <Button
                             className={css["game-failed__button"]}
                             onClick={startGame}
@@ -441,7 +449,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             )}
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                    <Div style={{ padding: 22 }}>
                         <Button
                             color="yellow"
                             onClick={() => routeNavigator.replace("/")}

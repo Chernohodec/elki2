@@ -23,6 +23,7 @@
     background-size: contain, cover;
     background-position: center 20%, center;
     background-repeat: no-repeat;
+    animation: start 1s forwards;
 }
 
 .onboarding-content-wrapper {
@@ -44,4 +45,24 @@
     padding: 30px 20px 20px;
     background-color: var(--white);
     border-radius: 55px;
+}
+
+.onboarding-page__snow{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+}
+
+
+@keyframes start {
+    0%{
+        background-position: center 180%, center;
+    }
+
+    100%{
+        background-position: center 20%, center;
+    }
 }

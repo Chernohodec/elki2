@@ -154,7 +154,7 @@
     right: 0;
     top: 30px;
     margin: auto;
-    z-index: 2;
+    z-index: 3;
 }
 
 .snowdrift-wrapper_order_3 {
@@ -174,7 +174,7 @@
 
 .pig {
     position: absolute;
-    width: 94px;
+    width: 120px;
     height: 144px;
     background-image: url(/assets/img/tasks/task2/pig.png);
     background-repeat: no-repeat;
@@ -190,9 +190,6 @@
     height: 0;
 }
 
-.pig.horse {
-    background-image: url(/assets/img/tasks/task2/horse.png);
-}
 
 .pig.horse {
     background-image: url(/assets/img/tasks/task2/horse.png);
@@ -200,6 +197,10 @@
 
 .pig.deer {
     background-image: url(/assets/img/tasks/task2/deer.png);
+}
+
+.pig.dog {
+    background-image: url(/assets/img/tasks/task2/dog.png);
 }
 
 .pig.cat {
@@ -213,4 +214,12 @@
 /* Анимация при нажатии на свинью */
 .pig:active {
     transform: scale(0.9);
+}
+
+.motion-wrapper{
+    min-height: calc(100dvh - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 100px;
 }

@@ -35,15 +35,15 @@ export const Game3Start: FC<NavIdProps> = ({ id }) => {
                     css[`game-start-panel__content_${platform}`]
                 )}
             >
-                <div className={css["game-start-panel__img-wrapper"]}>
-                    <img
-                        className={css["game-start-panel__img"]}
-                        width={145}
-                        src={"assets/img/tasks/task3/character-pic.png"}
-                        alt=""
-                    />
-                </div>
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div style={{ padding: 22, margin: "auto" }}>
+                    <div className={css["game-start-panel__img-wrapper"]}>
+                        <img
+                            className={css["game-start-panel__img"]}
+                            width={145}
+                            src={"assets/img/tasks/task3/character-pic.png"}
+                            alt=""
+                        />
+                    </div>
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
                         Виталя должен добыть
@@ -51,13 +51,18 @@ export const Game3Start: FC<NavIdProps> = ({ id }) => {
                         самую красивую ель
                     </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">Виталик всё к Новому году приготовил... Ой, где же ёлка? Пока забывчивый герой ищет топор и выдвигается в лес, запоминайте правила: тапать на ёлку нужно быстро и точно.</Text>
+                    <Text align="center" color="white">
+                        Виталик всё к Новому году приготовил... Ой, где же ёлка?
+                        Пока забывчивый герой ищет топор и выдвигается в лес,
+                        запоминайте правила: тапать на ёлку нужно быстро и
+                        точно.
+                    </Text>
                     <Spacing size={40} />
                     <Spacing size={90} />
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ padding: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

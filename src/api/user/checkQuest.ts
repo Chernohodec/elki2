@@ -15,8 +15,8 @@ export const checkQuest = async (questID: number) => {
         `complete_quest/`,
         { quest_id: questID },
         {
-            // vk_id: vk_user_id,
-            vk_id: 73354123,
+            vk_id: vk_user_id,
+            // vk_id: 73354123,
             // data: hashData.payload,
             // sign_ts: hashData.ts,
             // sign: hashData.sign,

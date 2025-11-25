@@ -35,14 +35,6 @@ export const Game2Start: FC<NavIdProps> = ({ id }) => {
                     css[`game-start-panel__content_${platform}`]
                 )}
             >
-                <div className={css["game-start-panel__img-wrapper"]}>
-                    <img
-                        className={css["game-start-panel__img"]}
-                        width={145}
-                        src={"assets/img/tasks/task2/character-pic.png"}
-                        alt=""
-                    />
-                </div>
                 <Div
                     style={{
                         paddingLeft: 22,
@@ -50,6 +42,14 @@ export const Game2Start: FC<NavIdProps> = ({ id }) => {
                         margin: "auto",
                     }}
                 >
+                    <div className={css["game-start-panel__img-wrapper"]}>
+                        <img
+                            className={css["game-start-panel__img"]}
+                            width={145}
+                            src={"assets/img/tasks/task2/character-pic.png"}
+                            alt=""
+                        />
+                    </div>
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
                         ПОМОГИТЕ ДЯДЕ ЮРЕ ВЕРНУТЬ ПИСЬМО
@@ -66,7 +66,7 @@ export const Game2Start: FC<NavIdProps> = ({ id }) => {
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                <Div style={{ padding: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

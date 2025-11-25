@@ -9,7 +9,7 @@ export const postUser = (data: {}) => {
         "patch",
         `user/`,
         { ...data },
-        // { vk_id: vk_user_id }
-        {vk_id: 73354123}
+        { vk_id: vk_user_id }
+        // {vk_id: 73354123}
     );
 };

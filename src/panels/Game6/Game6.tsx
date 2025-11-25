@@ -60,90 +60,99 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
                     css[`game-start-panel__content_platform_${platform}`]
                 )}
             >
-                {showConfetti && (
-                    <Confetti
-                        recycle={false}
-                        numberOfPieces={400}
-                        gravity={0.5}
-                        tweenDuration={900}
-                        className={css["game-start-panel__confetti"]}
-                    />
-                )}
-                {!gameComplete ? (
-                    <Div className={css["game-area"]}>
-                        <div className={css["game-area__pic1"]}></div>
-                        <div className={css["game-area__counter"]}>
-                            {foundItems.length}/5
-                        </div>
-                        <div className={css["game-area__pic2"]}>
-                            <button
-                                className={classNames(
-                                    css["game-area__item"],
-                                    css["game-area__item_order_1"],
-                                    foundItems.includes(1) &&
-                                        css["game-area__item_active"]
-                                )}
-                                onClick={() => {
-                                    !foundItems.includes(1) &&
-                                        setFoundItems([...foundItems, 1]);
-                                }}
-                            ></button>
-                            <button
-                                className={classNames(
-                                    css["game-area__item"],
-                                    css["game-area__item_order_2"],
-                                    foundItems.includes(2) &&
-                                        css["game-area__item_active"]
-                                )}
-                                onClick={() => {
-                                    !foundItems.includes(2) &&
-                                        setFoundItems([...foundItems, 2]);
-                                }}
-                            ></button>
-                            <button
-                                className={classNames(
-                                    css["game-area__item"],
-                                    css["game-area__item_order_3"],
-                                    foundItems.includes(3) &&
-                                        css["game-area__item_active"]
-                                )}
-                                onClick={() => {
-                                    !foundItems.includes(3) &&
-                                        setFoundItems([...foundItems, 3]);
-                                }}
-                            ></button>
-                            <button
-                                className={classNames(
-                                    css["game-area__item"],
-                                    css["game-area__item_order_4"],
-                                    foundItems.includes(4) &&
-                                        css["game-area__item_active"]
-                                )}
-                                onClick={() => {
-                                    !foundItems.includes(4) &&
-                                        setFoundItems([...foundItems, 4]);
-                                }}
-                            ></button>
-                            <button
-                                className={classNames(
-                                    css["game-area__item"],
-                                    css["game-area__item_order_5"],
-                                    foundItems.includes(5) &&
-                                        css["game-area__item_active"]
-                                )}
-                                onClick={() => {
-                                    !foundItems.includes(5) &&
-                                        setFoundItems([...foundItems, 5]);
-                                }}
-                            ></button>
-                        </div>
-                    </Div>
-                ) : (
-                    <GameDone text="Вас не проведёшь! Благодаря вам Ваня и родители успешно добрались до Великого Устюга. Теперь семья снова вместе — ведь Новый год нужно встречать с близкими!" />
-                )}
+                <motion.div
+                    key={[showConfetti, gameComplete]}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className={css["motion-wrapper"]}
+                >
+                    {showConfetti && (
+                        <Confetti
+                            recycle={false}
+                            numberOfPieces={400}
+                            gravity={0.5}
+                            tweenDuration={900}
+                            className={css["game-start-panel__confetti"]}
+                        />
+                    )}
+                    {!gameComplete ? (
+                        <Div className={css["game-area"]}>
+                            <div className={css["game-area__pic1"]}></div>
+                            <div className={css["game-area__counter"]}>
+                                {foundItems.length}/5
+                            </div>
+                            <div className={css["game-area__pic2"]}>
+                                <button
+                                    className={classNames(
+                                        css["game-area__item"],
+                                        css["game-area__item_order_1"],
+                                        foundItems.includes(1) &&
+                                            css["game-area__item_active"]
+                                    )}
+                                    onClick={() => {
+                                        !foundItems.includes(1) &&
+                                            setFoundItems([...foundItems, 1]);
+                                    }}
+                                ></button>
+                                <button
+                                    className={classNames(
+                                        css["game-area__item"],
+                                        css["game-area__item_order_2"],
+                                        foundItems.includes(2) &&
+                                            css["game-area__item_active"]
+                                    )}
+                                    onClick={() => {
+                                        !foundItems.includes(2) &&
+                                            setFoundItems([...foundItems, 2]);
+                                    }}
+                                ></button>
+                                <button
+                                    className={classNames(
+                                        css["game-area__item"],
+                                        css["game-area__item_order_3"],
+                                        foundItems.includes(3) &&
+                                            css["game-area__item_active"]
+                                    )}
+                                    onClick={() => {
+                                        !foundItems.includes(3) &&
+                                            setFoundItems([...foundItems, 3]);
+                                    }}
+                                ></button>
+                                <button
+                                    className={classNames(
+                                        css["game-area__item"],
+                                        css["game-area__item_order_4"],
+                                        foundItems.includes(4) &&
+                                            css["game-area__item_active"]
+                                    )}
+                                    onClick={() => {
+                                        !foundItems.includes(4) &&
+                                            setFoundItems([...foundItems, 4]);
+                                    }}
+                                ></button>
+                                <button
+                                    className={classNames(
+                                        css["game-area__item"],
+                                        css["game-area__item_order_5"],
+                                        foundItems.includes(5) &&
+                                            css["game-area__item_active"]
+                                    )}
+                                    onClick={() => {
+                                        !foundItems.includes(5) &&
+                                            setFoundItems([...foundItems, 5]);
+                                    }}
+                                ></button>
+                            </div>
+                        </Div>
+                    ) : (
+                        <GameDone text="Вас не проведёшь! Благодаря вам Ваня и родители успешно добрались до Великого Устюга. Теперь семья снова вместе — ведь Новый год нужно встречать с близкими!" />
+                    )}
+                </motion.div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                <Div style={{ padding: 22 }}>
                     {!gameComplete ? (
                         <Button
                             disabled={foundItems.length !== 5}

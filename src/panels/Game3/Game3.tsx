@@ -155,7 +155,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         tapCountRef.current += 1;
 
         // Рассчитываем новые проценты - увеличиваем на фиксированное значение
-        const increment = 8; // Увеличиваем на 8% за тап
+        const increment = 5; // Увеличиваем на 8% за тап
         const newPercents = Math.min(100, percents + increment);
 
         // Плавная анимация заполнения
@@ -242,6 +242,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
+                    className={css["motion-wrapper"]}
                 >
                     {showConfetti && (
                         <Confetti
@@ -344,7 +345,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
             </div>
             {gameComplete && (
                 <FixedLayout vertical="bottom">
-                    <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                    <Div style={{ padding: 22 }}>
                         <Button
                             color="yellow"
                             onClick={() => routeNavigator.replace("/")}

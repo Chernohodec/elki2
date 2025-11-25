@@ -35,25 +35,32 @@ export const Game6Start: FC<NavIdProps> = ({ id }) => {
                     css[`game-start-panel__content_${platform}`]
                 )}
             >
-                <div className={css["game-start-panel__img-wrapper"]}>
-                    <img
-                        className={css["game-start-panel__img"]}
-                        width={145}
-                        src={"assets/img/tasks/task6/character-pic.png"}
-                        alt=""
-                    />
-                </div>
-                <Div style={{paddingLeft: 22, paddingRight: 22, margin: 'auto'}}>
+                <Div style={{ padding: 22, margin: "auto" }}>
+                    <div className={css["game-start-panel__img-wrapper"]}>
+                        <img
+                            className={css["game-start-panel__img"]}
+                            width={145}
+                            src={"assets/img/tasks/task6/character-pic.png"}
+                            alt=""
+                        />
+                    </div>
                     <Spacing size={35} />
-                    <Title align="center" color="yellow">Судьбоносный танец<br/>
-с Вадимом на балу</Title>
+                    <Title align="center" color="yellow">
+                        Судьбоносный танец
+                        <br />с Вадимом на балу
+                    </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">Официантка Аня встретила инструктора Вадима и как по волшебству оказалась на праздничном балу. Найдите пять отличий между кадрами с ней — до Великого Устюга останется рукой подать!</Text>
+                    <Text align="center" color="white">
+                        Официантка Аня встретила инструктора Вадима и как
+                        по волшебству оказалась на праздничном балу. Найдите
+                        пять отличий между кадрами с ней — до Великого Устюга
+                        останется рукой подать!
+                    </Text>
                     <Spacing size={130} />
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{paddingLeft: 22, paddingRight: 22}}>
+                <Div style={{ padding: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

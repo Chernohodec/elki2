@@ -5,6 +5,7 @@ export interface Main {
     appIsLoaded: boolean;
     onboardingComplete: boolean;
     notificationIsAllowed: boolean;
+    userCode: string;
     heroes: {
         id: number;
         img: string;
@@ -17,17 +18,18 @@ export interface Main {
 }
 
 const initialState: Main = {
-    appIsLoaded: true,
-    onboardingComplete: true,
-    notificationIsAllowed: true,
+    appIsLoaded: false,
+    onboardingComplete: false,
+    notificationIsAllowed: false,
+    userCode: '',
     heroes: [
         {
             id: 1,
             img: "assets/img/tasks/task2/character-pic.png",
             actor: {
-                name: "Дядя юра",
+                name: "ДЯДЯ ЮРА",
                 voice: "Дмитрий Нагиев",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'Ради дамы сердца готов на всё, даже на невинный обман под видом небольшого чуда.'
             },
         },
         {
@@ -36,7 +38,7 @@ const initialState: Main = {
             actor: {
                 name: "ДАМИР",
                 voice: "РУЗИЛЬ МИНЕКАЕВ",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'В канун Нового года у будущего отца только одна забота: абсурдные желания любимой жены.'
             },
         },
         {
@@ -45,7 +47,7 @@ const initialState: Main = {
             actor: {
                 name: "Зина",
                 voice: "ОЛЬГА КАРТУНКОВА",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'Даст отпор любому негодняю... а потом проникнется к нему симпатией и споёт под ночным небом.'
             },
         },
         {
@@ -54,7 +56,7 @@ const initialState: Main = {
             actor: {
                 name: "ВИТАЛИК",
                 voice: "АНДРЕЙ РОЖКОВ",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'В смертельной опасности успокоит разговорами о радикулите. '
             },
         },
         {
@@ -63,25 +65,16 @@ const initialState: Main = {
             actor: {
                 name: "Аня",
                 voice: "ТИНА СТОЙИЛКОВИЧ",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'Примчится на доске к своему счастью и почти грациозно плюхнется в снег.'
             },
         },
         {
             id: 6,
-            img: "assets/img/tasks/task2/character-pic.png",
-            actor: {
-                name: "ВИТАЛИК",
-                voice: "АНДРЕЙ РОЖКОВ",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
-            },
-        },
-        {
-            id: 7,
             img: "assets/img/actors/actor6.png",
             actor: {
                 name: "ИГОРЬ",
                 voice: "ДМИТРИЙ ЖУРАВЛЁВ",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'Победитель года в самом неудачном выборе времени для новостей. '
             },
         },
         {
@@ -90,7 +83,7 @@ const initialState: Main = {
             actor: {
                 name: "Света",
                 voice: "ЮЛИЯ ТОПОЛЬНИЦКАЯ",
-                text: 'Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur'
+                text: 'С правильной поддержкой и толикой волшебства научится всему — даже вождению на механике.'
             },
         },
     ],
@@ -109,6 +102,9 @@ const mainSlice = createSlice({
         setNotificationIsAllowed(state, action: PayloadAction<boolean>) {
             state.notificationIsAllowed = action.payload;
         },
+        setUserCode(state, action: PayloadAction<string>){
+            state.userCode = action.payload;
+        }
     },
 });
 
@@ -121,8 +117,11 @@ export const selectNotificationIsAllowed = (state: RootState) =>
     state.main.notificationIsAllowed;
 export const selectHeroes = (state: RootState) =>
     state.main.heroes;
+export const selectUserCode = (state: RootState) =>
+    state.main.userCode;
 export const {
     setOnboardingComplete,
     setAppIsLoaded,
     setNotificationIsAllowed,
+    setUserCode
 } = mainSlice.actions;

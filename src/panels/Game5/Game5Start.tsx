@@ -35,14 +35,6 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                     css[`game-start-panel__content_${platform}`]
                 )}
             >
-                <div className={css["game-start-panel__img-wrapper"]}>
-                    <img
-                        className={css["game-start-panel__img"]}
-                        width={145}
-                        src={"assets/img/tasks/task5/character-pic.png"}
-                        alt=""
-                    />
-                </div>
                 <Div
                     style={{
                         paddingLeft: 22,
@@ -50,6 +42,14 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                         margin: "auto",
                     }}
                 >
+                    <div className={css["game-start-panel__img-wrapper"]}>
+                        <img
+                            className={css["game-start-panel__img"]}
+                            width={145}
+                            src={"assets/img/tasks/task5/character-pic.png"}
+                            alt=""
+                        />
+                    </div>
                     <Spacing size={35} />
                     <Title align="center" color="yellow">
                         Дамир и ужин
@@ -57,12 +57,17 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                         что может пойти не так
                     </Title>
                     <Spacing size={5} />
-                    <Text align="center" color="white">Наш Дамир совсем замотался! Хотел бы он отдыхать с беременной женой, но работа не ждёт. Передвигайте одинаковые элементы в один ряд — помогите Дамиру приготовить блюдо к новогоднему банкету.</Text>
+                    <Text align="center" color="white">
+                        Наш Дамир совсем замотался! Хотел бы он отдыхать
+                        с беременной женой, но работа не ждёт. Передвигайте
+                        одинаковые элементы в один ряд — помогите Дамиру
+                        приготовить блюдо к новогоднему банкету.
+                    </Text>
                     <Spacing size={130} />
                 </Div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                <Div style={{ padding: 22 }}>
                     <Button
                         color="yellow"
                         onClick={() =>

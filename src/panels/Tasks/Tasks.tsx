@@ -27,12 +27,12 @@ import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPane
 import { InviteBanner } from "../../components/InviteBanner/InviteBanner";
 import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
-import { DEFAULT_VIEW_PANELS } from "../../routes";
+import { DEFAULT_VIEW_MODALS, DEFAULT_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectBalls, selectTasks } from "../../store/tasks.reducer";
 import css from "./Tasks.module.css";
 
-export const Tasks: FC<NavIdProps> = ({ id }) => {
+export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
     const [params, setParams] = useSearchParams();
     const currentPathTab = params.get("tab");
@@ -90,53 +90,9 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
         }
     }, [currentPathTab, routeNavigator]);
 
-    const inviteFriend = async () => {
-        bridge
-            .send("VKWebAppShare", {
-                link: `https://vk.com/app54237274#/?referal_id=${vk_user_id}`,
-                text: "Я помогаю Финнику добраться до волшебного посоха и участвую в розыгрыше призов. Присоединяйся!",
-            })
-            .then((data) => {
-                if (data.success) {
-                    routeNavigator.showPopout(
-                        <Snackbar
-                            onClose={() => routeNavigator.hidePopout()}
-                            before={
-                                <Avatar
-                                    size={24}
-                                    style={{
-                                        background:
-                                            "var(--vkui--color_background_accent)",
-                                    }}
-                                >
-                                    <Icon16Done
-                                        fill="#fff"
-                                        width={14}
-                                        height={14}
-                                    />
-                                </Avatar>
-                            }
-                        >
-                            Приглашение отправлено!
-                        </Snackbar>
-                    );
-
-                    console.log("Приглашения не отправлены", data.notSentIds);
-                }
-            })
-            .catch((error) => {
-                console.log(error); // Ошибка
-            });
-    };
-
     return (
         <Panel id={id} disableBackground className={css["tasks-panel"]}>
-            <CustomPanelHeader
-                onBackClick={() => {
-                    routeNavigator.back();
-                }}
-                title="Мои шары"
-            />
+            <CustomPanelHeader onBackClick={onBackClick} title="Мои шары" />
             <Spacing size={20} />
             <div className={css["big-counter"]}>{balls.length}</div>
             <Spacing size={30} />
@@ -182,7 +138,7 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                         friends?.length === 0 ? (
                             <>
                                 <img
-                                    width={170}
+                                    width={160}
                                     style={{
                                         display: "flex",
                                         margin: "0 auto",
@@ -190,7 +146,6 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                     src={"assets/img/friends-pic.png"}
                                     alt=""
                                 />
-                                <Spacing size={15} />
                                 <Title color="white" align="center">
                                     Получите больше
                                     <br />
@@ -203,13 +158,19 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                     вероятность победы в розыгрыше.{" "}
                                 </Text>
                                 <Spacing size={15} />
-                                <Button onClick={inviteFriend}>
+                                <Button
+                                    onClick={() =>
+                                        routeNavigator.showModal(
+                                            DEFAULT_VIEW_MODALS.SHARE_MODAL
+                                        )
+                                    }
+                                >
                                     Пригласить
                                 </Button>
                             </>
                         ) : (
                             <>
-                                <InviteBanner inviteFriend={inviteFriend} />
+                                <InviteBanner />
                                 <Spacing size={15} />
                                 {friends?.length > 0 && (
                                     <Div className={css["friends-list"]}>
@@ -326,31 +287,35 @@ export const Tasks: FC<NavIdProps> = ({ id }) => {
                                 </>
                             ) : (
                                 <>
-                                    <Spacing size={20} />
                                     <img
+                                        width={160}
                                         style={{
                                             display: "flex",
-                                            margin: "auto",
+                                            margin: "0 auto",
                                         }}
-                                        width={175}
                                         src={"assets/img/friends-pic.png"}
                                         alt=""
                                     />
-                                    <Spacing size={15} />
-                                    <Title align={"center"} color={"white"}>
-                                        Получайте больше шаров
+                                    <Title color="white" align="center">
+                                        Получите больше
                                         <br />
-                                        за друзей
+                                        шаров за друзей
                                     </Title>
-                                    <Spacing size={7} />
+                                    <Spacing size={5} />
                                     <Text align="center" color="gray">
                                         Друг в беде не бросит, шанс на приз
                                         умножит! Зовите в игру своих друзей,
                                         чтобы увеличить вероятность победы в
                                         розыгрыше.{" "}
                                     </Text>
-                                    <Spacing size={25} />
-                                    <Button onClick={inviteFriend}>
+                                    <Spacing size={15} />
+                                    <Button
+                                        onClick={() =>
+                                            routeNavigator.showModal(
+                                                DEFAULT_VIEW_MODALS.SHARE_MODAL
+                                            )
+                                        }
+                                    >
                                         Пригласить
                                     </Button>
                                 </>

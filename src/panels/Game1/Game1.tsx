@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import { checkQuest } from "../../api/user/checkQuest";
 import { motion } from "framer-motion";
+import bridge, { UserInfo } from "@vkontakte/vk-bridge";
 
 export type GameProps = {
     id: number;
@@ -46,6 +47,78 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
     );
     const platform = usePlatform();
     const dispatch = useAppDispatch();
+    const [userInfo, setUserInfo] = useState<UserInfo>();
+
+    const results = [
+        {
+            id: 1,
+            text: (
+                <>
+                    Ох как радостно мне стало от мысли, что ты посвящаешь себя
+                    хорошим поступкам. Это достойно восхищения! Грядущий год
+                    подарит ещё больше счастливых и по-настоящему волшебных
+                    моментов. Встречай их с улыбкой и открытым сердцем — и всё
+                    непременно сбудется. С наступающим Новым годом, мой дорогой
+                    друг.
+                </>
+            ),
+        },
+        {
+            id: 2,
+            text: (
+                <>
+                    Пишет тебе добрый волшебник из заснеженного Великого Устюга.
+                    С большим удовольствием узнал, что ты становишься всё лучше
+                    с каждым годом. Продолжай в том же духе — и ты удивишься,
+                    сколько всего у тебя может получиться. С наступающим Новым
+                    годом!
+                </>
+            ),
+        },
+        {
+            id: 3,
+            text: (
+                <>
+                    Знаю, твой год выдался непростым. Не всегда всё складывается
+                    так, как нам хочется. Но не спеши вешать нос: каждый день —
+                    это возможность совершить поступки, которыми можно
+                    гордиться. С добрыми делами — навстречу чудесам в
+                    наступающем Новом годе!
+                </>
+            ),
+        },
+        {
+            id: 4,
+            text: (
+                <>
+                    Я очень рад, что ты не забываешь про Дедушку Мороза. Весь
+                    год я с интересом наблюдал за тобой и хочу сказать: не переставай стремиться к добру. Именно хорошие поступки
+                    сделают мир по-настоящему волшебным. Чудеса случаются в новогоднюю ночь, но их можно найти и в самые обычные дни — стоит только приглядеться. С наступающим Новым годом!
+                </>
+            ),
+        },
+    ];
+
+    const getResultText = (input1: string, input2: string) => {
+        if (input1 === "хорошо и послушно" && input2 === "много помогать") {
+            return results[0].text;
+        }
+
+        if (
+            input1 === "лучше, чем в прошлом" &&
+            input2 === "найти новое хобби"
+        ) {
+            return results[1].text;
+        }
+
+        if (
+            input1 === "плохо (и не горжусь)" &&
+            input2 === "перестать лениться"
+        ) {
+            return results[2].text;
+        }
+        return results[3].text;
+    };
 
     useEffect(() => {
         if (currentTask?.completed || !currentTask?.is_active) {
@@ -74,6 +147,16 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
         setShowConfetti(true);
     };
 
+    useEffect(() => {
+        bridge.send("VKWebAppGetUserInfo", {}).then((data) => {
+            if (data.id) {
+                // Данные пользователя получены
+                // console.log(data);
+                setUserInfo(data);
+            }
+        });
+    }, []);
+
     return (
         <Panel
             id={id}
@@ -99,6 +182,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
+                    className={css["motion-wrapper"]}
                 >
                     {showConfetti && (
                         <Confetti
@@ -110,7 +194,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                         />
                     )}
                     {gameComplete ? (
-                        <GameDone text="Ура, Ваня стал на шаг ближе к Великому Устюгу! Впереди его ждут новые приключения, а вас — увлекательные задания." />
+                        <GameDone text="Ура, Ваня стал на шаг ближе к Великому Устюгу! Впереди его ждут новые приключения, а вас — увлекательные задания." />
                     ) : currentStep === 0 ? (
                         <div className={css["mail-game"]}>
                             <div className={css["letter"]}>
@@ -242,7 +326,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                         </div>
                                     )}
                                 </div>
-                                <Spacing size={20} />
+                                <Spacing size={30} />
                                 <Title size="medium" align="center">
                                     У МЕНЯ СТОЛЬКО ВСЕГО ПОЛУЧИЛОСЬ СДЕЛАТЬ,
                                     НАПРИМЕР
@@ -280,26 +364,28 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                                     css[
                                                         "custom-select__button"
                                                     ],
-                                                    input2 === "Хорошо" &&
+                                                    input2 ===
+                                                        "много помогать" &&
                                                         css[
                                                             "custom-select__button_active"
                                                         ]
                                                 )}
                                                 onClick={() => {
-                                                    setInput2("Хорошо");
+                                                    setInput2("много помогать");
                                                     setInput2IsOpen(false);
                                                 }}
                                             >
                                                 <Title
                                                     size="medium"
                                                     color={
-                                                        input2 === "Хорошо"
+                                                        input2 ===
+                                                        "много помогать"
                                                             ? "white"
                                                             : "red"
                                                     }
                                                     align="center"
                                                 >
-                                                    Хорошо
+                                                    много помогать
                                                 </Title>
                                             </button>
                                             <button
@@ -307,26 +393,30 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                                     css[
                                                         "custom-select__button"
                                                     ],
-                                                    input2 === "Плохо" &&
+                                                    input2 ===
+                                                        "найти новое хобби" &&
                                                         css[
                                                             "custom-select__button_active"
                                                         ]
                                                 )}
                                                 onClick={() => {
-                                                    setInput2("Плохо");
+                                                    setInput2(
+                                                        "найти новое хобби"
+                                                    );
                                                     setInput2IsOpen(false);
                                                 }}
                                             >
                                                 <Title
                                                     size="medium"
                                                     color={
-                                                        input2 === "Плохо"
+                                                        input2 ===
+                                                        "найти новое хобби"
                                                             ? "white"
                                                             : "red"
                                                     }
                                                     align="center"
                                                 >
-                                                    Плохо
+                                                    найти новое хобби
                                                 </Title>
                                             </button>
                                             <button
@@ -334,32 +424,36 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                                     css[
                                                         "custom-select__button"
                                                     ],
-                                                    input2 === "Нормально" &&
+                                                    input2 ===
+                                                        "перестать лениться" &&
                                                         css[
                                                             "custom-select__button_active"
                                                         ]
                                                 )}
                                                 onClick={() => {
-                                                    setInput2("Нормально");
+                                                    setInput2(
+                                                        "перестать лениться"
+                                                    );
                                                     setInput2IsOpen(false);
                                                 }}
                                             >
                                                 <Title
                                                     size="medium"
                                                     color={
-                                                        input2 === "Нормально"
+                                                        input2 ===
+                                                        "перестать лениться"
                                                             ? "white"
                                                             : "red"
                                                     }
                                                     align="center"
                                                 >
-                                                    Нормально
+                                                    перестать лениться
                                                 </Title>
                                             </button>
                                         </div>
                                     )}
                                 </div>
-                                <Spacing size={20} />
+                                <Spacing size={30} />
                                 <Title size="medium" align="center">
                                     ПОЭТОМУ, ПОЖАЛУЙСТА, ПОДАРИ МНЕ
                                 </Title>
@@ -406,23 +500,16 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             <div className={css["mail-game"]}>
                                 <div className={css["letter"]}>
                                     <Title align="center">
-                                        Здравствуй Иван
+                                        Здравствуй, {userInfo?.first_name}
                                     </Title>
                                     <Spacing size={10} />
                                     <Title
                                         color="black"
                                         size="medium"
                                         align="center"
+                                        className={css["letter__result"]}
                                     >
-                                        Ох как радостно мне стало от мысли,
-                                        что ты посвящаешь себя хорошим
-                                        поступкам. Это достойно восхищения!
-                                        Грядущий год подарит ещё больше
-                                        счастливых и по‑настоящему волшебных
-                                        моментов. Встречай их с улыбкой
-                                        и открытым сердцем — и всё непременно
-                                        сбудется. С наступающим Новым годом,
-                                        мой дорогой друг.
+                                        {getResultText(input1, input2)}
                                         <br />
                                         <br />
                                         Искренне твой,
@@ -436,7 +523,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                 </motion.div>
             </div>
             <FixedLayout vertical="bottom">
-                <Div style={{ paddingLeft: 22, paddingRight: 22 }}>
+                <Div style={{ padding: 22 }}>
                     {gameComplete ? (
                         <Button
                             color="yellow"

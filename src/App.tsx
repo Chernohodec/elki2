@@ -54,6 +54,7 @@ export const App = () => {
     const {
         panel: activePanel = DEFAULT_VIEW_PANELS.MAIN,
         view: activeView = DEFAULT_VIEW,
+        panelsHistory
     } = useActiveVkuiLocation();
     const gamePanels: string[] = [
         DEFAULT_VIEW_PANELS.GAME1_START,
@@ -77,6 +78,15 @@ export const App = () => {
         const userUpdated: any = await getUser();
         dispatch(setBalls(userUpdated.tickets));
         dispatch(setTasks(userUpdated.quests));
+    };
+
+    const onBackClick = () => {
+        console.log('panelsHistory ', panelsHistory)
+        if (panelsHistory.length !== 1) {
+            routeNavigator.back();
+        } else {
+            routeNavigator.replace("/");
+        }
     };
 
     useEffect(() => {
@@ -136,14 +146,13 @@ export const App = () => {
                         <View
                             activePanel={activePanel}
                             nav={DEFAULT_VIEW}
-                            onSwipeBackStart={() => "prevent"}
+                            onSwipeBackStart={onBackClick}
                         >
                             <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
-                            <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} />
-                            <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} />
-                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} />
-                            <About nav={DEFAULT_VIEW_PANELS.ABOUT} />
-
+                            <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} onBackClick={onBackClick}/>
+                            <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} onBackClick={onBackClick}/>
+                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} onBackClick={onBackClick}/>
+                            <About nav={DEFAULT_VIEW_PANELS.ABOUT} onBackClick={onBackClick}/>
                             <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
                             <Game1
                                 updateTasks={updateTasks}

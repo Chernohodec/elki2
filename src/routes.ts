@@ -42,7 +42,8 @@ export const DEFAULT_VIEW_PANELS = {
 export const DEFAULT_VIEW_MODALS = {
     HERO_MODAL: "hero_modal",
     TASK_MODAL: "task_modal",
-    CLOSE_MODAL: "close_modal"
+    CLOSE_MODAL: "close_modal",
+    SHARE_MODAL: "share_modal"
 } as const;
 
 export const routes = RoutesConfig.create([

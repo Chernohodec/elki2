@@ -29,11 +29,6 @@ export const Loading: FC<NavIdProps> = ({ id }) => {
     useEffect(() => {
         if (!isLoading && !timeIsLoading) {
             dispatch(setAppIsLoaded(true));
-            if (!onboardingComplete) {
-                // routeNavigator.replace(`/${ONBOARDING_VIEW_PANELS.START}`);
-            } else {
-                // routeNavigator.replace(`/`);
-            }
         }
     }, [isLoading, timeIsLoading, onboardingComplete]);
 
