@@ -75,10 +75,9 @@ const TaskModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
                     <Text align="center">
                         <span
                             dangerouslySetInnerHTML={{
-                                __html: currentTask?.name,
+                                __html: currentTask?.text,
                             }}
                         >
-                            currentTask?.text
                         </span>
                     </Text>
                     <Spacing size={35} />

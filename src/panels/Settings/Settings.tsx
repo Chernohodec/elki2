@@ -47,7 +47,7 @@ export const Settings: FC<NavIdProps> = ({ id, onBackClick }) => {
                                 onChange={() => {
                                     notificationIsAllowed
                                         ? askDenyNotifications()
-                                        : askAllowNotifications(true);
+                                        : askAllowNotifications();
                                 }}
                             />
                         }

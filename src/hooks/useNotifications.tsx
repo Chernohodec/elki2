@@ -27,12 +27,11 @@ export const useNotifications = () => {
         sendBridgeTrack("registration");
     };
 
-    const askAllowNotifications = async (menu?: boolean) => {
+    const askAllowNotifications = async () => {
         await bridge
             .send("VKWebAppAllowNotifications")
             .then((data) => {
                 if (data.result) {
-                    // Разрешение на отправку уведомлений мини-приложением или игрой получено
                     dispatch(setNotificationIsAllowed(true));
                     postUser({ is_notifications_allowed: true });
                 } else {
@@ -42,6 +41,7 @@ export const useNotifications = () => {
                 }
             })
             .catch((error) => {
+                console.log('VKWebAppAllowNotifications error', error)
                 dispatch(setNotificationIsAllowed(false));
                 postUser({ is_notifications_allowed: false });
             });

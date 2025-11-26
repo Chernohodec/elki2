@@ -22,7 +22,6 @@ export const useInit = () => {
 
         try {
             const userInfo = await getUser(referalID);
-            console.log(userInfo);
             const stateTasks = userInfo.data.quests;
             dispatch(setTasks(stateTasks));
             dispatch(setUserCode(userInfo.data.code));

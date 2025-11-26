@@ -54,7 +54,7 @@ export const App = () => {
     const {
         panel: activePanel = DEFAULT_VIEW_PANELS.MAIN,
         view: activeView = DEFAULT_VIEW,
-        panelsHistory
+        panelsHistory,
     } = useActiveVkuiLocation();
     const gamePanels: string[] = [
         DEFAULT_VIEW_PANELS.GAME1_START,
@@ -76,12 +76,12 @@ export const App = () => {
 
     const updateTasks = async () => {
         const userUpdated: any = await getUser();
-        dispatch(setBalls(userUpdated.tickets));
-        dispatch(setTasks(userUpdated.quests));
+        dispatch(setBalls(userUpdated.data.tickets));
+        dispatch(setTasks(userUpdated.data.quests));
     };
 
     const onBackClick = () => {
-        console.log('panelsHistory ', panelsHistory)
+        console.log("panelsHistory ", panelsHistory);
         if (panelsHistory.length !== 1) {
             routeNavigator.back();
         } else {
@@ -115,6 +115,16 @@ export const App = () => {
             "/assets/img/prize-bg.png",
             "/assets/img/prize1.png",
             "/assets/img/progressbar-bg.jpg",
+            "/assets/img/tasks/task2/cat.png",
+            "/assets/img/tasks/task2/deer.png",
+            "/assets/img/tasks/task2/dog.png",
+            "/assets/img/tasks/task2/done.png",
+            "/assets/img/tasks/task2/game-bg.jpg",
+            "/assets/img/tasks/task2/horse.png",
+            "/assets/img/tasks/task2/pig.png",
+            "/assets/img/tasks/task3/done.png",
+            "/assets/img/tasks/task3/game-bg.jpg",
+            "/assets/img/tasks/task3/tree.png",
         ];
 
         preloadImages(images);
@@ -149,10 +159,22 @@ export const App = () => {
                             onSwipeBackStart={onBackClick}
                         >
                             <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
-                            <Tasks nav={DEFAULT_VIEW_PANELS.TASKS} onBackClick={onBackClick}/>
-                            <Settings nav={DEFAULT_VIEW_PANELS.SETTINGS} onBackClick={onBackClick}/>
-                            <Prize nav={DEFAULT_VIEW_PANELS.PRIZE} onBackClick={onBackClick}/>
-                            <About nav={DEFAULT_VIEW_PANELS.ABOUT} onBackClick={onBackClick}/>
+                            <Tasks
+                                nav={DEFAULT_VIEW_PANELS.TASKS}
+                                onBackClick={onBackClick}
+                            />
+                            <Settings
+                                nav={DEFAULT_VIEW_PANELS.SETTINGS}
+                                onBackClick={onBackClick}
+                            />
+                            <Prize
+                                nav={DEFAULT_VIEW_PANELS.PRIZE}
+                                onBackClick={onBackClick}
+                            />
+                            <About
+                                nav={DEFAULT_VIEW_PANELS.ABOUT}
+                                onBackClick={onBackClick}
+                            />
                             <Game1Start nav={DEFAULT_VIEW_PANELS.GAME1_START} />
                             <Game1
                                 updateTasks={updateTasks}

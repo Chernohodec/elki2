@@ -37,7 +37,7 @@
 }
 
 .mail-game {
-    height: calc(100dvh - 120px);
+    height: calc(100dvh - 100px);
     position: relative;
     background-image: url(/assets/img/tasks/task1/envelope.svg);
     background-repeat: no-repeat;
@@ -183,6 +183,30 @@
     animation: floating 2s infinite;
 }
 
+.mail-sending__text {}
+
+.mail-sending__text:after {
+    content: '';
+    animation: dots 1s linear infinite;
+    position: absolute;
+}
+
+@keyframes dots {
+
+    0%,
+    100% {
+        content: '.';
+    }
+
+    33% {
+        content: '..';
+    }
+
+    66% {
+        content: '...';
+    }
+}
+
 @keyframes floating {
 
     0%,
@@ -212,7 +236,7 @@
     padding-right: 26px;
 }
 
-.motion-wrapper{
+.motion-wrapper {
     min-height: calc(100dvh - 100px);
     display: flex;
     flex-direction: column;
@@ -220,6 +244,6 @@
     padding-bottom: 100px;
 }
 
-.letter__result{
+.letter__result {
     line-height: 1.2;
 }

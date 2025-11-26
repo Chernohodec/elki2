@@ -26,7 +26,7 @@ const CloseModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
                 </Title>
                 <Spacing size={5} />
                 <Text align="center">
-                    Игра завершится и весь прогресс будет потерян
+                    Игра завершится, и весь прогресс будет потерян
                 </Text>
                 <Spacing size={25} />
                 <Button

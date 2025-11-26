@@ -132,6 +132,7 @@ export const Map = ({ ...props }: Map) => {
                         {[...Array(60)].map((item, index) => {
                             return (
                                 <div
+                                    key={index}
                                     className={classNames(
                                         css["lights__light"],
                                         css[`lights__light_order_${index + 1}`]

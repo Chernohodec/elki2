@@ -31,6 +31,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const currentTask = useAppSelector(selectTasks).find(
         (task) => task?.id === 2
     );
+    const [onboardingStep, setOnboardingStep] = useState(0);
     const [onboardingDone, setOnboardingDone] = useState(false);
     const [score, setScore] = useState(0);
     const [lives, setLives] = useState(3); // Добавляем состояние для жизней
@@ -123,12 +124,12 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             setActiveAnimalType(animalType);
             setActiveHole(randomHole);
 
-            const showTime = 800 + Math.random() * 400;
+            const showTime = 1000 + Math.random() * 600;
 
             setTimeout(() => {
                 setActiveHole(null);
             }, showTime);
-        }, 1500);
+        }, 1800);
     };
 
     const playPigSound = () => {
@@ -291,10 +292,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                             }
                         />
                     ) : !gameComplete ? (
-                        <div
-                            className={css["hit-pig-game"]}
-                            onClick={() => !onboardingDone && startGame()}
-                        >
+                        <div className={css["hit-pig-game"]}>
                             <div className={css["hit-pig-game__header"]}>
                                 <div className={css["hit-pig-counter"]}>
                                     <Title color="yellow">{score}/10</Title>
@@ -402,24 +400,58 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                             </div>
                             {!onboardingDone && (
                                 <div className={css["onboarding-wrapper"]}>
-                                    <div className={css["onboarding"]}>
-                                        <Title align="center">
-                                            Тапайте по пигу,
-                                            <br />
-                                            чтобы поймать его
-                                        </Title>
-                                        <Spacing size={20} />
-                                        <Button color="red" onClick={startGame}>
-                                            Начать игру
-                                        </Button>
-                                    </div>
+                                    {onboardingStep === 0 && (
+                                        <div className={css["onboarding"]}>
+                                            <Title align="center">
+                                                Тапайте по пигу,
+                                                <br />
+                                                чтобы поймать его
+                                            </Title>
+                                            <Spacing size={20} />
+                                            <Button
+                                                color="red"
+                                                onClick={() =>
+                                                    setOnboardingStep(
+                                                        onboardingStep + 1
+                                                    )
+                                                }
+                                            >
+                                                Продолжить
+                                            </Button>
+                                        </div>
+                                    )}
+                                    {onboardingStep === 1 && (
+                                        <div className={css["onboarding"]}>
+                                            <img
+                                                style={{
+                                                    margin: "-20px auto 0",
+                                                    display: "flex",
+                                                }}
+                                                width={175}
+                                                height={87}
+                                                src="/assets/img/tasks/task2/onboarding-pic.png"
+                                            />
+                                            <Spacing size={15} />
+                                            <Title align="center">
+                                                ТАПАЙ ТОЛЬКО НА ПИГА, <br/>ДРУГИЕ
+                                                ЗВЕРЯТА НЕ В СЧЁТ
+                                            </Title>
+                                            <Spacing size={20} />
+                                            <Button
+                                                color="red"
+                                                onClick={startGame}
+                                            >
+                                                Начать игру
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
                     ) : (
                         <GameDone
                             pic="assets/img/tasks/task2/done.png"
-                            text="Поймать Пига оказалось непросто, но письмо снова в наших руках. Перед новыми заданиями не помешает хорошенько согреться!"
+                            text="Поймать Пига оказалось непросто, но письмо снова в наших руках. Перед новыми заданиями не помешает хорошенько согреться!"
                         />
                     )}
                 </motion.div>
@@ -430,6 +462,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                         <Button
                             className={css["game-failed__button"]}
                             onClick={startGame}
+                            color="yellow"
                         >
                             Повторить попытку
                         </Button>
