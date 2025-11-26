@@ -28,6 +28,7 @@ import css from "./Game5.module.css";
 import { checkQuest } from "../../api/user/checkQuest";
 import { motion } from "framer-motion";
 import { Title } from "../../components/Title/Title";
+import { postStat } from "../../api/user/postStat";
 
 export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -36,6 +37,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const currentTask = useAppSelector(selectTasks).find(
         (task) => task?.id === 5
     );
+    const [startTime, setStartTime] = useState<number | null>(null);
     const [counters, setCounters] = useState([0, 0, 0, 0]);
     const [gameComplete, setGameComplete] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
@@ -83,8 +85,14 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [gems, setGems] = useState<number[][]>([]);
 
     const completeTask = () => {
+        const completionTime = Date.now();
+        const totalTime = (completionTime - startTime) / 1000;
         checkQuest(5).then(() => {
             updateTasks();
+            postStat({
+                name: "game5",
+                data: { timespent: totalTime }
+            });
         });
         dispatch(setTaskCompleted(5));
         setGameComplete(true);
@@ -730,6 +738,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
+        setStartTime(Date.now());
     }, []);
 
     return (
@@ -776,7 +785,8 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                                         key={index}
                                         className={classNames(
                                             css["game-header__item"],
-                                            counter === 3 && css["game-header__item_done"]
+                                            counter === 3 &&
+                                                css["game-header__item_done"]
                                         )}
                                     >
                                         <img

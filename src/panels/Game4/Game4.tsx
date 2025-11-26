@@ -34,6 +34,7 @@ import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game4.module.css";
 import { selectUserCode } from "../../store/main.reducer";
 import { Icon16Done } from "@vkontakte/icons";
+import { postStat } from "../../api/user/postStat";
 
 export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -47,11 +48,13 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
         (task) => task?.id === 4
     );
     const [showConfetti, setShowConfetti] = useState(false);
+    const [startTime, setStartTime] = useState<number | null>(null);
 
     useEffect(() => {
         if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
+        setStartTime(Date.now());
     }, []);
 
     const shareToStory = async (currentSlide: number) => {
@@ -101,8 +104,14 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     };
 
     const completeTask = () => {
+        const completionTime = Date.now();
+        const totalTime = (completionTime - startTime) / 1000;
         checkQuest(4).then(() => {
             updateTasks();
+            postStat({
+                name: "game4",
+                data: { timespent: totalTime, choice: currentSlide+1 }
+            });
         });
         dispatch(setTaskCompleted(4));
         setGameComplete(true);

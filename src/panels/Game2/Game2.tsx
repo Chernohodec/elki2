@@ -22,6 +22,7 @@ import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game2.module.css";
+import { postStat } from "../../api/user/postStat";
 
 export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
@@ -44,6 +45,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     const [gameComplete, setGameComplete] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const [startTime, setStartTime] = useState<number | null>(null);
 
     // URL звука свиньи
     const pigSoundUrl =
@@ -66,8 +68,16 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
     }, [pigSoundUrl]);
 
     const completeTask = () => {
+        const completionTime = Date.now();
+        const totalTime = (completionTime - startTime) / 1000;
         checkQuest(2).then(() => {
             updateTasks();
+            postStat({
+                name: "game2",
+                data: {
+                    timespent: totalTime,
+                },
+            });
         });
         dispatch(setTaskCompleted(2));
         setGameComplete(true);
@@ -78,6 +88,7 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
+        setStartTime(Date.now());
     }, []);
 
     // Очистка интервала при размонтировании
@@ -248,6 +259,12 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (lives === 0) {
             setGameActive(false);
             setGameOver(true);
+            postStat({
+                name: "game2",
+                data: {
+                    fail: true,
+                },
+            });
         }
     }, [lives]);
 
@@ -433,8 +450,8 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
                                             />
                                             <Spacing size={15} />
                                             <Title align="center">
-                                                ТАПАЙ ТОЛЬКО НА ПИГА, <br/>ДРУГИЕ
-                                                ЗВЕРЯТА НЕ В СЧЁТ
+                                                ТАПАЙ ТОЛЬКО НА ПИГА, <br />
+                                                ДРУГИЕ ЗВЕРЯТА НЕ В СЧЁТ
                                             </Title>
                                             <Spacing size={20} />
                                             <Button

@@ -19,12 +19,14 @@ import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game6.module.css";
 import { checkQuest } from "../../api/user/checkQuest";
 import { motion } from "framer-motion";
+import { postStat } from "../../api/user/postStat";
 
 export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
     const routeNavigator = useRouteNavigator();
     const dispatch = useAppDispatch();
     const [gameComplete, setGameComplete] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [startTime, setStartTime] = useState<number | null>(null);
     const [foundItems, setFoundItems] = useState<number[]>([]);
     const platform = usePlatform();
     const currentTask = useAppSelector(selectTasks).find(
@@ -35,11 +37,18 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
+        setStartTime(Date.now());
     }, []);
 
     const completeTask = () => {
+        const completionTime = Date.now();
+        const totalTime = (completionTime - startTime) / 1000;
         checkQuest(6).then(() => {
             updateTasks();
+            postStat({
+                name: "game6",
+                data: { timespent: totalTime }
+            });
         });
         dispatch(setTaskCompleted(6));
         setGameComplete(true);

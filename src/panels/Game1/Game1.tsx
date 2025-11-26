@@ -12,16 +12,17 @@ import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPane
 import css from "./Game1.module.css";
 
 // Импортируем звуковые файлы
+import bridge, { UserInfo } from "@vkontakte/vk-bridge";
+import { motion } from "framer-motion";
 import Confetti from "react-confetti";
+import { checkQuest } from "../../api/user/checkQuest";
+import { postStat } from "../../api/user/postStat";
 import { Button } from "../../components/Button/Button";
 import { GameDone } from "../../components/GameDone/GameDone";
 import { Title } from "../../components/Title/Title";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
-import { checkQuest } from "../../api/user/checkQuest";
-import { motion } from "framer-motion";
-import bridge, { UserInfo } from "@vkontakte/vk-bridge";
 
 export type GameProps = {
     id: number;
@@ -38,6 +39,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
     const [input2IsOpen, setInput2IsOpen] = useState(false);
     const [input3, setInput3] = useState("");
     const [showConfetti, setShowConfetti] = useState(false);
+    const [startTime, setStartTime] = useState<number | null>(null);
     const formIsValid =
         input1 !== "Выберите вариант" &&
         input2 !== "Выберите вариант" &&
@@ -55,7 +57,9 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
             value: "хорошо и послушно",
             text: (
                 <>
-                    Ох,&nbsp;как радостно мне стало от&nbsp;мысли, что ты&nbsp;посвящаешь себя хорошим поступкам. Это достойно восхищения!
+                    Ох,&nbsp;как радостно мне стало от&nbsp;мысли, что
+                    ты&nbsp;посвящаешь себя хорошим поступкам. Это достойно
+                    восхищения!
                 </>
             ),
         },
@@ -64,7 +68,10 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
             value: "лучше, чем в прошлом",
             text: (
                 <>
-                    Весь год я&nbsp;с&nbsp;интересом наблюдал за&nbsp;тобой и&nbsp;хочу сказать: не&nbsp;переставай стремиться к&nbsp;добру. Именно хорошие поступки делают мир таким сказочным и&nbsp;чудесным.
+                    Весь год я&nbsp;с&nbsp;интересом наблюдал за&nbsp;тобой
+                    и&nbsp;хочу сказать: не&nbsp;переставай стремиться
+                    к&nbsp;добру. Именно хорошие поступки делают мир таким
+                    сказочным и&nbsp;чудесным.
                 </>
             ),
         },
@@ -73,7 +80,10 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
             value: "плохо (и не горжусь)",
             text: (
                 <>
-                    Знаю, твой год выдался непростым. Не&nbsp;всегда всё складывается так, как нам хочется. Но&nbsp;не&nbsp;спеши вешать нос: каждый день даёт возможность совершить поступки, которыми можно гордиться.
+                    Знаю, твой год выдался непростым. Не&nbsp;всегда всё
+                    складывается так, как нам хочется. Но&nbsp;не&nbsp;спеши
+                    вешать нос: каждый день даёт возможность совершить поступки,
+                    которыми можно гордиться.
                 </>
             ),
         },
@@ -82,7 +92,11 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
             value: "много помогать",
             text: (
                 <>
-                    Дарить заботу и&nbsp;радость от&nbsp;чистого сердца&nbsp;&mdash; это и&nbsp;есть настоящее волшебство. Продолжай в&nbsp;том&nbsp;же духе, и&nbsp;каждая искорка доброты вернётся к&nbsp;тебе с&nbsp;лихвой, наполняя жизнь светом и&nbsp;теплом.
+                    Дарить заботу и&nbsp;радость от&nbsp;чистого
+                    сердца&nbsp;&mdash; это и&nbsp;есть настоящее волшебство.
+                    Продолжай в&nbsp;том&nbsp;же духе, и&nbsp;каждая искорка
+                    доброты вернётся к&nbsp;тебе с&nbsp;лихвой, наполняя жизнь
+                    светом и&nbsp;теплом.
                 </>
             ),
         },
@@ -91,7 +105,10 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
             value: "найти новое хобби",
             text: (
                 <>
-                    Здорово, что в&nbsp;тебе живёт дух истинного исследователя. Продолжай заниматься любимыми делами и&nbsp;смело открывай новые. Пусть каждый день станет для тебя маленьким праздником!
+                    Здорово, что в&nbsp;тебе живёт дух истинного исследователя.
+                    Продолжай заниматься любимыми делами и&nbsp;смело открывай
+                    новые. Пусть каждый день станет для тебя маленьким
+                    праздником!
                 </>
             ),
         },
@@ -100,7 +117,10 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
             value: "перестать лениться",
             text: (
                 <>
-                    Любая работа над собой воздаётся сторицей. Сегодня&nbsp;&mdash; маленький шаг, а&nbsp;через неделю&nbsp;&mdash; уже самая настоящая тропинка, что уж&nbsp;говорить о&nbsp;целом годе. Так держать!
+                    Любая работа над собой воздаётся сторицей.
+                    Сегодня&nbsp;&mdash; маленький шаг, а&nbsp;через
+                    неделю&nbsp;&mdash; уже самая настоящая тропинка, что
+                    уж&nbsp;говорить о&nbsp;целом годе. Так держать!
                 </>
             ),
         },
@@ -119,12 +139,6 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
     };
 
     useEffect(() => {
-        if (currentTask?.completed || !currentTask?.is_active) {
-            routeNavigator.replace(`/`);
-        }
-    }, []);
-
-    useEffect(() => {
         if (currentStep === 1) {
             const timer = setTimeout(() => {
                 setCurrentStep(2);
@@ -137,8 +151,19 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
     };
 
     const completeTask = () => {
+        const completionTime = Date.now();
+        const totalTime = (completionTime - startTime) / 1000;
         checkQuest(1).then(() => {
             updateTasks();
+            postStat({
+                name: "game1",
+                data: {
+                    input1: input1,
+                    input2: input2,
+                    input3: input3,
+                    timespent: totalTime,
+                },
+            });
         });
         dispatch(setTaskCompleted(1));
         setGameComplete(true);
@@ -153,6 +178,11 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                 setUserInfo(data);
             }
         });
+
+        setStartTime(Date.now());
+        if (currentTask?.completed || !currentTask?.is_active) {
+            routeNavigator.replace(`/`);
+        }
     }, []);
 
     return (
@@ -476,7 +506,11 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 alt=""
                             />
                             <Spacing size={90} />
-                            <Title color="yellow" align="center" className={css["mail-sending__text"]}>
+                            <Title
+                                color="yellow"
+                                align="center"
+                                className={css["mail-sending__text"]}
+                            >
                                 Отправляем письмо
                             </Title>
                             <Spacing size={90} />

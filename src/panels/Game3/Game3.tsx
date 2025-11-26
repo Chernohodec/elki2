@@ -22,6 +22,7 @@ import { selectTasks, setTaskCompleted } from "../../store/tasks.reducer";
 import css from "./Game3.module.css";
 import { checkQuest } from "../../api/user/checkQuest";
 import { motion } from "framer-motion";
+import { postStat } from "../../api/user/postStat";
 
 // Интерфейс для снежинки
 interface Snowflake {
@@ -52,16 +53,26 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
     const decayIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const lastTapTimeRef = useRef<number>(0);
     const snowflakeIdRef = useRef(0);
+    const [startTime, setStartTime] = useState<number | null>(null);
 
     useEffect(() => {
         if (currentTask?.completed || !currentTask?.is_active) {
             routeNavigator.replace(`/`);
         }
+        setStartTime(Date.now());
     }, []);
 
     const completeTask = () => {
+        const completionTime = Date.now();
+        const totalTime = (completionTime - startTime) / 1000;
         checkQuest(3).then(() => {
             updateTasks();
+            postStat({
+                name: "game3",
+                data: {
+                    timespent: totalTime
+                },
+            });
         });
         dispatch(setTaskCompleted(3));
         setGameComplete(true);
