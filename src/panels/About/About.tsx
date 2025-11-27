@@ -19,17 +19,21 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
     const heroes = useAppSelector(selectHeroes);
 
     const gallery = [
-        { id: 1, pic: "assets/img/movie-pic.jpg" },
-        { id: 2, pic: "assets/img/movie-pic.jpg" },
-        { id: 3, pic: "assets/img/movie-pic.jpg" },
+        { id: 1, pic: "assets/img/gallery/1.jpg" },
+        { id: 2, pic: "assets/img/gallery/2.jpg" },
+        { id: 3, pic: "assets/img/gallery/3.jpg" },
+        { id: 4, pic: "assets/img/gallery/4.jpg" },
+        { id: 5, pic: "assets/img/gallery/5.jpg" },
+        { id: 6, pic: "assets/img/gallery/6.jpg" },
+        { id: 7, pic: "assets/img/gallery/7.jpg" },
+        { id: 8, pic: "assets/img/gallery/8.jpg" },
+        { id: 9, pic: "assets/img/gallery/9.jpg" },
+        { id: 10, pic: "assets/img/gallery/10.jpg" },
     ];
 
     return (
         <Panel id={id} disableBackground className={css["about-panel"]}>
-            <CustomPanelHeader
-                onBackClick={onBackClick}
-                title="О фильме"
-            />
+            <CustomPanelHeader onBackClick={onBackClick} title="О фильме" />
             {/* <a
                 href="https://vk.com/video-210460227_456239471"
                 target="_blank"
@@ -50,14 +54,20 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                     color="white"
                     className={css["about-panel-description__text"]}
                 >
-                    Главная новогодняя комедия страны снова на экранах! За хорошее настроение отвечают пять новелл, полных тепла,
+                    Главная новогодняя комедия страны снова на экранах!
+                    За хорошее настроение отвечают пять новелл, полных тепла,
                     доброго юмора и атмосферы всеобщего праздника. У руля в этом
                     году — Жора Крыжовников, в ролях: Дмитрий Нагиев, Рузиль
                     Минекаев, Дмитрий Журавлёв, Андрей Рожков, Ольга Картункова,
                     Тина Стойилкович и др.
                 </Text>
                 <Spacing size={25} />
-                <Button color="yellow" href="https://www.afisha.ru/movie/elki-12-1001086/">Купить билеты</Button>
+                <Button
+                    color="yellow"
+                    href="https://www.afisha.ru/movie/elki-12-1001086/"
+                >
+                    Купить билеты
+                </Button>
             </div>
             <Spacing size={65} />
             <Div className={css["about-panel-chars"]}>
@@ -181,7 +191,12 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                     </Swiper>
                 </div>
                 <Spacing size={35} />
-                <Button color="yellow" href="https://www.afisha.ru/movie/elki-12-1001086/">Купить билеты</Button>
+                <Button
+                    color="yellow"
+                    href="https://www.afisha.ru/movie/elki-12-1001086/"
+                >
+                    Купить билеты
+                </Button>
             </Div>
         </Panel>
     );

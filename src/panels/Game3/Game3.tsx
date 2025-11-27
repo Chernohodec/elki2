@@ -70,7 +70,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
             postStat({
                 name: "game3",
                 data: {
-                    timespent: totalTime
+                    timespent: totalTime,
                 },
             });
         });
@@ -237,7 +237,11 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
+                    gameComplete
+                        ? routeNavigator.replace("/")
+                        : routeNavigator.showModal(
+                              DEFAULT_VIEW_MODALS.CLOSE_MODAL
+                          );
                 }}
                 title="Ёлочка для Витали"
             ></CustomPanelHeader>

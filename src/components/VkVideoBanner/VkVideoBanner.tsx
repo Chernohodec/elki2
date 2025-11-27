@@ -1,27 +1,32 @@
-import { AspectRatio, usePlatform } from "@vkontakte/vkui";
-import { MouseEventHandler } from "react";
+import bridge from "@vkontakte/vk-bridge";
+import { AspectRatio } from "@vkontakte/vkui";
+import { useEffect, useRef } from "react";
 import css from "./VkVideoBanner.module.css";
 
-export const VkVideoBanner = ({
-    href,
-    onClick,
-}: {
-    href?: string;
-    onClick?: MouseEventHandler<HTMLElement>;
-}) => {
-    const platform = usePlatform();
-    const isDesktop = platform === "vkcom";
+export const VkVideoBanner = () => {
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+    useEffect(() => {
+        if (iframeRef.current) {
+            const player = VK.VideoPlayer(iframeRef.current);
+            bridge.subscribe((e) => {
+                if (e.detail.type === "VKWebAppViewHide") {
+                    player.pause();
+                }
+            });
+        }
+    }, []);
 
     return (
-        <AspectRatio ratio={16/9}>
+        <AspectRatio ratio={16 / 9}>
             <div className={css["vk-banner"]}>
                 <iframe
                     className={css["vk-banner__video"]}
-                    src="https://vk.com/video_ext.php?oid=-51109251&id=456239677"
+                    src="https://vk.com/video_ext.php?oid=-51109251&id=456239677&js_api=1"
                     width="330"
                     height="160"
-                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    allow="autoplay; encrypted-media; fullscreen;"
                     allowFullScreen
+                    ref={iframeRef}
                 ></iframe>
             </div>
         </AspectRatio>

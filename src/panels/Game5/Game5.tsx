@@ -54,6 +54,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         x: number;
         y: number;
     } | null>(null);
+    const [isAnimating, setIsAnimating] = useState(false); // Добавляем состояние для блокировки
 
     const config = {
         countRows: 8,
@@ -83,6 +84,16 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     };
 
     const [gems, setGems] = useState<number[][]>([]);
+
+    // Функция для блокировки взаимодействия
+    const startAnimation = () => {
+        setIsAnimating(true);
+    };
+
+    // Функция для разблокировки взаимодействия
+    const endAnimation = () => {
+        setIsAnimating(false);
+    };
 
     const completeTask = () => {
         const completionTime = Date.now();
@@ -120,6 +131,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     // Проверка на завершение игры
     useEffect(() => {
         if (counters.every((counter) => counter >= 3)) {
+            startAnimation(); // Блокируем взаимодействие
             // Анимация завершения уровня
             const allGems = document.querySelectorAll(`.${css["game-gem"]}`);
             allGems.forEach((gem, index) => {
@@ -137,6 +149,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
             setTimeout(() => {
                 completeTask();
+                endAnimation(); // Разблокируем после завершения
             }, allGems.length * 50 + 300);
         }
     }, [counters]);
@@ -211,6 +224,10 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         row2: number,
         col2: number
     ) => {
+        if (isAnimating) return; // Запрещаем взаимодействие во время анимации
+
+        startAnimation(); // Блокируем взаимодействие
+
         const gem1 = document.getElementById(
             `${config.gemIdPrefix}-${row1}-${col1}`
         );
@@ -218,7 +235,10 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             `${config.gemIdPrefix}-${row2}-${col2}`
         );
 
-        if (!gem1 || !gem2) return;
+        if (!gem1 || !gem2) {
+            endAnimation();
+            return;
+        }
 
         // Запрещаем взаимодействие во время анимации
         gem1.style.pointerEvents = "none";
@@ -256,12 +276,6 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             gem1.style.zIndex = "";
             gem2.style.zIndex = "";
 
-            // Возвращаем возможность взаимодействия
-            setTimeout(() => {
-                gem1.style.pointerEvents = "";
-                gem2.style.pointerEvents = "";
-            }, 50);
-
             if (
                 !isStreak(newGems, row1, col1) &&
                 !isStreak(newGems, row2, col2)
@@ -281,16 +295,14 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                         revertedGems[row2][col2] = newGems[row1][col1];
                         setGems(revertedGems);
 
-                        // gem1.style.transition = "none";
-                        // gem2.style.transition = "none";
-                        // gem1.style.transform = "translate(0, 0)";
-                        // gem2.style.transform = "translate(0, 0)";
-                        // gem1.style.zIndex = "";
-                        // gem2.style.zIndex = "";
-
                         config.gameState = "pick";
                         player.selectedRow = -1;
                         player.selectedCol = -1;
+
+                        // Возвращаем возможность взаимодействия
+                        gem1.style.pointerEvents = "";
+                        gem2.style.pointerEvents = "";
+                        endAnimation();
                     }, config.swapDuration);
                 }, 200);
             } else {
@@ -301,7 +313,10 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     // Удаление совпадающих элементов с анимацией
     const removeMatches = (grid: number[][]) => {
-        if (!grid) return;
+        if (!grid) {
+            endAnimation();
+            return;
+        }
 
         const newGrid = [...grid];
         const matchedGems: { row: number; col: number }[] = [];
@@ -355,21 +370,25 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             }
         }
 
+        // Если нет совпадений, разблокируем и выходим
+        if (matchedGems.length === 0) {
+            endAnimation();
+            checkNewMatches(newGrid);
+            return;
+        }
+
         // Добавляем анимацию перед удалением
         matchedGems.forEach(({ row, col }) => {
             const gem = document.getElementById(
                 `${config.gemIdPrefix}-${row}-${col}`
             );
             if (gem) {
+                gem.style.pointerEvents = "none";
                 gem.classList.add(css["match-animation"]);
                 gem.addEventListener(
                     "animationend",
                     () => {
                         gem.classList.remove(css["match-animation"]);
-                        // Восстанавливаем стили на случай, если элемент остался на поле
-                        // gem.style.opacity = "1";
-                        // gem.style.transform = "scale(1)";
-                        // gem.style.visibility = "visible";
                     },
                     { once: true }
                 );
@@ -402,11 +421,18 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     // Падение элементов с анимацией
     const dropGems = (grid: number[][]) => {
-        if (!grid) return;
+        if (!grid) {
+            endAnimation();
+            return;
+        }
 
         const newGrid = [...grid];
         let moved = false;
-        const movedGems = new Set<string>(); // Отслеживаем перемещенные gems
+
+        // Блокируем все элементы на поле
+        document.querySelectorAll(`.${css["game-gem"]}`).forEach((gem) => {
+            (gem as HTMLElement).style.pointerEvents = "none";
+        });
 
         for (let j = 0; j < config.countCols; j++) {
             for (let i = config.countRows - 1; i > 0; i--) {
@@ -424,7 +450,6 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     newGrid[i][j] = newGrid[i - 1][j];
                     newGrid[i - 1][j] = -1;
                     moved = true;
-                    movedGems.add(`${i}-${j}`); // Запоминаем новый позиции
                 }
             }
         }
@@ -438,11 +463,9 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                         el.classList.remove(css["falling-animation"]);
                     });
 
-                // Добавляем дополнительную задержку для стабилизации
                 setTimeout(() => dropGems(newGrid), 50);
             }, 50);
         } else {
-            // Увеличиваем задержку перед заполнением
             setTimeout(() => fillEmptySpaces(newGrid), 50);
         }
     };
@@ -458,7 +481,6 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                 do {
                     gemType = Math.floor(Math.random() * 6);
                 } while (
-                    // Предотвращаем немедленные совпадения при появлении
                     (j >= 2 &&
                         newGrid[0][j - 1] === gemType &&
                         newGrid[0][j - 2] === gemType) ||
@@ -475,7 +497,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     `${config.gemIdPrefix}-0-${j}`
                 );
                 if (gem) {
-                    // Сбрасываем стили перед анимацией появления
+                    gem.style.pointerEvents = "none";
                     gem.style.opacity = "1";
                     gem.style.transform = "scale(1)";
                     gem.style.visibility = "visible";
@@ -496,14 +518,12 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (filled) {
             setTimeout(() => dropGems(newGrid), 300);
         } else {
-            // Добавляем задержку перед проверкой новых совпадений
             setTimeout(() => checkNewMatches(newGrid), 100);
         }
     };
 
     // Проверка новых совпадений после заполнения
     const checkNewMatches = (grid: number[][]) => {
-        // Временно помечаем элементы, которые уже были анимированы
         const recentlyAnimated = new Set<string>();
 
         let hasMatches = false;
@@ -512,7 +532,6 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             for (let j = 0; j < config.countCols; j++) {
                 if (grid[i][j] !== -1 && isStreak(grid, i, j)) {
                     const gemKey = `${i}-${j}`;
-                    // Пропускаем элементы, которые только что появились
                     if (!recentlyAnimated.has(gemKey)) {
                         hasMatches = true;
                         recentlyAnimated.add(gemKey);
@@ -524,6 +543,12 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (hasMatches) {
             setTimeout(() => removeMatches(grid), 150);
         } else {
+            // Разблокируем взаимодействие когда все анимации завершены
+            document.querySelectorAll(`.${css["game-gem"]}`).forEach((gem) => {
+                (gem as HTMLElement).style.pointerEvents = "";
+            });
+            endAnimation();
+
             if (!hasPossibleMoves(grid)) {
                 shuffleBoard();
             } else {
@@ -572,6 +597,8 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
     // Перемешивание поля
     const shuffleBoard = () => {
+        startAnimation();
+
         const flatGems = gems.flat();
         for (let i = flatGems.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -594,6 +621,15 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             config.gameState = "pick";
             player.selectedRow = -1;
             player.selectedCol = -1;
+            // Разблокируем после перемешивания
+            setTimeout(() => {
+                document
+                    .querySelectorAll(`.${css["game-gem"]}`)
+                    .forEach((gem) => {
+                        (gem as HTMLElement).style.pointerEvents = "";
+                    });
+                endAnimation();
+            }, 300);
         }
     };
 
@@ -603,6 +639,8 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         row: number,
         col: number
     ) => {
+        if (isAnimating) return; // Блокируем если идет анимация
+
         const touch = e.touches[0];
         setTouchStartPos({ x: touch.clientX, y: touch.clientY });
         setSelectedGem({ row, col });
@@ -613,11 +651,11 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (!touchStartPos || !selectedGem) return;
+        if (isAnimating || !touchStartPos || !selectedGem) return;
     };
 
     const handleTouchEnd = (e: React.TouchEvent) => {
-        if (!touchStartPos || !selectedGem) return;
+        if (isAnimating || !touchStartPos || !selectedGem) return;
 
         document.querySelectorAll(`.${css["gem-selected"]}`).forEach((el) => {
             el.classList.remove(css["gem-selected"]);
@@ -646,6 +684,8 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         col: number,
         direction: "up" | "down" | "left" | "right"
     ) => {
+        if (isAnimating) return; // Блокируем если идет анимация
+
         let targetRow = row;
         let targetCol = col;
 
@@ -706,6 +746,8 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     };
 
     const handleMouseDown = (e: React.MouseEvent, row: number, col: number) => {
+        if (isAnimating) return; // Блокируем если идет анимация
+
         setMouseStartPos({ x: e.clientX, y: e.clientY });
         setSelectedGem({ row, col });
         const gem = document.getElementById(
@@ -715,11 +757,11 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (!mouseStartPos || !selectedGem) return;
+        if (isAnimating || !mouseStartPos || !selectedGem) return;
     };
 
     const handleMouseUp = (e: React.MouseEvent) => {
-        if (!mouseStartPos || !selectedGem) return;
+        if (isAnimating || !mouseStartPos || !selectedGem) return;
 
         document.querySelectorAll(`.${css["gem-selected"]}`).forEach((el) => {
             el.classList.remove(css["gem-selected"]);
@@ -768,7 +810,11 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
+                    gameComplete
+                        ? routeNavigator.replace("/")
+                        : routeNavigator.showModal(
+                              DEFAULT_VIEW_MODALS.CLOSE_MODAL
+                          );
                 }}
                 title="Кулинарная игра"
             ></CustomPanelHeader>

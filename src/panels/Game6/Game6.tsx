@@ -59,7 +59,11 @@ export const Game6: FC<NavIdProps> = ({ id, updateTasks }) => {
         <Panel id={id} disableBackground className={css["game-panel"]}>
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
+                    gameComplete
+                        ? routeNavigator.replace("/")
+                        : routeNavigator.showModal(
+                              DEFAULT_VIEW_MODALS.CLOSE_MODAL
+                          );
                 }}
                 title="Найди отличия"
             ></CustomPanelHeader>

@@ -193,7 +193,11 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
         >
             <CustomPanelHeader
                 onBackClick={() => {
-                    routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
+                    gameComplete
+                        ? routeNavigator.replace("/")
+                        : routeNavigator.showModal(
+                              DEFAULT_VIEW_MODALS.CLOSE_MODAL
+                          );
                 }}
                 title="Письмо деду морозу"
             ></CustomPanelHeader>
