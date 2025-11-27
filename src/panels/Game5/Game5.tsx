@@ -91,7 +91,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
             updateTasks();
             postStat({
                 name: "game5",
-                data: { timespent: totalTime }
+                data: { timespent: totalTime },
             });
         });
         dispatch(setTaskCompleted(5));
@@ -406,6 +406,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
         const newGrid = [...grid];
         let moved = false;
+        const movedGems = new Set<string>(); // Отслеживаем перемещенные gems
 
         for (let j = 0; j < config.countCols; j++) {
             for (let i = config.countRows - 1; i > 0; i--) {
@@ -415,7 +416,6 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     );
                     if (gem) {
                         gem.classList.add(css["falling-animation"]);
-                        // Гарантируем, что элемент видим перед анимацией
                         gem.style.opacity = "1";
                         gem.style.transform = "scale(1)";
                         gem.style.visibility = "visible";
@@ -424,6 +424,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     newGrid[i][j] = newGrid[i - 1][j];
                     newGrid[i - 1][j] = -1;
                     moved = true;
+                    movedGems.add(`${i}-${j}`); // Запоминаем новый позиции
                 }
             }
         }
@@ -436,10 +437,13 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                     .forEach((el) => {
                         el.classList.remove(css["falling-animation"]);
                     });
-                dropGems(newGrid);
-            }, 100);
+
+                // Добавляем дополнительную задержку для стабилизации
+                setTimeout(() => dropGems(newGrid), 50);
+            }, 50);
         } else {
-            fillEmptySpaces(newGrid);
+            // Увеличиваем задержку перед заполнением
+            setTimeout(() => fillEmptySpaces(newGrid), 50);
         }
     };
 
@@ -450,28 +454,40 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
 
         for (let j = 0; j < config.countCols; j++) {
             if (newGrid[0][j] === -1) {
-                newGrid[0][j] = Math.floor(Math.random() * 6);
+                let gemType;
+                do {
+                    gemType = Math.floor(Math.random() * 6);
+                } while (
+                    // Предотвращаем немедленные совпадения при появлении
+                    (j >= 2 &&
+                        newGrid[0][j - 1] === gemType &&
+                        newGrid[0][j - 2] === gemType) ||
+                    (newGrid[1] &&
+                        newGrid[1][j] === gemType &&
+                        newGrid[2] &&
+                        newGrid[2][j] === gemType)
+                );
+
+                newGrid[0][j] = gemType;
                 filled = true;
 
-                setTimeout(() => {
-                    const gem = document.getElementById(
-                        `${config.gemIdPrefix}-0-${j}`
+                const gem = document.getElementById(
+                    `${config.gemIdPrefix}-0-${j}`
+                );
+                if (gem) {
+                    // Сбрасываем стили перед анимацией появления
+                    gem.style.opacity = "1";
+                    gem.style.transform = "scale(1)";
+                    gem.style.visibility = "visible";
+                    gem.classList.add(css["spawn-animation"]);
+                    gem.addEventListener(
+                        "animationend",
+                        () => {
+                            gem.classList.remove(css["spawn-animation"]);
+                        },
+                        { once: true }
                     );
-                    if (gem) {
-                        // Сбрасываем стили перед анимацией появления
-                        gem.style.opacity = "1";
-                        gem.style.transform = "scale(1)";
-                        gem.style.visibility = "visible";
-                        gem.classList.add(css["spawn-animation"]);
-                        gem.addEventListener(
-                            "animationend",
-                            () => {
-                                gem.classList.remove(css["spawn-animation"]);
-                            },
-                            { once: true }
-                        );
-                    }
-                }, 10);
+                }
             }
         }
 
@@ -480,26 +496,33 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
         if (filled) {
             setTimeout(() => dropGems(newGrid), 300);
         } else {
-            checkNewMatches(newGrid);
+            // Добавляем задержку перед проверкой новых совпадений
+            setTimeout(() => checkNewMatches(newGrid), 100);
         }
     };
 
     // Проверка новых совпадений после заполнения
     const checkNewMatches = (grid: number[][]) => {
+        // Временно помечаем элементы, которые уже были анимированы
+        const recentlyAnimated = new Set<string>();
+
         let hasMatches = false;
 
         for (let i = 0; i < config.countRows; i++) {
             for (let j = 0; j < config.countCols; j++) {
-                if (isStreak(grid, i, j)) {
-                    hasMatches = true;
-                    break;
+                if (grid[i][j] !== -1 && isStreak(grid, i, j)) {
+                    const gemKey = `${i}-${j}`;
+                    // Пропускаем элементы, которые только что появились
+                    if (!recentlyAnimated.has(gemKey)) {
+                        hasMatches = true;
+                        recentlyAnimated.add(gemKey);
+                    }
                 }
             }
-            if (hasMatches) break;
         }
 
         if (hasMatches) {
-            setTimeout(() => removeMatches(grid), 100);
+            setTimeout(() => removeMatches(grid), 150);
         } else {
             if (!hasPossibleMoves(grid)) {
                 shuffleBoard();
@@ -785,7 +808,7 @@ export const Game5: FC<NavIdProps> = ({ id, updateTasks }) => {
                                         key={index}
                                         className={classNames(
                                             css["game-header__item"],
-                                            counter === 3 &&
+                                            counter > 2 &&
                                                 css["game-header__item_done"]
                                         )}
                                     >

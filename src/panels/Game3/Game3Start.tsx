@@ -27,7 +27,7 @@ export const Game3Start: FC<NavIdProps> = ({ id }) => {
                 onBackClick={() => {
                     routeNavigator.back();
                 }}
-                title="Елочка для Витали"
+                title="Ёлочка для Витали"
             />
             <div
                 className={classNames(

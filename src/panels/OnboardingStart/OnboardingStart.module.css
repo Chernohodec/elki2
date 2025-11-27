@@ -47,7 +47,7 @@
     border-radius: 55px;
 }
 
-.onboarding-page__snow{
+.onboarding-page__snow {
     position: absolute;
     left: 0;
     top: 0;
@@ -56,13 +56,18 @@
     height: 100%;
 }
 
+.onboarding-content__text a {
+    color: #EA0300;
+    text-decoration: underline;
+}
+
 
 @keyframes start {
-    0%{
+    0% {
         background-position: center 180%, center;
     }
 
-    100%{
+    100% {
         background-position: center 20%, center;
     }
 }

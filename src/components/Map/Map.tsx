@@ -27,7 +27,6 @@ export const Map = ({ ...props }: Map) => {
     const isDragging = useRef(false);
     const startX = useRef(0);
     const scrollLeft = useRef(0);
-    console.log(tasks);
 
     const findFirstActiveUncompletedTask = () => {
         return tasks.findIndex((task) => task.is_active && !task.completed);

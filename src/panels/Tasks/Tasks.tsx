@@ -1,20 +1,8 @@
-import { Icon16Done } from "@vkontakte/icons";
-import bridge, {
-    parseURLSearchParamsForGetLaunchParams,
-} from "@vkontakte/vk-bridge";
 import {
     useRouteNavigator,
     useSearchParams,
 } from "@vkontakte/vk-mini-apps-router";
-import {
-    Avatar,
-    classNames,
-    Div,
-    NavIdProps,
-    Panel,
-    Snackbar,
-    Spacing,
-} from "@vkontakte/vkui";
+import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
 import { FC, useEffect, useState } from "react";
 // import taskPic1 from "../../assets/img/task-pic1.png";
 // import taskPic2 from "../../assets/img/task-pic2.png";
@@ -37,52 +25,14 @@ export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
     const [params, setParams] = useSearchParams();
     const currentPathTab = params.get("tab");
     const tasks = useAppSelector(selectTasks);
-    const tasksDone = tasks.filter((task) => !task.completed).length === 0;
-    const images = [
-        "assets/img/tasks/task1-icon.png",
-        "assets/img/tasks/task2-icon.png",
-        "assets/img/tasks/task3-icon.png",
-        "assets/img/tasks/task4-icon.png",
-        "assets/img/tasks/task5-icon.png",
-        "assets/img/tasks/task6-icon.png",
-    ];
+
     const [currentTab, setCurrentTab] = useState("tasks");
     const balls = useAppSelector(selectBalls);
-    const routes = [
-        {
-            id: 1,
-            route: DEFAULT_VIEW_PANELS.GAME1_START,
-        },
-        {
-            id: 2,
-            route: DEFAULT_VIEW_PANELS.GAME2_START,
-        },
-        {
-            id: 3,
-            route: DEFAULT_VIEW_PANELS.GAME3_START,
-        },
-        {
-            id: 4,
-            route: DEFAULT_VIEW_PANELS.GAME4_START,
-        },
-        {
-            id: 5,
-            route: DEFAULT_VIEW_PANELS.GAME5_START,
-        },
-        {
-            id: 6,
-            route: DEFAULT_VIEW_PANELS.GAME6_START,
-        },
-    ];
+
     const friends = useAppSelector(selectBalls).filter(
         (ball) => ball.type === "INVITE"
     );
     const ballsToShow = balls.filter((ball) => ball.type === "QUEST");
-    const { vk_user_id } = parseURLSearchParamsForGetLaunchParams(
-        window.location.search
-    );
-
-    console.log(tasks);
 
     useEffect(() => {
         if (currentPathTab) {
@@ -167,6 +117,7 @@ export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
                                 >
                                     Пригласить
                                 </Button>
+                                <Spacing size={90} />
                             </>
                         ) : (
                             <>
@@ -225,7 +176,7 @@ export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
                                                 </div>
                                             );
                                         })}
-                                        <Spacing size={80} />
+                                        <Spacing size={90} />
                                     </Div>
                                 )}
                             </>
@@ -320,7 +271,7 @@ export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
                                     </Button>
                                 </>
                             )}
-                            <Spacing size={70} />
+                            <Spacing size={90} />
                         </>
                     )}
                 </Div>

@@ -16,7 +16,7 @@
     background-image: url(/assets/img/loading-title.svg), url(../../assets/img/loading-bg-mobile.jpg);
     background-repeat: no-repeat;
     background-position: center 10dvh, center 100%;
-    background-size: 350px, calc(100% + 15px);
+    background-size: 350px, cover;
 }
 
 

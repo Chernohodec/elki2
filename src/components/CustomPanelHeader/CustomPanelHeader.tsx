@@ -6,7 +6,7 @@ import { classNames, PanelHeader, PlatformProvider, usePlatform } from "@vkontak
 import { MouseEventHandler, ReactNode } from "react";
 import { DEFAULT_VIEW_PANELS, ONBOARDING_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
-import { selectTasks } from "../../store/tasks.reducer";
+import { selectBalls, selectTasks } from "../../store/tasks.reducer";
 import { Title } from "../Title/Title";
 import css from "./CustomPanelHeader.module.css";
 import {
@@ -28,30 +28,13 @@ export const CustomPanelHeader = ({
     settings,
     ...props
 }: CustomPanelHeader) => {
-    const tasks = useAppSelector(selectTasks);
     const routeNavigator = useRouteNavigator();
-    const taskPages = [
-        DEFAULT_VIEW_PANELS.GAME1_START,
-        DEFAULT_VIEW_PANELS.GAME1,
-        DEFAULT_VIEW_PANELS.GAME2_START,
-        DEFAULT_VIEW_PANELS.GAME2,
-        DEFAULT_VIEW_PANELS.GAME3_START,
-        DEFAULT_VIEW_PANELS.GAME3,
-        DEFAULT_VIEW_PANELS.GAME4_START,
-        DEFAULT_VIEW_PANELS.GAME4,
-        DEFAULT_VIEW_PANELS.GAME5_START,
-        DEFAULT_VIEW_PANELS.GAME5,
-        DEFAULT_VIEW_PANELS.GAME6_START,
-        DEFAULT_VIEW_PANELS.GAME6,
-    ];
     const { panel: activePanel } = useActiveVkuiLocation();
     const isMainPanel = activePanel === DEFAULT_VIEW_PANELS.MAIN;
-    const isAboutPanel = activePanel === DEFAULT_VIEW_PANELS.ABOUT;
     const isOnboarding =
         activePanel === ONBOARDING_VIEW_PANELS.START ||
         activePanel === ONBOARDING_VIEW_PANELS.NOTIFICATIONS;
-    const isTaskPage = taskPages.includes(activePanel);
-    const finishedTasks = tasks.filter((task) => task.completed);
+    const balls = useAppSelector(selectBalls);
 
     return (
         <PlatformProvider value="ios">
@@ -76,7 +59,7 @@ export const CustomPanelHeader = ({
                         }
                     >
                         <span className={css["task-counter__value"]}>
-                            {finishedTasks.length}
+                            {balls.length}
                         </span>
                     </div>
                 )

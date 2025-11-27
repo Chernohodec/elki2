@@ -1,5 +1,12 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
+import {
+    classNames,
+    Div,
+    NavIdProps,
+    Panel,
+    Spacing,
+    usePlatform,
+} from "@vkontakte/vkui";
 import { FC, useRef, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -54,7 +61,7 @@ const FaqItem = ({
 
 export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
-
+    const isDesktop = usePlatform() === "vkcom";
     const swiperRef = useRef();
 
     const prizes = [
@@ -120,10 +127,7 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
 
     return (
         <Panel id={id} disableBackground className={css["prizes-panel"]}>
-            <CustomPanelHeader
-                onBackClick={onBackClick}
-                title="Розыгрыш"
-            />
+            <CustomPanelHeader onBackClick={onBackClick} title="Розыгрыш" />
             <Spacing size={240} />
             <div className={css["prizes-panel__content"]}>
                 <Div>
@@ -147,7 +151,9 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                         <Text align="center" color="gray">
                             У Вани из Кирова есть заветное желание, которое
                             может исполнить только Дед Мороз. Помогите мальчику
-                            добраться до дома волшебника в Великом Устюге, а родителям — догнать своего сына. В дороге вас ждут увлекательные приключения, знакомство с новыми
+                            добраться до дома волшебника в Великом Устюге,
+                            а родителям — догнать своего сына. В дороге вас ждут
+                            увлекательные приключения, знакомство с новыми
                             героями и, наконец, розыгрыш классных призов!
                         </Text>
                     </div>
@@ -161,7 +167,8 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                                 className={css["prizes-info__text"]}
                             >
                                 До 12 января выполняйте задания и накапливайте
-                                шары. Чем их больше, тем выше шансы выиграть приз
+                                шары. Чем их больше, тем выше шансы выиграть
+                                приз
                             </Title>
                         </div>
                         <div className={css["prizes-info__item"]}>
@@ -195,9 +202,46 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                     </Title>
                     <Spacing size={20} />
                     <div className={css["prizes-slider"]}>
+                        {isDesktop && (
+                            <>
+                                <button
+                                    className={classNames(
+                                        css["prizes-slider__prev"]
+                                    )}
+                                    onClick={() =>
+                                        swiperRef.current?.slidePrev()
+                                    }
+                                >
+                                    <img
+                                        width={16}
+                                        height={16}
+                                        src="/assets/img/slider-arrow.svg"
+                                        alt=""
+                                    />
+                                </button>
+                                <button
+                                    className={classNames(
+                                        css["prizes-slider__next"]
+                                    )}
+                                    onClick={() =>
+                                        swiperRef.current?.slideNext()
+                                    }
+                                >
+                                    <img
+                                        width={16}
+                                        height={16}
+                                        src="/assets/img/slider-arrow.svg"
+                                        alt=""
+                                    />
+                                </button>
+                            </>
+                        )}
                         <Swiper
                             spaceBetween={10}
                             slidesPerView={"auto"}
+                            onBeforeInit={(swiper) => {
+                                swiperRef.current = swiper;
+                            }}
                             // loop={true}
                         >
                             {prizes.map((prize) => {

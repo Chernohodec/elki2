@@ -74,7 +74,7 @@
 }
 
 .tips-slide__meat{
-    width: 170px;
+    width: 150px;
 }
 
 .tips-slider__swiper :global(.swiper-slide) {
@@ -97,7 +97,7 @@
 }
 
 .tips-slide__title{
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .advice-block{

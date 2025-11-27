@@ -239,7 +239,7 @@ export const Game3: FC<NavIdProps> = ({ id, updateTasks }) => {
                 onBackClick={() => {
                     routeNavigator.showModal(DEFAULT_VIEW_MODALS.CLOSE_MODAL);
                 }}
-                title="Елочка для Витали"
+                title="Ёлочка для Витали"
             ></CustomPanelHeader>
             <div
                 className={classNames(

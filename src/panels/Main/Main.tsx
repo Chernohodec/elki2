@@ -5,8 +5,7 @@ import {
     NavIdProps,
     Panel,
     Spacing,
-    classNames,
-    usePlatform,
+    classNames
 } from "@vkontakte/vkui";
 import { FC } from "react";
 import { Button } from "../../components/Button/Button";
@@ -18,14 +17,12 @@ import { Title } from "../../components/Title/Title";
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 import { checkTimeIsAllowed } from "../../helpers/checkTimeIsAllowed";
 import { DEFAULT_VIEW_MODALS, DEFAULT_VIEW_PANELS } from "../../routes";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useAppSelector } from "../../store";
 import { selectTasks } from "../../store/tasks.reducer";
 import css from "./Main.module.css";
 
 export const Main: FC<NavIdProps> = ({ id }) => {
     const routeNavigator = useRouteNavigator();
-    const platform = usePlatform();
-    const dispatch = useAppDispatch();
     const tasks = useAppSelector(selectTasks);
     const completedTasks = tasks.filter((task) => task.completed).length;
     const tasksDone = tasks.filter((task) => !task.completed).length === 0;
@@ -73,7 +70,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                 )
                             }
                         >
-                            <span>Мои билеты</span>
+                            <span>Мои шары</span>
                             <img
                                 style={{ transform: "rotate(-90deg)" }}
                                 src="assets/img/all-tasks-icon.svg"

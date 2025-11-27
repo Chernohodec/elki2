@@ -96,7 +96,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 25px;
+    right: 15px;
     margin: auto;
     background-image: url(/assets/img/select-arrow.svg);
     background-repeat: no-repeat;
@@ -246,4 +246,7 @@
 
 .letter__result {
     line-height: 1.2;
+    position: relative;
+    z-index: 2;
+    margin: auto;
 }

@@ -1,17 +1,17 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
-import css from "./About.module.css";
+import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
 import { DEFAULT_VIEW_MODALS } from "../../routes";
 import { useAppSelector } from "../../store";
 import { selectHeroes } from "../../store/main.reducer";
-import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
+import css from "./About.module.css";
 
 export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
@@ -57,13 +57,13 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                     Тина Стойилкович и др.
                 </Text>
                 <Spacing size={25} />
-                <Button color="yellow">Купить билеты</Button>
+                <Button color="yellow" href="https://www.afisha.ru/movie/elki-12-1001086/">Купить билеты</Button>
             </div>
             <Spacing size={65} />
             <Div className={css["about-panel-chars"]}>
                 <Spacing size={25} />
                 <Title color="yellow" align="center">
-                    Актеры
+                    Актёры
                 </Title>
                 <Spacing size={20} />
                 <div className={css["chars-slider"]}>
@@ -181,7 +181,7 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                     </Swiper>
                 </div>
                 <Spacing size={35} />
-                <Button color="yellow">Купить билеты</Button>
+                <Button color="yellow" href="https://www.afisha.ru/movie/elki-12-1001086/">Купить билеты</Button>
             </Div>
         </Panel>
     );

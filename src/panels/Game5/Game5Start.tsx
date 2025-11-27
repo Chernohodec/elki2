@@ -54,7 +54,7 @@ export const Game5Start: FC<NavIdProps> = ({ id }) => {
                     <Title align="center" color="yellow">
                         Дамир и ужин
                         <br />
-                        что может пойти не так
+                        что может пойти не так?
                     </Title>
                     <Spacing size={5} />
                     <Text align="center" color="white">

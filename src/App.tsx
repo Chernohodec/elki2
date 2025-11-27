@@ -81,7 +81,6 @@ export const App = () => {
     };
 
     const onBackClick = () => {
-        console.log("panelsHistory ", panelsHistory);
         if (panelsHistory.length !== 1) {
             routeNavigator.back();
         } else {
@@ -125,6 +124,14 @@ export const App = () => {
             "/assets/img/tasks/task3/done.png",
             "/assets/img/tasks/task3/game-bg.jpg",
             "/assets/img/tasks/task3/tree.png",
+            "/assets/img/tasks/task5/done.png",
+            "/assets/img/tasks/task5/item1.png",
+            "/assets/img/tasks/task5/item2.png",
+            "/assets/img/tasks/task5/item3.png",
+            "/assets/img/tasks/task5/item4.png",
+            "/assets/img/tasks/task5/item5.png",
+            "/assets/img/tasks/task5/item6.png",
+            "/assets/img/tasks/task5/item7.png",
         ];
 
         preloadImages(images);

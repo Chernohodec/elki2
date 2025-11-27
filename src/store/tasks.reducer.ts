@@ -53,7 +53,7 @@ const initialState: TasksState = {
         },
         {
             id: 3,
-            name: "Елочка для Витали",
+            name: "Ёлочка для Витали",
             text: "Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.Lorem ipsum dolor sit amet consectetur. Pretium placerat duis convallis felis eget nunc arcu id at. Facilisi augue ultrices molestie.",
             type: "kid",
             activation_time: "2025-10-19T20:52:04+03:00",
