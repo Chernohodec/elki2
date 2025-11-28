@@ -241,3 +241,8 @@
     font-size: 14px;
     max-width: 400px;
 }
+
+.prizes-info__text a{
+    color: #FFC30B;
+    text-decoration: underline;
+}

@@ -1,6 +1,13 @@
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
-import { FC, useRef } from "react";
+import {
+    classNames,
+    Div,
+    NavIdProps,
+    Panel,
+    Spacing,
+    usePlatform,
+} from "@vkontakte/vkui";
+import { FC, useRef, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "../../components/Button/Button";
@@ -16,7 +23,10 @@ import css from "./About.module.css";
 export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
     const swiperRef = useRef(null);
+    const swiperActorsRef = useRef(null);
+    const [currentActorSlide, setCurrentActorSlide] = useState(0);
     const heroes = useAppSelector(selectHeroes);
+    const isDesktop = usePlatform() === "vkcom";
 
     const gallery = [
         { id: 1, pic: "assets/img/gallery/1.jpg" },
@@ -77,7 +87,54 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                 </Title>
                 <Spacing size={20} />
                 <div className={css["chars-slider"]}>
-                    <Swiper spaceBetween={15} slidesPerView={"auto"}>
+                    <Swiper
+                        onBeforeInit={(swiper) => {
+                            console.log(swiper);
+                            swiperActorsRef.current = swiper;
+                        }}
+                        onSlideChange={(swiper)=>setCurrentActorSlide(swiper.activeIndex)}
+                        spaceBetween={15}
+                        slidesPerView={"auto"}
+                    >
+                        {isDesktop && (
+                            <>
+                                {currentActorSlide !== 0 && (
+                                    <button
+                                        className={classNames(
+                                            css["chars-slider__prev"]
+                                        )}
+                                        onClick={() =>
+                                            swiperActorsRef.current?.slidePrev()
+                                        }
+                                    >
+                                        <img
+                                            width={16}
+                                            height={16}
+                                            src="/assets/img/slider-arrow.svg"
+                                            alt=""
+                                        />
+                                    </button>
+                                )}
+                                {currentActorSlide !==
+                                    heroes.length -3 && (
+                                    <button
+                                        className={classNames(
+                                            css["chars-slider__next"]
+                                        )}
+                                        onClick={() =>
+                                            swiperActorsRef.current?.slideNext()
+                                        }
+                                    >
+                                        <img
+                                            width={16}
+                                            height={16}
+                                            src="/assets/img/slider-arrow.svg"
+                                            alt=""
+                                        />
+                                    </button>
+                                )}
+                            </>
+                        )}
                         {heroes.map((hero) => {
                             return (
                                 <SwiperSlide key={hero.id}>

@@ -12,7 +12,7 @@ import {
     usePlatform,
 } from "@vkontakte/vkui";
 import { motion } from "framer-motion";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -49,6 +49,8 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
     );
     const [showConfetti, setShowConfetti] = useState(false);
     const [startTime, setStartTime] = useState<number | null>(null);
+    const swiperRef = useRef(null);
+    const isDesktop = platform === "vkcom";
 
     useEffect(() => {
         if (currentTask?.completed || !currentTask?.is_active) {
@@ -110,7 +112,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
             updateTasks();
             postStat({
                 name: "game4",
-                data: { timespent: totalTime, choice: currentSlide+1 }
+                data: { timespent: totalTime, choice: currentSlide + 1 },
             });
         });
         dispatch(setTaskCompleted(4));
@@ -197,6 +199,41 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                 совет от зины
                             </Title>
                             <div className={css["tips-slider"]}>
+                                {isDesktop && (
+                                    <>
+                                        <button
+                                            className={classNames(
+                                                css["tips-slider__prev"]
+                                            )}
+                                            onClick={() =>
+                                                swiperRef.current?.slidePrev()
+                                            }
+                                        >
+                                            <img
+                                                width={16}
+                                                height={16}
+                                                src="/assets/img/slider-arrow.svg"
+                                                alt=""
+                                            />
+                                        </button>
+
+                                        <button
+                                            className={classNames(
+                                                css["tips-slider__next"]
+                                            )}
+                                            onClick={() =>
+                                                swiperRef.current?.slideNext()
+                                            }
+                                        >
+                                            <img
+                                                width={16}
+                                                height={16}
+                                                src="/assets/img/slider-arrow.svg"
+                                                alt=""
+                                            />
+                                        </button>
+                                    </>
+                                )}
                                 <Swiper
                                     slidesPerView={3}
                                     centeredSlides
@@ -205,6 +242,9 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                                     onTransitionEnd={(swiper) =>
                                         setCurrentSlide(swiper.activeIndex)
                                     }
+                                    onBeforeInit={(swiper) => {
+                                        swiperRef.current = swiper;
+                                    }}
                                     loop={true}
                                 >
                                     {advices.map((advice) => (

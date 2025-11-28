@@ -3,7 +3,6 @@ import {
     Icon24NotificationOutline,
     Icon28DocumentTextOutline,
 } from "@vkontakte/icons";
-import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     Div,
     NavIdProps,
@@ -11,30 +10,23 @@ import {
     SimpleCell,
     Spacing,
     Switch,
-    usePlatform,
 } from "@vkontakte/vkui";
 import { FC } from "react";
+import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
-import { useNotifications } from "../../hooks/useNotifications";
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
+import { useNotifications } from "../../hooks/useNotifications";
 import { useAppSelector } from "../../store";
 import { selectNotificationIsAllowed } from "../../store/main.reducer";
 import css from "./Settings.module.css";
-import { Button } from "../../components/Button/Button";
 
 export const Settings: FC<NavIdProps> = ({ id, onBackClick }) => {
-    const routeNavigator = useRouteNavigator();
     const { askAllowNotifications, askDenyNotifications } = useNotifications();
     const notificationIsAllowed = useAppSelector(selectNotificationIsAllowed);
-    const platform = usePlatform();
-    const isDesktop = platform === "vkcom";
 
     return (
         <Panel id={id} disableBackground className={css["settings-panel"]}>
-            <CustomPanelHeader
-                onBackClick={onBackClick}
-                title="Настройки"
-            />
+            <CustomPanelHeader onBackClick={onBackClick} title="Настройки" />
             <div className={css["settings-panel__content"]}>
                 <div className={css["settings-block"]}></div>
                 <Div>
@@ -51,9 +43,10 @@ export const Settings: FC<NavIdProps> = ({ id, onBackClick }) => {
                                 }}
                             />
                         }
+                        multiline
                         subtitle={
-                            <span style={{ color: "#ffffffaa" }}>
-                                Пришлём уведомление, <br />
+                            <span style={{ color: "#ffffffaa", fontSize: 12, lineHeight: 1.2 }}>
+                                Пришлём уведомление,
                                 когда откроется новое задание
                             </span>
                         }

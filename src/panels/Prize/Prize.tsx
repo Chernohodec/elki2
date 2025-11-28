@@ -1,4 +1,3 @@
-import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
 import {
     classNames,
     Div,
@@ -17,8 +16,8 @@ import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
-import css from "./Prize.module.css";
 import { VkVideoBanner } from "../../components/VkVideoBanner/VkVideoBanner";
+import css from "./Prize.module.css";
 
 const FaqItem = ({
     id,
@@ -60,7 +59,6 @@ const FaqItem = ({
 };
 
 export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
-    const routeNavigator = useRouteNavigator();
     const isDesktop = usePlatform() === "vkcom";
     const swiperRef = useRef();
 
@@ -189,8 +187,8 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                                 color="white"
                                 className={css["prizes-info__text"]}
                             >
-                                16 января мы назовём имена 15 победителей
-                                в сообществе «Ёлки 12» во «ВКонтакте»
+                                16 января мы назовём имена 15 победителей{" "}
+                                 <a href="https://vk.com/elki_film" target="_blank">в сообществе «Ёлки 12»</a>
                             </Title>
                         </div>
                     </div>

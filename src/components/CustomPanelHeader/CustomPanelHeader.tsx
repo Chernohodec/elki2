@@ -39,7 +39,7 @@ export const CustomPanelHeader = ({
     return (
         <PlatformProvider value="ios">
         <PanelHeader
-            className={classNames(css["custom-header"])}
+            className={classNames(css["custom-header"], isOnboarding && css["custom-header_onboarding"])}
             delimiter="none"
             transparent={true}
             fixed={isMainPanel ? false : false}

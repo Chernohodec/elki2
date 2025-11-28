@@ -183,6 +183,13 @@
     align-items: center;
 }
 
+@media screen and (max-width: 374px) {
+    .tasks-item__button{
+        width: 90px;
+        font-size: 12px;
+    }
+}
+
 @media screen and (min-width: 600px) {
     .tasks-list {
         display: grid;

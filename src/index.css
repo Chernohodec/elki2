@@ -95,6 +95,7 @@ a:hover {
   --white: #ffffff;
   --red-gradient: linear-gradient(180deg, #EA0300 0%, #840715 100%);
   --yellow-gradient: linear-gradient(180deg, #FFC30B 0%, #FF9500 100%);
+  --vkui_internal--panel_header_height: 100px
 }
 
 .vkuiModalPage__children {

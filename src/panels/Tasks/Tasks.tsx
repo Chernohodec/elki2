@@ -66,7 +66,7 @@ export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
                                     css["task-switcher__button_active"]
                             )}
                         >
-                            <span>История начисления</span>
+                            <span>История начислений</span>
                         </button>
                         <button
                             onClick={() =>

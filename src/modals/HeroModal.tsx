@@ -32,7 +32,7 @@ const HeroModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
                 <Spacing size={5} />
                 <Text align="center">{currentHero?.actor.text}</Text>
                 <Spacing size={35} />
-                <Button onClick={props.onClose}>Продолжить</Button>
+                <Button onClick={props.onClose}>Закрыть</Button>
             </div>
         </ModalCard>
     );
