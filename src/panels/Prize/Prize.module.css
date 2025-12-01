@@ -214,8 +214,8 @@
 .prizes-panel__rules {
     display: flex;
     align-items: center;
-    border: 1px solid #FFFFFF42;
-    background: #FFFFFF12;
+    border: 1px dashed #FFFFFF42;
+    background: #7E070A;
     border-radius: 20px;
     height: 52px;
     justify-content: space-between;

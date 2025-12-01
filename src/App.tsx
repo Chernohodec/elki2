@@ -44,6 +44,7 @@ import {
 import { selectTasks, setBalls, setTasks } from "./store/tasks.reducer";
 import { preloadImages } from "./helpers/preloadImages";
 import { useEffect } from "react";
+import bridge from "@vkontakte/vk-bridge";
 
 export const App = () => {
     const routerPopout = usePopout();
@@ -86,6 +87,11 @@ export const App = () => {
         } else {
             routeNavigator.replace("/");
         }
+        // if (activePanel !== "/") {
+        //     routeNavigator.replace("/");
+        // } else {
+        //     bridge.send("VKWebAppClose");
+        // }
     };
 
     useEffect(() => {
@@ -163,7 +169,9 @@ export const App = () => {
                         <View
                             activePanel={activePanel}
                             nav={DEFAULT_VIEW}
-                            onSwipeBackStart={onBackClick}
+                            // onSwipeBack={onBackClick}
+                            onSwipeBackStart={() => "prevent"}
+                            // history={panelsHistory}
                         >
                             <Main nav={DEFAULT_VIEW_PANELS.MAIN} />
                             <Tasks

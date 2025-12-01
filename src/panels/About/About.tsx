@@ -92,9 +92,19 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                             console.log(swiper);
                             swiperActorsRef.current = swiper;
                         }}
-                        onSlideChange={(swiper)=>setCurrentActorSlide(swiper.activeIndex)}
+                        onSlideChange={(swiper) =>
+                            setCurrentActorSlide(swiper.activeIndex)
+                        }
                         spaceBetween={15}
                         slidesPerView={"auto"}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: "auto",
+                            },
+                            600: {
+                                slidesPerView: 3,
+                            },
+                        }}
                     >
                         {isDesktop && (
                             <>
@@ -115,8 +125,7 @@ export const About: FC<NavIdProps> = ({ id, onBackClick }) => {
                                         />
                                     </button>
                                 )}
-                                {currentActorSlide !==
-                                    heroes.length -3 && (
+                                {currentActorSlide !== heroes.length - 3 && (
                                     <button
                                         className={classNames(
                                             css["chars-slider__next"]

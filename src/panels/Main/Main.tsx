@@ -66,7 +66,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                             color="transparent-yellow"
                             onClick={() =>
                                 routeNavigator.push(
-                                    `/${DEFAULT_VIEW_PANELS.TASKS}?tab=tickets`
+                                    `/${DEFAULT_VIEW_PANELS.TASKS}?tab=balls`
                                 )
                             }
                         >

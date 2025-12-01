@@ -58,7 +58,7 @@ export const Map = ({ ...props }: Map) => {
                     behavior: "smooth",
                 });
             }
-        }, 100);
+        }, 250);
     };
 
     useEffect(() => {

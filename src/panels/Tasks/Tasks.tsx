@@ -4,12 +4,6 @@ import {
 } from "@vkontakte/vk-mini-apps-router";
 import { classNames, Div, NavIdProps, Panel, Spacing } from "@vkontakte/vkui";
 import { FC, useEffect, useState } from "react";
-// import taskPic1 from "../../assets/img/task-pic1.png";
-// import taskPic2 from "../../assets/img/task-pic2.png";
-// import taskPic3 from "../../assets/img/task-pic3.png";
-// import taskPic4 from "../../assets/img/task-pic4.png";
-// import taskPic5 from "../../assets/img/task-pic5.png";
-// import taskPic6 from "../../assets/img/task-pic6.png";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { InviteBanner } from "../../components/InviteBanner/InviteBanner";
@@ -17,14 +11,13 @@ import { Text } from "../../components/Text/Text";
 import { Title } from "../../components/Title/Title";
 import { DEFAULT_VIEW_MODALS, DEFAULT_VIEW_PANELS } from "../../routes";
 import { useAppSelector } from "../../store";
-import { selectBalls, selectTasks } from "../../store/tasks.reducer";
+import { selectBalls } from "../../store/tasks.reducer";
 import css from "./Tasks.module.css";
 
 export const Tasks: FC<NavIdProps> = ({ id, onBackClick }) => {
     const routeNavigator = useRouteNavigator();
     const [params, setParams] = useSearchParams();
     const currentPathTab = params.get("tab");
-    const tasks = useAppSelector(selectTasks);
 
     const [currentTab, setCurrentTab] = useState("tasks");
     const balls = useAppSelector(selectBalls);

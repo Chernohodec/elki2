@@ -238,9 +238,10 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 <Spacing size={10} />
                                 <div className={css["custom-select"]}>
                                     <div
-                                        onClick={() =>
-                                            setInput1IsOpen(!input1IsOpen)
-                                        }
+                                        onClick={() => {
+                                            setInput1IsOpen(!input1IsOpen);
+                                            setInput2IsOpen(false);
+                                        }}
                                         className={
                                             css["custom-select__main-value"]
                                         }
@@ -367,9 +368,10 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                 <Spacing size={10} />
                                 <div className={css["custom-select"]}>
                                     <div
-                                        onClick={() =>
-                                            setInput2IsOpen(!input2IsOpen)
-                                        }
+                                        onClick={() => {
+                                            setInput2IsOpen(!input2IsOpen);
+                                            setInput1IsOpen(false);
+                                        }}
                                         className={
                                             css["custom-select__main-value"]
                                         }

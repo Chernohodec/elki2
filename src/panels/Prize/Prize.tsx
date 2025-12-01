@@ -11,7 +11,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import nextIcon from "../../assets/img/next-button.svg";
 // import prevIcon from "../../assets/img/prev-button.svg";
-import { Icon24Chevron, Icon24ChevronRight } from "@vkontakte/icons";
+import { Icon20ChevronRight, Icon24Chevron, Icon24ChevronRight } from "@vkontakte/icons";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
 import { Text } from "../../components/Text/Text";
@@ -240,7 +240,7 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                             onBeforeInit={(swiper) => {
                                 swiperRef.current = swiper;
                             }}
-                            // loop={true}
+                            loop={true}
                         >
                             {prizes.map((prize) => {
                                 return (
@@ -308,7 +308,7 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                         <Text color="white" align="left">
                             Условия розыгрыша
                         </Text>
-                        <Icon24ChevronRight
+                        <Icon20ChevronRight
                             fill={"#ffffff"}
                             className={css["faq-item__icon"]}
                         />
