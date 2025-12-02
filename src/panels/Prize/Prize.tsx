@@ -339,7 +339,7 @@ export const Prize: FC<NavIdProps> = ({ id, onBackClick }) => {
                     <Spacing size={10} />
                     <Button
                         color="transparent"
-                        href="https://www.afisha.ru/movie/elki-12-1001086/"
+                        href="https://elki12.ru/"
                     >
                         Подробнее о фильме
                     </Button>

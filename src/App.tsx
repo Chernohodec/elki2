@@ -5,8 +5,10 @@ import {
     usePopout,
     useRouteNavigator,
 } from "@vkontakte/vk-mini-apps-router";
+import { useEffect } from "react";
 import { getUser } from "./api/user/getUser";
 import { CustomTabbar } from "./components/CustomTabbar/CustomTabbar";
+import { preloadImages } from "./helpers/preloadImages";
 import "./index.css";
 import { Modals } from "./modals";
 import { About } from "./panels/About/About";
@@ -42,9 +44,6 @@ import {
     selectOnboardingComplete,
 } from "./store/main.reducer";
 import { selectTasks, setBalls, setTasks } from "./store/tasks.reducer";
-import { preloadImages } from "./helpers/preloadImages";
-import { useEffect } from "react";
-import bridge from "@vkontakte/vk-bridge";
 
 export const App = () => {
     const routerPopout = usePopout();

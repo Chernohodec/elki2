@@ -28,7 +28,7 @@ const ShareModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
                 attachment: {
                     text: "open",
                     type: "url",
-                    url: `https://vk.com/app54237274#/?referal_id=${userCode}`,
+                    url: `https://vk.com/app52632034#/?referal_id=${userCode}`,
                 },
             })
             .then((data: any) => {
@@ -72,7 +72,7 @@ const ShareModal: React.FC<NavIdProps & { onClose: () => void }> = (props) => {
     const inviteFriend = async () => {
         bridge
             .send("VKWebAppShare", {
-                link: `https://vk.com/app54237274#/?referal_id=${userCode}`,
+                link: `https://vk.com/app52632034#/?referal_id=${userCode}`,
                 text: "Я помогаю Ване и его родителям добраться до Деда Мороза!",
             })
             .then((data: any) => {

@@ -9,7 +9,7 @@ export const postToWall = async (image: string,) => {
             .send("VKWebAppShowWallPostBox", {
                 owner_id: vk_user_id,
                 message: `Открытка для финника`,
-                attachments: `https://vk.com/app54237274`,
+                attachments: `https://vk.com/app52632034`,
                 upload_attachments: [{
                     "type": "photo",
                     "link": image

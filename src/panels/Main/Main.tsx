@@ -240,7 +240,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                         <div
                                                             className={
                                                                 css[
-                                                                    "tasks-item__closed"
+                                                                    "tasks-item__time-block"
                                                                 ]
                                                             }
                                                         >
@@ -313,7 +313,7 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                 <Spacing size={10} />
                 <Button
                     color="transparent"
-                    href="https://www.afisha.ru/movie/elki-12-1001086/"
+                    href="https://elki12.ru/"
                 >
                     Подробнее о фильме
                 </Button>

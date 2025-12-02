@@ -68,7 +68,7 @@ export const Game4: FC<NavIdProps> = ({ id, updateTasks }) => {
                     attachment: {
                         text: "open",
                         type: "url",
-                        url: `https://vk.com/app54237274#/?referal_id=${userCode}`,
+                        url: `https://vk.com/app52632034#/?referal_id=${userCode}`,
                     },
                 })
                 .then((data: any) => {

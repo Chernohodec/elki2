@@ -131,6 +131,18 @@
     margin-bottom: -40px;
 }
 
+.tasks-item__time-block{
+    height: 52px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FCF0D1;
+    border-radius: 26px;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
 .tasks-item__closed {
     display: flex;
     align-items: center;
@@ -231,5 +243,13 @@
 
     .tasks-item__closed div{
         text-align: center;
+    }
+
+    .tasks-item__time-block{
+        width: 100%;
+    }
+
+    .tasks-item__timer-wrapper{
+        flex-direction: column;
     }
 }
