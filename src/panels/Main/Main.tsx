@@ -1,12 +1,6 @@
 import { Icon16CheckOutline } from "@vkontakte/icons";
 import { useRouteNavigator } from "@vkontakte/vk-mini-apps-router";
-import {
-    Div,
-    NavIdProps,
-    Panel,
-    Spacing,
-    classNames
-} from "@vkontakte/vkui";
+import { Div, NavIdProps, Panel, Spacing, classNames } from "@vkontakte/vkui";
 import { FC } from "react";
 import { Button } from "../../components/Button/Button";
 import { CustomPanelHeader } from "../../components/CustomPanelHeader/CustomPanelHeader";
@@ -85,10 +79,10 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                 const taskIsOpen = checkTimeIsAllowed(
                                     task.activation_time
                                 );
-                                const previousTaskCompleted = true
-                                    // index === 0
-                                    //     ? true
-                                    //     : tasks[index - 1].completed;
+                                const previousTaskCompleted =
+                                    index === 0
+                                        ? true
+                                        : tasks[index - 1].completed;
 
                                 return (
                                     <div
@@ -108,7 +102,11 @@ export const Main: FC<NavIdProps> = ({ id }) => {
                                                         ]
                                                     }
                                                 >
-                                                    <img width={24} src="/assets/img/lock-icon.svg" alt="" />
+                                                    <img
+                                                        width={24}
+                                                        src="/assets/img/lock-icon.svg"
+                                                        alt=""
+                                                    />
                                                     <Title
                                                         size="xs"
                                                         color="red-black"

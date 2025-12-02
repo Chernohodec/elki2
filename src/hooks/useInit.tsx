@@ -9,6 +9,7 @@ import {
     setUserCode,
 } from "../store/main.reducer";
 import { setBalls, setTasks } from "../store/tasks.reducer";
+import { postStat } from "../api/user/postStat";
 
 export const useInit = () => {
     const [isLoading, setLoading] = useState(false);
@@ -16,6 +17,7 @@ export const useInit = () => {
     const dispatch = useAppDispatch();
     const [params] = useSearchParams();
     const referalID = params.get("referal_id");
+    const pushID = params.get("push_id");
 
     const init = async () => {
         setLoading(true);
@@ -30,6 +32,12 @@ export const useInit = () => {
                 setNotificationIsAllowed(userInfo.data.is_notifications_allowed)
             );
             dispatch(setOnboardingComplete(userInfo.data.is_onboarded));
+            pushID && postStat({
+                name: "push",
+                data: {
+                    push_id: pushID,
+                },
+            });
             setLoading(false);
         } catch (e) {
             console.log(e);
