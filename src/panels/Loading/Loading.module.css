@@ -13,16 +13,16 @@
     height: calc(100dvh + 2px);
     width: 100%;
     box-sizing: border-box;
-    background-image: url(/assets/img/loading-title.svg), url(../../assets/img/loading-bg-mobile.jpg);
+    background-image: url(/assets/img/age-mark.svg), url(/assets/img/loading-title.svg), url(../../assets/img/loading-bg-mobile.jpg);
     background-repeat: no-repeat;
-    background-position: center 10dvh, center 100%;
-    background-size: 350px, cover;
+    background-position: calc(100% - 20px) 20px, center 10dvh, center 100%;
+    background-size: 45px,350px, cover;
 }
 
 
 @media screen and (min-width: 600px) {
     .loading-page::before {
-        background-image: url(/assets/img/loading-title.svg), url(../../assets/img/loading-bg.jpg);
-        background-size: 350px, auto calc(100% + 60px);
+        background-image: url(/assets/img/age-mark.svg), url(/assets/img/loading-title.svg), url(../../assets/img/loading-bg.jpg);
+        background-size: 45px, 350px, auto calc(100% + 60px);
     }
 }
