@@ -501,6 +501,14 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                                     maxLength={30}
                                 />
                             </div>
+                            <Button
+                                disabled={!formIsValid}
+                                className={classNames(css["letter__submit"], css["letter__submit_step_0"])}
+                                color="yellow"
+                                onClick={submitMail}
+                            >
+                                Отправить
+                            </Button>
                         </div>
                     ) : currentStep === 1 ? (
                         <div className={css["mail-sending"]}>
@@ -572,14 +580,7 @@ export const Game1: FC<GameProps> = ({ id, updateTasks }) => {
                             К заданиям
                         </Button>
                     ) : currentStep === 0 ? (
-                        <Button
-                            disabled={!formIsValid}
-                            className={css["letter__submit"]}
-                            color="yellow"
-                            onClick={submitMail}
-                        >
-                            Отправить
-                        </Button>
+                        <></>
                     ) : currentStep === 1 ? (
                         <></>
                     ) : currentStep === 2 ? (
