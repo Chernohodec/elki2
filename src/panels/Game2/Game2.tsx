@@ -135,12 +135,12 @@ export const Game2: FC<NavIdProps> = ({ id, updateTasks }) => {
             setActiveAnimalType(animalType);
             setActiveHole(randomHole);
 
-            const showTime = 1000 + Math.random() * 600;
+            const showTime = 1200 + Math.random() * 800;
 
             setTimeout(() => {
                 setActiveHole(null);
             }, showTime);
-        }, 1800);
+        }, 2200);
     };
 
     const playPigSound = () => {

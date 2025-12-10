@@ -21,7 +21,7 @@ export const VkVideoBanner = () => {
             <div className={css["vk-banner"]}>
                 <iframe
                     className={css["vk-banner__video"]}
-                    src="https://vk.com/video_ext.php?oid=-51109251&id=456239677&js_api=1"
+                    src="https://vk.com/video_ext.php?oid=-218182715&id=456241404&js_api=1"
                     width="330"
                     height="160"
                     allow="autoplay; encrypted-media; fullscreen;"

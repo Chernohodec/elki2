@@ -216,10 +216,17 @@
     transform: scale(0.9);
 }
 
-.motion-wrapper{
+.motion-wrapper {
     min-height: calc(100dvh - 100px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 100px;
+}
+
+@media screen and (min-width:600px) {
+    .hit-pig-game {
+        background-size: 100% calc(100% + 5px);
+    }
+
 }
